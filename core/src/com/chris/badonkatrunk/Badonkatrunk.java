@@ -31,9 +31,9 @@ public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 			batch = new SpriteBatch();
 			theWorld = new Sprite(new Texture(Gdx.files.internal("test.png")));
 			theWorld.setPosition(0, 0);
-			cameraY = 0;
-			camera = new OrthographicCamera(600, 250);
-			camera.position.set(width/2,theWorld.getHeight()/4,0);
+			cameraY = -0.1f;
+			camera = new OrthographicCamera(240, 100);
+			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 
 			Gdx.input.setInputProcessor(this);
 		}
@@ -41,7 +41,7 @@ public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 		@Override
 		public void render() {
 			if(camera.position.x < theWorld.getWidth()-camera.viewportWidth/2){
-				camera.translate(1f, 0f);
+				camera.translate(1f, cameraY);
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -60,10 +60,6 @@ public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 
 		@Override
 		public boolean keyDown(int keycode) {
-			if(keycode == 32){
-				
-			}
-
 			return false;
 		}
 
