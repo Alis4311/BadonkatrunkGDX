@@ -9,11 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Badonkatrunk extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	
+	TimTest test;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
+		test = new TimTest();
 	}
 
 	@Override
@@ -23,6 +24,7 @@ public class Badonkatrunk extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(img, 0, 0);
 		batch.end();
+        test.draw();
 	}
 	
 	@Override
