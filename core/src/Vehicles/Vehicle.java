@@ -12,6 +12,7 @@ public abstract class Vehicle {
     private int xPosition;
     private int yPosition;
     private int accelerationRate;
+    private int speed;
     private int jumpHeight;
     private Sound accelerateSound;
     private Sound jumpSound;
@@ -51,6 +52,14 @@ public abstract class Vehicle {
 
     public void setAccelerationRate(int accelerationRate) {
         this.accelerationRate = accelerationRate;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public int getJumpHeight() {
