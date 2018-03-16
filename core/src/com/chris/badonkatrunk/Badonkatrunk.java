@@ -11,31 +11,39 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import javafx.scene.input.KeyCode;
 
 public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 		SpriteBatch batch;
 		Sprite theWorld;
 		OrthographicCamera camera;
+		int width;
+		int height;
+		float cameraY;
 
 
 		@Override
 		public void create() {
+			width =  Gdx.graphics.getWidth();
+			height = Gdx.graphics.getHeight();
+			System.out.println(width);
+			System.out.println(height);
 			batch = new SpriteBatch();
-			theWorld = new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")));
+			theWorld = new Sprite(new Texture(Gdx.files.internal("test.png")));
 			theWorld.setPosition(0, 0);
-			theWorld.setSize(50, 25);
-
-
-			camera = new OrthographicCamera(250, 250);
-			camera.position.set(0,0,0);
+			cameraY = 0;
+			camera = new OrthographicCamera(600, 250);
+			camera.position.set(width/2,theWorld.getHeight()/4,0);
 
 			Gdx.input.setInputProcessor(this);
 		}
 
 		@Override
 		public void render() {
-			camera.translate(1f, 0f);
-			Gdx.gl.glClearColor(1, 0, 0, 1);
+			if(camera.position.x < theWorld.getWidth()-camera.viewportWidth/2){
+				camera.translate(1f, 0f);
+			}
+			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 			camera.update();
@@ -52,14 +60,13 @@ public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 
 		@Override
 		public boolean keyDown(int keycode) {
-
+			if(keycode == 32){
+				
+			}
 
 			return false;
 		}
 
-		public void update(){
-
-		}
 
 		@Override
 		public boolean keyTyped(char character) {
