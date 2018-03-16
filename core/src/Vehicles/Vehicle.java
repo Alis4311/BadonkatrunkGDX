@@ -1,6 +1,7 @@
 package Vehicles;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
@@ -10,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
  */
 public abstract class Vehicle {
     private Sprite image;
-    private int xPosition;
-    private int yPosition;
     private int accelerationRate;
     private int speed;
     private int jumpHeight;
@@ -30,20 +29,13 @@ public abstract class Vehicle {
         return this.image;
     }
 
-    public void setXPosition(int xPosition) {
-        this.xPosition = xPosition;
+    public void setPosition(int xPosition, int yPosition) {
+        //this.xPosition = xPosition;
+        image.setPosition(xPosition, yPosition);
     }
 
-    public int getXPosition() {
-        return xPosition;
-    }
-
-    public void setYPosition(int yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public int getYPosition() {
-        return yPosition;
+    public void draw(Batch batch) {
+        image.draw(batch);
     }
 
 
