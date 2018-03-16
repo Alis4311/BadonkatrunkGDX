@@ -4,6 +4,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
+ *Abstract Entity class that can represent different vehicles that the player uses in the game.
  *
  * author Tim Normark
  */
