@@ -40,4 +40,12 @@ public class Map {
         goalXCoordinates = (int)getBackground().getWidth();
         return goalXCoordinates;
     }
+
+    public int getBackgroundWidth(){
+        return (int)getBackground().getWidth();
+    }
+
+    public int getBackgroundHeight(){
+        return (int)getBackground().getHeight();
+    }
 }
