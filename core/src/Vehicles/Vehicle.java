@@ -63,21 +63,36 @@ public abstract class Vehicle {
         this.jumpHeight = jumpHeight;
     }
 
-
-    public Sound getAccelerateSound() {
-        return accelerateSound;
-    }
-
     public void setAccelerateSound(Sound accelerateSound) {
         this.accelerateSound = accelerateSound;
     }
 
-    public Sound getJumpSound() {
-        return jumpSound;
-    }
-
     public void setJumpSound(Sound jumpSound) {
         this.jumpSound = jumpSound;
+    }
+
+    public void playAccelerateSound() {
+        accelerateSound.play();
+    }
+
+    public void loopAccelerateSound() {
+        accelerateSound.loop();
+    }
+
+    public void stopAccelerateSound() {
+        accelerateSound.stop();
+    }
+
+    public void playJumpSound() {
+        jumpSound.play();
+    }
+
+    public void loopJumpSound() {
+        jumpSound.loop();
+    }
+
+    public void stopJumpSound() {
+        jumpSound.stop();
     }
 
 }
