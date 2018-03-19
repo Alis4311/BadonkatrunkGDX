@@ -32,7 +32,6 @@ public class Badonkatrunk extends ApplicationAdapter{
             car = new Car();
 			camera = new OrthographicCamera(240, 100);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
-
 		}
 
 		@Override
@@ -50,6 +49,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 			theWorld.draw(batch);
 			car.getImage().draw(batch);
+
 			batch.end();
 
 		}

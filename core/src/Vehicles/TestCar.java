@@ -10,8 +10,5 @@ public class TestCar {
         System.out.println(car.getSpeed());
         System.out.println(car.getAccelerationRate());
         System.out.println(car.getJumpHeight());
-        Sound sound = car.getAccelerateSound();
-        sound.play();
-        sound.loop();
     }
 }
