@@ -23,7 +23,7 @@ public class Car extends Vehicle {
         setJumpHeight(50);
         setJumpSound(Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")));
         setAccelerateSound(Gdx.audio.newSound(Gdx.files.internal("enginesound.wav")));
-        textureAtlas = new TextureAtlas("car.atlas");
+        textureAtlas = new TextureAtlas(Gdx.files.internal("car.atlas"));
         region = textureAtlas.findRegion("0001");
 
         setImage(new Sprite(region));
