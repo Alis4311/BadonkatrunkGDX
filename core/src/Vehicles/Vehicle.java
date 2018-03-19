@@ -3,6 +3,7 @@ package Vehicles;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
 /**
@@ -11,14 +12,16 @@ import com.badlogic.gdx.math.Rectangle;
  * author Tim Normark
  */
 public abstract class Vehicle {
-    private Sprite image;
-    private int accelerationRate;
-    private int speed;
-    private int maxSpeed;
-    private int jumpHeight;
-    private Sound accelerateSound;
-    private Sound jumpSound;
-    private boolean grounded;
+    protected Sprite image;
+    protected int accelerationRate;
+    protected int currentFrame = 1;
+    protected int speed;
+    protected int maxSpeed;
+    protected int jumpHeight;
+    protected Sound accelerateSound;
+    protected Sound jumpSound;
+
+    protected boolean grounded;
 
     public void setImage(Sprite image) {
         if(image != null) {

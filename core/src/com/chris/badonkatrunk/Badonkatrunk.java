@@ -17,7 +17,6 @@ import javafx.scene.input.KeyCode;
 
 public class Badonkatrunk extends ApplicationAdapter{
 		SpriteBatch batch;
-		Sprite theWorld;
 		OrthographicCamera camera;
 		float cameraY;
 		Car car;
@@ -30,7 +29,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 			level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
 			cameraY = -0.1f;
             car = new Car();
-			camera = new OrthographicCamera(240, 100);
+			camera = new OrthographicCamera(580, 200);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 		}
 
@@ -38,7 +37,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 		public void render() {
 			if(camera.position.x < level.getWidth()-camera.viewportWidth/2){
 				camera.translate(1f,car.getImage().getY(),0);
-				car.setPosition((int)car.getImage().getX()+2,(int)car.getImage().getY());
+				car.setPosition((int)car.getX()+2,(int)car.getY());
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
