@@ -1,5 +1,6 @@
 package MapTest;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ public class Map {
         this.background = background;
         ObstacleObjectList = new LinkedList<Sprite>();
         backgroundObjectList = new LinkedList<Sprite>();
+        this.background.setPosition(0,0);
     }
 
     /**
@@ -79,7 +81,7 @@ public class Map {
      * Returns the width of the background Sprite.
      * @return - int.
      */
-    public int getBackgroundWidth(){
+    public int getWidth(){
         return (int)getBackground().getWidth();
     }
 
@@ -87,7 +89,11 @@ public class Map {
      * Returns the height of the background Sprite.
      * @return - int.
      */
-    public int getBackgroundHeight(){
+    public int getHeight(){
         return (int)getBackground().getHeight();
+    }
+
+    public void draw(Batch batch){
+        this.background.draw(batch);
     }
 }

@@ -1,5 +1,6 @@
 package com.chris.badonkatrunk;
 
+import MapTest.Map;
 import Vehicles.Car;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
@@ -20,14 +21,13 @@ public class Badonkatrunk extends ApplicationAdapter{
 		OrthographicCamera camera;
 		float cameraY;
 		Car car;
-
+		Map level;
 
 		@Override
 		public void create() {
 
 			batch = new SpriteBatch();
-			theWorld = new Sprite(new Texture(Gdx.files.internal("test.png")));
-			theWorld.setPosition(0, 0);
+			level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
 			cameraY = -0.1f;
             car = new Car();
 			camera = new OrthographicCamera(240, 100);
@@ -36,7 +36,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 		@Override
 		public void render() {
-			if(camera.position.x < theWorld.getWidth()-camera.viewportWidth/2){
+			if(camera.position.x < level.getWidth()-camera.viewportWidth/2){
 				camera.translate(1f,car.getImage().getY(),0);
 				car.setPosition((int)car.getImage().getX()+2,(int)car.getImage().getY());
 			}
@@ -46,9 +46,8 @@ public class Badonkatrunk extends ApplicationAdapter{
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-
-			theWorld.draw(batch);
-			car.getImage().draw(batch);
+			level.getBackground().draw(batch);
+			car.draw(batch);
 
 			batch.end();
 
