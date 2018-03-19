@@ -1,5 +1,6 @@
 package com.chris.badonkatrunk;
 
+import Vehicles.Car;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,35 +14,32 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import javafx.scene.input.KeyCode;
 
-public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
+public class Badonkatrunk extends ApplicationAdapter{
 		SpriteBatch batch;
 		Sprite theWorld;
 		OrthographicCamera camera;
-		int width;
-		int height;
 		float cameraY;
+		Car car;
 
 
 		@Override
 		public void create() {
-			width =  Gdx.graphics.getWidth();
-			height = Gdx.graphics.getHeight();
-			System.out.println(width);
-			System.out.println(height);
+
 			batch = new SpriteBatch();
 			theWorld = new Sprite(new Texture(Gdx.files.internal("test.png")));
 			theWorld.setPosition(0, 0);
 			cameraY = -0.1f;
+            car = new Car();
 			camera = new OrthographicCamera(240, 100);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 
-			Gdx.input.setInputProcessor(this);
 		}
 
 		@Override
 		public void render() {
 			if(camera.position.x < theWorld.getWidth()-camera.viewportWidth/2){
-				camera.translate(1f, cameraY);
+				camera.translate(1f,car.getImage().getY(),0);
+				car.setPosition((int)car.getImage().getX()+2,(int)car.getImage().getY());
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -49,48 +47,10 @@ public class Badonkatrunk extends ApplicationAdapter implements InputProcessor {
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
+
 			theWorld.draw(batch);
+			car.getImage().draw(batch);
 			batch.end();
-		}
 
-		@Override
-		public boolean keyUp(int keycode) {
-			return false;
-		}
-
-		@Override
-		public boolean keyDown(int keycode) {
-			return false;
-		}
-
-
-		@Override
-		public boolean keyTyped(char character) {
-			return false;
-		}
-
-		@Override
-		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			return false;
-		}
-
-		@Override
-		public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-			return false;
-		}
-
-		@Override
-		public boolean touchDragged(int screenX, int screenY, int pointer) {
-			return false;
-		}
-
-		@Override
-		public boolean mouseMoved(int screenX, int screenY) {
-			return false;
-		}
-
-		@Override
-		public boolean scrolled(int amount) {
-			return false;
 		}
 	}
