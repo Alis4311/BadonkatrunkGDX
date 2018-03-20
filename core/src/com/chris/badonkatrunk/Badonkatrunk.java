@@ -24,11 +24,12 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 		@Override
 		public void create() {
-
 			batch = new SpriteBatch();
 			level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
 			cameraY = -0.1f;
             car = new Car();
+            car.playJumpSound();
+            car.loopAccelerateSound();
 			camera = new OrthographicCamera(580, 200);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 		}
@@ -36,7 +37,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 		@Override
 		public void render() {
 			if(camera.position.x < level.getWidth()-camera.viewportWidth/2){
-				camera.translate(1f,car.getImage().getY(),0);
+				camera.translate(1f,car.getY(),0);
 				car.setPosition((int)car.getX()+2,(int)car.getY());
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);

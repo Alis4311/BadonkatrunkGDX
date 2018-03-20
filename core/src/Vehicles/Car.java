@@ -34,7 +34,6 @@ public class Car extends Vehicle {
                                if(currentFrame > 4)
                                    currentFrame = 1;
 
-                               // ATTENTION! String.format() doesnt work under GWT for god knows why...
                                currentAtlasKey = String.format("%04d", currentFrame);
                                image.setRegion(textureAtlas.findRegion(currentAtlasKey));
                            }
