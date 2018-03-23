@@ -16,6 +16,6 @@ public class Car extends Vehicle {
     public Car() {
         super("car.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 8, 0.15f,
-                50);
+                2000);
     }
 }

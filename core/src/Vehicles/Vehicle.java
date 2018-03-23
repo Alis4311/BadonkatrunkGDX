@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Timer;
  *
  * author Tim Normark
  */
-public abstract class Vehicle extends FallingObject {
+public abstract class Vehicle {
     private VehicleSound vehicleSound;
     private Sprite image;
     private float accelerationRate;
@@ -25,6 +25,9 @@ public abstract class Vehicle extends FallingObject {
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
+    private float gravity = 5f;
+
+    private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
@@ -62,7 +65,16 @@ public abstract class Vehicle extends FallingObject {
     }
 
     private void setPosition(float xPosition, float yPosition) {
-        image.setPosition(xPosition, yPosition);
+        if(yPosition > 0){
+            image.setPosition(xPosition, yPosition);
+            if(grounded)
+                setGrounded(false);
+        } else if(yPosition <= 0) {
+            image.setPosition(xPosition,0);
+            if(!grounded)
+                setGrounded(true);
+        }
+
     }
 
     public void draw(Batch batch) {
@@ -70,7 +82,7 @@ public abstract class Vehicle extends FallingObject {
     }
 
     public void setGrounded(boolean grounded) {
-        super.setGrounded(grounded);
+        this.grounded = grounded;
         if(grounded)
             showDrivingAnimation();
         else
@@ -81,11 +93,11 @@ public abstract class Vehicle extends FallingObject {
     public void accelerate() {
         vehicleSound.accelerate();
 
-        if(speed < maxSpeed && isGrounded()) {
+        if(speed < maxSpeed && grounded) {
             speed += accelerationRate;
         }
 
-        setPosition(getX() + speed, getY() - gravity());
+        setPosition(getX() + speed, getY() - gravity);
 
     }
 
@@ -93,19 +105,22 @@ public abstract class Vehicle extends FallingObject {
         vehicleSound.decelerate();
         if(speed > 0) {
            speed = Math.max(speed - accelerationRate, 0);
-           setPosition(getX() + speed, getY() - gravity());
+           setPosition(getX() + speed, getY() - gravity);
         }
     }
 
     public void jump() {
-        if(isGrounded()) {
+        if(grounded) {
             vehicleSound.jump();
-            super.jump();
+            setPosition(getX()+speed, getY()+jumpHeight*Gdx.graphics.getDeltaTime());
         }
     }
 
     private void showDrivingAnimation() {
-        Timer.schedule(new DrivingAnimation(),0,1/20.0f);
+       if(Timer.instance() != null){
+           Timer.instance().clear();
+       }
+        Timer.schedule(drivingAnimation,0,1/20.0f);
     }
 
     private void showJumpImage() {

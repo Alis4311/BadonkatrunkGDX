@@ -22,9 +22,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 		float cameraY;
 		Vehicle car;
 		Map level;
-
-		boolean jump = true;
-
+	int counter = 0;
 		@Override
 		public void create() {
 			batch = new SpriteBatch();
@@ -34,27 +32,29 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 			camera = new OrthographicCamera(580, 200);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+
 		}
 
 		@Override
 		public void render() {
 			if(camera.position.x < level.getWidth()-camera.viewportWidth/2){
-				camera.translate(1f,car.getY(),0);
+
 
 				// Tim la till detta, enbart för att testa Vehicle:s accelerate och idling metoder.
 				// Fordonet gasar tills den kommer förbi mitten av kamerans vy. Där släpper den på gasen.
-				if(car.getY() <= 0) {
-					car.setGrounded(true);
-				}
 				if(car.getX() < camera.position.x) {
 					car.accelerate();
 				} else {
-					if(jump) {
+					if(counter <= 0){
 						car.jump();
-						jump = false;
+						counter++;
+					}else{
+						car.idling();
+
 					}
-					car.idling();
+
 				}
+				camera.translate(1f,0,0);
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
