@@ -23,6 +23,8 @@ public class Badonkatrunk extends ApplicationAdapter{
 		Vehicle car;
 		Map level;
 
+		boolean jump = true;
+
 		@Override
 		public void create() {
 			batch = new SpriteBatch();
@@ -41,9 +43,16 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 				// Tim la till detta, enbart för att testa Vehicle:s accelerate och idling metoder.
 				// Fordonet gasar tills den kommer förbi mitten av kamerans vy. Där släpper den på gasen.
+				if(car.getY() <= 0) {
+					car.setGrounded(true);
+				}
 				if(car.getX() < camera.position.x) {
 					car.accelerate();
 				} else {
+					if(jump) {
+						car.jump();
+						jump = false;
+					}
 					car.idling();
 				}
 			}

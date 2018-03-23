@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Timer;
  *
  * author Tim Normark
  */
-public abstract class Vehicle {
+public abstract class Vehicle extends FallingObject {
     private VehicleSound vehicleSound;
     private Sprite image;
     private float accelerationRate;
@@ -25,8 +25,6 @@ public abstract class Vehicle {
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
-
-    private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
@@ -72,7 +70,7 @@ public abstract class Vehicle {
     }
 
     public void setGrounded(boolean grounded) {
-        this.grounded = grounded;
+        super.setGrounded(grounded);
         if(grounded)
             showDrivingAnimation();
         else
@@ -83,11 +81,11 @@ public abstract class Vehicle {
     public void accelerate() {
         vehicleSound.accelerate();
 
-        if(speed < maxSpeed && grounded) {
+        if(speed < maxSpeed && isGrounded()) {
             speed += accelerationRate;
         }
 
-        setPosition(getX() + speed, getY());
+        setPosition(getX() + speed, getY() - gravity());
 
     }
 
@@ -95,18 +93,19 @@ public abstract class Vehicle {
         vehicleSound.decelerate();
         if(speed > 0) {
            speed = Math.max(speed - accelerationRate, 0);
-           setPosition(getX() + speed, getY());
+           setPosition(getX() + speed, getY() - gravity());
         }
     }
 
     public void jump() {
-        if(grounded) {
+        if(isGrounded()) {
             vehicleSound.jump();
+            super.jump();
         }
     }
 
     private void showDrivingAnimation() {
-        Timer.schedule(drivingAnimation,0,1/20.0f);
+        Timer.schedule(new DrivingAnimation(),0,1/20.0f);
     }
 
     private void showJumpImage() {
