@@ -25,6 +25,7 @@ public abstract class Vehicle {
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
+    private float gravity = 5f;
 
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
@@ -64,7 +65,16 @@ public abstract class Vehicle {
     }
 
     private void setPosition(float xPosition, float yPosition) {
-        image.setPosition(xPosition, yPosition);
+        if(yPosition > 0){
+            image.setPosition(xPosition, yPosition);
+            if(grounded)
+                setGrounded(false);
+        } else if(yPosition <= 0) {
+            image.setPosition(xPosition,0);
+            if(!grounded)
+                setGrounded(true);
+        }
+
     }
 
     public void draw(Batch batch) {
@@ -87,7 +97,7 @@ public abstract class Vehicle {
             speed += accelerationRate;
         }
 
-        setPosition(getX() + speed, getY());
+        setPosition(getX() + speed, getY() - gravity);
 
     }
 
@@ -95,17 +105,21 @@ public abstract class Vehicle {
         vehicleSound.decelerate();
         if(speed > 0) {
            speed = Math.max(speed - accelerationRate, 0);
-           setPosition(getX() + speed, getY());
+           setPosition(getX() + speed, getY() - gravity);
         }
     }
 
     public void jump() {
         if(grounded) {
             vehicleSound.jump();
+            setPosition(getX()+speed, getY()+jumpHeight*Gdx.graphics.getDeltaTime());
         }
     }
 
     private void showDrivingAnimation() {
+       if(Timer.instance() != null){
+           Timer.instance().clear();
+       }
         Timer.schedule(drivingAnimation,0,1/20.0f);
     }
 
