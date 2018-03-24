@@ -28,7 +28,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 			batch = new SpriteBatch();
 			level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
 			cameraY = -0.1f;
-            car = new Car();
+            car = new Car(level);
 
 			camera = new OrthographicCamera(580, 200);
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
@@ -62,8 +62,8 @@ public class Badonkatrunk extends ApplicationAdapter{
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
-			level.getBackground().draw(batch);
-			car.draw(batch);
+			level.draw(batch);
+			//car.draw(batch);
 
 			batch.end();
 

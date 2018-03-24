@@ -1,5 +1,6 @@
 package Vehicles;
 
+import MapTest.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -31,7 +32,7 @@ public abstract class Vehicle {
     private DrivingAnimation drivingAnimation;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
-            float accelerationRate, float jumpHeight) {
+            float accelerationRate, float jumpHeight, Map map) {
         vehicleSound = new VehicleSound(engineSound, jumpSound);
         this.maxSpeed = maxSpeed;
         this.accelerationRate = accelerationRate;
@@ -44,7 +45,7 @@ public abstract class Vehicle {
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         TextureAtlas.AtlasRegion region = textureAtlas.findRegion(currentAtlasKey);
         image = new Sprite(region);
-
+        map.setCar(this);
         setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
 
