@@ -2,6 +2,8 @@ package Vehicles;
 
 import MapTest.Map;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -21,12 +23,13 @@ public abstract class Vehicle {
     private Sprite image;
     private float accelerationRate;
     private float speed;
+    private float ySpeed;
     private float maxSpeed;
     private float jumpHeight;
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
-    private float gravity = 5f;
+    private float gravity = 2f;
 
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
@@ -37,6 +40,7 @@ public abstract class Vehicle {
         this.maxSpeed = maxSpeed;
         this.accelerationRate = accelerationRate;
         this.speed = 0f;
+        this.ySpeed = 0f;
         this.jumpHeight = jumpHeight;
         drivingAnimation = new DrivingAnimation();
 
@@ -63,6 +67,27 @@ public abstract class Vehicle {
 
     public float getY() {
         return image.getY();
+    }
+
+    private void processInput(){
+
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            accelerate();
+        } else {
+            idling();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+            jump();
+        }
+    }
+
+    public void update(){
+        processInput();
+        setPosition(getX() + speed, getY()+ySpeed);
+
+            ySpeed -= gravity;
+
+
     }
 
     private void setPosition(float xPosition, float yPosition) {
@@ -98,7 +123,7 @@ public abstract class Vehicle {
             speed += accelerationRate;
         }
 
-        setPosition(getX() + speed, getY() - gravity);
+
 
     }
 
@@ -106,14 +131,14 @@ public abstract class Vehicle {
         vehicleSound.decelerate();
         if(speed > 0) {
            speed = Math.max(speed - accelerationRate, 0);
-           setPosition(getX() + speed, getY() - gravity);
-        }
+       }
     }
 
     public void jump() {
         if(grounded) {
             vehicleSound.jump();
-            setPosition(getX()+speed, getY()+jumpHeight*Gdx.graphics.getDeltaTime());
+            ySpeed = this.jumpHeight;
+            grounded = false;
         }
     }
 
@@ -167,7 +192,7 @@ public abstract class Vehicle {
             MAXVOLUME = 1.0f;
             MINVOLUME = 0.4F;
             volumeChangeRate = 0.1f;
-            jump(); // Enbart för test. Ta bort inför skarpt läge.
+            //jump(); // Enbart för test. Ta bort inför skarpt läge.
 
             engineSoundId = engineSound.loop();
         }

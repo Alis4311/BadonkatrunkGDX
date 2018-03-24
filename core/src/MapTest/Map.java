@@ -104,6 +104,7 @@ public class Map {
 
     public void draw(Batch batch){
         this.background.draw(batch);
+
         this.car.draw(batch);
     }
 }
