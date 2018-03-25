@@ -29,7 +29,7 @@ public abstract class Vehicle {
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
-    private float gravity = 2f;
+    private float gravity = 1f;
 
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
@@ -69,18 +69,37 @@ public abstract class Vehicle {
         return image.getY();
     }
 
+    /**
+     * Handle input from user before updating car.
+     */
     private void processInput(){
+        /**
+         * For whatever reason we need to specify two inputs in order to not automatically loop the input.
+         * TODO: figure out why?
+         */
+        float x0 = Gdx.input.getX(0);
+        float x1 = Gdx.input.getX(1);
+        /**
+         * Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
+         * This will have to be changed to also take in Yposition of touch in order to add something like a pause/menu-button at a later stage, I suppose however that could be circumvented
+         * by checking the pause/menu-button input first and returning.
+         */
+        boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
+        boolean jumpTouch = (Gdx.input.isTouched(0) && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 < Gdx.graphics.getWidth() / 2);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch){
             accelerate();
         } else {
             idling();
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch){
             jump();
         }
     }
 
+    /**
+     * Update the position of the car, after processing user input.
+     */
     public void update(){
         processInput();
         setPosition(getX() + speed, getY()+ySpeed);
