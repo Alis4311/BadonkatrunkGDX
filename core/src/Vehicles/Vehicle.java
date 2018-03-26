@@ -3,7 +3,6 @@ package Vehicles;
 import MapTest.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -30,7 +29,7 @@ public abstract class Vehicle {
     private String currentAtlasKey;
     private int currentFrame;
     private float gravity = 1f;
-
+    private float groundlevel = 0;
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
 
@@ -49,7 +48,7 @@ public abstract class Vehicle {
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         TextureAtlas.AtlasRegion region = textureAtlas.findRegion(currentAtlasKey);
         image = new Sprite(region);
-        map.setCar(this);
+        map.setVehicle(this);
         setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
 
@@ -81,8 +80,7 @@ public abstract class Vehicle {
         float x1 = Gdx.input.getX(1);
         /**
          * Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
-         * This will have to be changed to also take in Yposition of touch in order to add something like a pause/menu-button at a later stage, I suppose however that could be circumvented
-         * by checking the pause/menu-button input first and returning.
+         *
          */
         boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
         boolean jumpTouch = (Gdx.input.isTouched(0) && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 < Gdx.graphics.getWidth() / 2);
@@ -105,17 +103,20 @@ public abstract class Vehicle {
         setPosition(getX() + speed, getY()+ySpeed);
 
             ySpeed -= gravity;
-
-
     }
 
-    private void setPosition(float xPosition, float yPosition) {
-        if(yPosition > 0){
+    public void dispose(){
+        vehicleSound.jumpSound.dispose();
+        vehicleSound.engineSound.dispose();
+    }
+
+    protected void setPosition(float xPosition, float yPosition) {
+        if(yPosition > groundlevel){
             image.setPosition(xPosition, yPosition);
             if(grounded)
                 setGrounded(false);
-        } else if(yPosition <= 0) {
-            image.setPosition(xPosition,0);
+        } else if(yPosition <= groundlevel ){
+            image.setPosition(xPosition,groundlevel);
             if(!grounded)
                 setGrounded(true);
         }
@@ -211,7 +212,7 @@ public abstract class Vehicle {
             MAXVOLUME = 1.0f;
             MINVOLUME = 0.4F;
             volumeChangeRate = 0.1f;
-            //jump(); // Enbart för test. Ta bort inför skarpt läge.
+
 
             engineSoundId = engineSound.loop();
         }
