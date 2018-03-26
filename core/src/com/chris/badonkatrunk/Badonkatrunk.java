@@ -20,36 +20,48 @@ public class Badonkatrunk extends ApplicationAdapter{
 		SpriteBatch batch;
 		OrthographicCamera camera;
 		float cameraY;
-		Vehicle car;
+		Vehicle vehicle;
 		Map level;
 		@Override
 		public void create() {
 			batch = new SpriteBatch();
 			level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
 			cameraY = -0.1f;
-            car = new Car(level);
+            vehicle = new Car(level);
 
 			camera = new OrthographicCamera(580, 200);
-			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 
+			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
+			//camera.position.set(camera.viewportWidth/2,vehicle.getY()/2,0);
 		}
 
 		@Override
 		public void render() {
-			if(camera.position.x < level.getWidth()-camera.viewportWidth/2){
+			if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
+				vehicle.dispose();
 
-				camera.translate(1f, 0,0);
+				this.dispose();
+				this.create();
+
+			}
+			if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
+
+				camera.translate(1f, 0, 0);
+				//camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
+				camera.update();
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			car.update();
+			vehicle.update();
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			level.draw(batch);
 
 			batch.end();
-			System.out.println(car.getY());
 
 		}
-	}
+
+
+}
+

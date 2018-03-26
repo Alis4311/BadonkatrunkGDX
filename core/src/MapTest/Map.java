@@ -15,7 +15,7 @@ public class Map {
     private int goalXCoordinates;
     private LinkedList<Sprite> ObstacleObjectList;
     private LinkedList<Sprite> backgroundObjectList;
-    private Vehicle car;
+    private Vehicle vehicle;
 
     /**
      * Constructor that instantiates local variables and sets the background to the one in the parameter.
@@ -29,11 +29,11 @@ public class Map {
     }
 
     /**
-     * Set the car associated.
+     * Set the vehicle associated.
      * @param vehicle
      */
-    public void setCar(Vehicle vehicle){
-        this.car = vehicle;
+    public void setVehicle(Vehicle vehicle){
+        this.vehicle = vehicle;
     }
     /**
      * Returns the background Sprite.
@@ -45,7 +45,7 @@ public class Map {
 
     /**
      * Adds sprites to the list that holds objects that has collision.
-     * @param sprite - The Sprite that the car can collide with.
+     * @param sprite - The Sprite that the vehicle can collide with.
      */
     public void addObstacleObjects(Sprite sprite){
         ObstacleObjectList.add(sprite);
@@ -105,6 +105,6 @@ public class Map {
     public void draw(Batch batch){
         this.background.draw(batch);
 
-        this.car.draw(batch);
+        this.vehicle.draw(batch);
     }
 }
