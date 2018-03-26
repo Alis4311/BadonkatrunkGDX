@@ -1,6 +1,9 @@
 package Vehicles;
 
+import MapTest.Map;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -20,22 +23,24 @@ public abstract class Vehicle {
     private Sprite image;
     private float accelerationRate;
     private float speed;
+    private float ySpeed;
     private float maxSpeed;
     private float jumpHeight;
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
-    private float gravity = 5f;
+    private float gravity = 1f;
 
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
-            float accelerationRate, float jumpHeight) {
+            float accelerationRate, float jumpHeight, Map map) {
         vehicleSound = new VehicleSound(engineSound, jumpSound);
         this.maxSpeed = maxSpeed;
         this.accelerationRate = accelerationRate;
         this.speed = 0f;
+        this.ySpeed = 0f;
         this.jumpHeight = jumpHeight;
         drivingAnimation = new DrivingAnimation();
 
@@ -44,7 +49,7 @@ public abstract class Vehicle {
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         TextureAtlas.AtlasRegion region = textureAtlas.findRegion(currentAtlasKey);
         image = new Sprite(region);
-
+        map.setCar(this);
         setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
 
@@ -62,6 +67,46 @@ public abstract class Vehicle {
 
     public float getY() {
         return image.getY();
+    }
+
+    /**
+     * Handle input from user before updating car.
+     */
+    private void processInput(){
+        /**
+         * For whatever reason we need to specify two inputs in order to not automatically loop the input.
+         * TODO: figure out why?
+         */
+        float x0 = Gdx.input.getX(0);
+        float x1 = Gdx.input.getX(1);
+        /**
+         * Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
+         * This will have to be changed to also take in Yposition of touch in order to add something like a pause/menu-button at a later stage, I suppose however that could be circumvented
+         * by checking the pause/menu-button input first and returning.
+         */
+        boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
+        boolean jumpTouch = (Gdx.input.isTouched(0) && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 < Gdx.graphics.getWidth() / 2);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch){
+            accelerate();
+        } else {
+            idling();
+        }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch){
+            jump();
+        }
+    }
+
+    /**
+     * Update the position of the car, after processing user input.
+     */
+    public void update(){
+        processInput();
+        setPosition(getX() + speed, getY()+ySpeed);
+
+            ySpeed -= gravity;
+
+
     }
 
     private void setPosition(float xPosition, float yPosition) {
@@ -97,7 +142,7 @@ public abstract class Vehicle {
             speed += accelerationRate;
         }
 
-        setPosition(getX() + speed, getY() - gravity);
+
 
     }
 
@@ -105,14 +150,14 @@ public abstract class Vehicle {
         vehicleSound.decelerate();
         if(speed > 0) {
            speed = Math.max(speed - accelerationRate, 0);
-           setPosition(getX() + speed, getY() - gravity);
-        }
+       }
     }
 
     public void jump() {
         if(grounded) {
             vehicleSound.jump();
-            setPosition(getX()+speed, getY()+jumpHeight*Gdx.graphics.getDeltaTime());
+            ySpeed = this.jumpHeight;
+            grounded = false;
         }
     }
 
@@ -166,7 +211,7 @@ public abstract class Vehicle {
             MAXVOLUME = 1.0f;
             MINVOLUME = 0.4F;
             volumeChangeRate = 0.1f;
-            jump(); // Enbart för test. Ta bort inför skarpt läge.
+            //jump(); // Enbart för test. Ta bort inför skarpt läge.
 
             engineSoundId = engineSound.loop();
         }

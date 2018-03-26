@@ -1,5 +1,6 @@
 package Vehicles;
 
+import MapTest.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,9 +14,9 @@ import com.badlogic.gdx.utils.Timer;
  */
 public class Car extends Vehicle {
 
-    public Car() {
+    public Car(Map map) {
         super("car.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 8, 0.15f,
-                2000);
+                15, map);
     }
 }

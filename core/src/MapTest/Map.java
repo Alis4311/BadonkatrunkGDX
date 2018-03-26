@@ -1,5 +1,6 @@
 package MapTest;
 
+import Vehicles.Vehicle;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -14,6 +15,7 @@ public class Map {
     private int goalXCoordinates;
     private LinkedList<Sprite> ObstacleObjectList;
     private LinkedList<Sprite> backgroundObjectList;
+    private Vehicle car;
 
     /**
      * Constructor that instantiates local variables and sets the background to the one in the parameter.
@@ -26,6 +28,13 @@ public class Map {
         this.background.setPosition(0,0);
     }
 
+    /**
+     * Set the car associated.
+     * @param vehicle
+     */
+    public void setCar(Vehicle vehicle){
+        this.car = vehicle;
+    }
     /**
      * Returns the background Sprite.
      * @return - Sprite.
@@ -95,5 +104,7 @@ public class Map {
 
     public void draw(Batch batch){
         this.background.draw(batch);
+
+        this.car.draw(batch);
     }
 }
