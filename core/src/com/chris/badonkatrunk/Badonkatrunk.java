@@ -29,7 +29,7 @@ public class Badonkatrunk extends ApplicationAdapter{
 			cameraY = -0.1f;
             vehicle = new Car(level);
 
-			camera = new OrthographicCamera(580, 200);
+			camera = new OrthographicCamera(500, 400);
 
 			camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
 			//camera.position.set(camera.viewportWidth/2,vehicle.getY()/2,0);
@@ -37,10 +37,13 @@ public class Badonkatrunk extends ApplicationAdapter{
 
 		@Override
 		public void render() {
+			/*
+				TODO: Write reset method
+			 */
 			if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
 				vehicle.dispose();
 
-				this.dispose();
+				//this.dispose();
 				this.create();
 
 			}
@@ -49,6 +52,17 @@ public class Badonkatrunk extends ApplicationAdapter{
 				camera.translate(1f, 0, 0);
 				//camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
 				camera.update();
+				/*
+				TODO: Write death method.
+				 */
+				if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
+					vehicle.dispose();
+					this.create();
+				}
+			}
+
+			if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.viewportWidth){
+				camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width;
 			}
 			Gdx.gl.glClearColor(0, 1, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
