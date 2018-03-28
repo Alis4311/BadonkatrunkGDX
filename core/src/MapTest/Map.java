@@ -1,6 +1,8 @@
 package MapTest;
 
 import Vehicles.Vehicle;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -24,6 +26,11 @@ public class Map {
     public Map(Sprite background){
         this.background = background;
         ObstacleObjectList = new LinkedList<Sprite>();
+        Sprite sprite = new Sprite (new Texture(Gdx.files.internal("badlogic.jpg")));
+        sprite.setSize(50,50);
+        sprite.setScale(0.8f);
+        sprite.setPosition(500, 20);
+        ObstacleObjectList.add(sprite);
         backgroundObjectList = new LinkedList<Sprite>();
         this.background.setPosition(0,0);
     }
@@ -104,7 +111,9 @@ public class Map {
 
     public void draw(Batch batch){
         this.background.draw(batch);
-
+        for(Sprite sprite : ObstacleObjectList){
+            sprite.draw(batch);
+        }
         this.vehicle.draw(batch);
     }
 }
