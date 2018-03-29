@@ -4,11 +4,9 @@ import MapTest.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 
 
@@ -19,17 +17,16 @@ import com.badlogic.gdx.utils.Timer;
  */
 public abstract class Vehicle extends Objects.CollidingObject {
     private VehicleSound vehicleSound;
-    //private Sprite image;
     private float accelerationRate;
-    private float speed;
+    private float xSpeed;
     private float ySpeed;
     private float maxSpeed;
     private float jumpHeight;
     private TextureAtlas textureAtlas;
     private String currentAtlasKey;
     private int currentFrame;
-    private float gravity = 1f;
-    private float groundlevel = 0;
+    private float gravity;
+    private float groundlevel;
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
 
@@ -39,8 +36,10 @@ public abstract class Vehicle extends Objects.CollidingObject {
         vehicleSound = new VehicleSound(engineSound, jumpSound);
         this.maxSpeed = maxSpeed;
         this.accelerationRate = accelerationRate;
-        this.speed = 0f;
+        this.xSpeed = 0f;
         this.ySpeed = 0f;
+        gravity = 1f;
+        groundlevel = 0;
         this.jumpHeight = jumpHeight;
         drivingAnimation = new DrivingAnimation();
 
@@ -88,7 +87,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
      */
     public void update(){
         processInput();
-        setPosition(getX() + speed, getY()+ySpeed);
+        setPosition(getX() + xSpeed, getY()+ySpeed);
 
             ySpeed -= gravity;
     }
@@ -123,15 +122,15 @@ public abstract class Vehicle extends Objects.CollidingObject {
     public void accelerate() {
         vehicleSound.accelerate();
 
-        if(speed < maxSpeed) {
-            speed += accelerationRate;
+        if(xSpeed < maxSpeed) {
+            xSpeed += accelerationRate;
         }
     }
 
     public void idling() {
         vehicleSound.decelerate();
-        if(speed > 0) {
-           speed = Math.max(speed - accelerationRate, 0);
+        if(xSpeed > 0) {
+           xSpeed = Math.max(xSpeed - accelerationRate, 0);
        }
     }
 

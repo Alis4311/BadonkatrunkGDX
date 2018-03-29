@@ -2,6 +2,7 @@ package Screens;
 
 import MapTest.Map;
 import Vehicles.Car;
+import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -15,7 +16,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 public class GameScreen implements Screen {
     OrthographicCamera camera;
-    Car vehicle;
+    Vehicle vehicle;
     Map level;
     SpriteBatch batch;
 
@@ -54,11 +55,12 @@ public class GameScreen implements Screen {
             if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
                 vehicle.dispose();
             }
+            if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
+                camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
+            }
         }
 
-        if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.viewportWidth){
-            //camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width;
-        }
+
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
