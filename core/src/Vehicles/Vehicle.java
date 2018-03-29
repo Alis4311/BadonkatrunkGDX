@@ -126,7 +126,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
             if (this.checkCollision(object.getBoundingRectangle())) {
                 if (this.getRightRectangle().overlaps(object.getBoundingRectangle())) {
 
-                    setPosition(object.getX() - this.getWidth(), getY() + ySpeed);
+                    xSpeed = 0;
                 }
 
                 if (this.getBottomRectangle().overlaps(object.getBoundingRectangle())) {

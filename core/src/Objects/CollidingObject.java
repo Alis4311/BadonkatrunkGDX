@@ -22,7 +22,7 @@ public class CollidingObject extends GameObject {
     }
 
     public Rectangle getBottomRectangle(){
-        return new Rectangle(this.getX(),this.getY(),this.getWidth(),5);
+        return new Rectangle(this.getX(),this.getY(),this.getWidth()-10,5);
     }
 
     public boolean checkCollision(Rectangle rect){

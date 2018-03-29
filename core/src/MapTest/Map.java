@@ -28,12 +28,16 @@ public class Map {
         this.background = background;
         ObstacleObjectList = new LinkedList<CollidingObject>();
         CollidingObject object = new CollidingObject(new Sprite (new Texture(Gdx.files.internal("badlogic.jpg"))));
-
+        CollidingObject object2 = new CollidingObject(new Sprite (new Texture(Gdx.files.internal("badlogic.jpg"))));
 
         object.setX(500);
         object.setY(0);
         object.setSize(64,64);
-        ObstacleObjectList.add(object);
+        object2.setX(800);
+        object2.setY(0);
+        object2.setSize(100,150);
+        addObstacleObjects(object);
+        addObstacleObjects(object2);
         backgroundObjectList = new LinkedList<Sprite>();
         this.background.setPosition(0,0);
     }
