@@ -27,6 +27,10 @@ public abstract class GameObject {
         this.sprite.setY(y);
     }
 
+    public void setSize(float width, float height){
+        this.sprite.setSize(width,height);
+    }
+
     public float getWidth(){
         return sprite.getWidth();
     }
@@ -37,7 +41,6 @@ public abstract class GameObject {
 
     public void draw(Batch batch){
 
-        //batch.draw(sprite.getTexture(), getX(),getY());
         sprite.draw(batch);
     }
 

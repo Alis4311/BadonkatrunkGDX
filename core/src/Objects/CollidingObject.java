@@ -14,12 +14,19 @@ public class CollidingObject extends GameObject {
 
     public Rectangle getBoundingRectangle(){
 
-        return new Rectangle(getX(),getY(),getWidth(),getHeight());
+        return sprite.getBoundingRectangle();
     }
 
+    public Rectangle getRightRectangle(){
+        return new Rectangle(this.getX()+getWidth()+5,this.getY()+10,5,getHeight()-50);
+    }
+
+    public Rectangle getBottomRectangle(){
+        return new Rectangle(this.getX(),this.getY(),this.getWidth(),5);
+    }
 
     public boolean checkCollision(Rectangle rect){
-        return true;
+        return Intersector.overlaps(this.getBoundingRectangle(),rect);
     }
 
 

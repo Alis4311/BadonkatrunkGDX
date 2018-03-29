@@ -1,5 +1,6 @@
 package MapTest;
 
+import Objects.CollidingObject;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +16,7 @@ import java.util.LinkedList;
 public class Map {
     private Sprite background;
     private int goalXCoordinates;
-    private LinkedList<Sprite> ObstacleObjectList;
+    private LinkedList<CollidingObject> ObstacleObjectList;
     private LinkedList<Sprite> backgroundObjectList;
     private Vehicle vehicle;
 
@@ -25,12 +26,14 @@ public class Map {
      */
     public Map(Sprite background){
         this.background = background;
-        ObstacleObjectList = new LinkedList<Sprite>();
-        Sprite sprite = new Sprite (new Texture(Gdx.files.internal("badlogic.jpg")));
-        sprite.setSize(50,50);
-        sprite.setScale(0.8f);
-        sprite.setPosition(500, 20);
-        ObstacleObjectList.add(sprite);
+        ObstacleObjectList = new LinkedList<CollidingObject>();
+        CollidingObject object = new CollidingObject(new Sprite (new Texture(Gdx.files.internal("badlogic.jpg"))));
+
+
+        object.setX(500);
+        object.setY(0);
+        object.setSize(64,64);
+        ObstacleObjectList.add(object);
         backgroundObjectList = new LinkedList<Sprite>();
         this.background.setPosition(0,0);
     }
@@ -52,19 +55,18 @@ public class Map {
 
     /**
      * Adds sprites to the list that holds objects that has collision.
-     * @param sprite - The Sprite that the vehicle can collide with.
+
      */
-    public void addObstacleObjects(Sprite sprite){
-        ObstacleObjectList.add(sprite);
+    public void addObstacleObjects(CollidingObject object){
+        ObstacleObjectList.add(object);
     }
 
     /**
      * Returns a Sprite from the gameObstacleObjectList.
-     * @param index - The index of the element in the list that returns.
      * @return - A Sprite.
      */
-    public Sprite getGameObstacleObjects(int index) {
-        return ObstacleObjectList.get(index);
+    public LinkedList<CollidingObject> getGameObstacleObjects() {
+        return ObstacleObjectList;
     }
 
     /**
@@ -111,8 +113,8 @@ public class Map {
 
     public void draw(SpriteBatch batch){
         this.background.draw(batch);
-        for(Sprite sprite : ObstacleObjectList){
-            sprite.draw(batch);
+        for(CollidingObject object : ObstacleObjectList){
+            object.draw(batch);
         }
 
     }

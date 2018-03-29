@@ -6,15 +6,13 @@ import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.chris.badonkatrunk.Badonkatrunk;
+import org.w3c.dom.css.Rect;
 
 
 public class GameScreen implements Screen {
@@ -31,7 +29,7 @@ public class GameScreen implements Screen {
         batch = badonkatrunk.batch;
         level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400,400);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         vehicle = new Car(level);
         shape = new ShapeRenderer();
     }
@@ -50,7 +48,7 @@ public class GameScreen implements Screen {
 
         if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
 
-            camera.translate(1f, 0, 0);
+            camera.translate(0f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
             camera.update();
 
@@ -68,18 +66,23 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
-        Rectangle rect = vehicle.getBoundingRectangle();
+        Rectangle carRect = vehicle.getBoundingRectangle();
+        Rectangle rightRect = vehicle.getRightRectangle();
+        Rectangle bottomRect = vehicle.getBottomRectangle();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         level.draw(batch);
+
         vehicle.draw(batch);
 
         batch.end();
-        shape.begin(ShapeRenderer.ShapeType.Filled);
-        shape.rect(rect.x,rect.y,rect.width,rect.height);
+        shape.begin(ShapeRenderer.ShapeType.Line);
+        shape.setColor(Color.RED);
+        shape.rect(carRect.x,carRect.y,carRect.width,carRect.height);
+        shape.rect(rightRect.x, rightRect.y,rightRect.width,rightRect.height);
+        shape.rect(bottomRect.x,bottomRect.y,bottomRect.width,bottomRect.height);
         shape.end();
-
 
     }
 

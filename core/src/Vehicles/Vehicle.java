@@ -1,9 +1,11 @@
 package Vehicles;
 
 import MapTest.Map;
+import Objects.CollidingObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,6 +31,8 @@ public abstract class Vehicle extends Objects.CollidingObject {
     private float groundlevel;
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private DrivingAnimation drivingAnimation;
+    private Map level;
+
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, Map map) {
@@ -46,7 +50,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
         currentAtlasKey = "0001";
         currentFrame = 1;
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
-
+        level = map;
         map.setVehicle(this);
         setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
@@ -87,9 +91,32 @@ public abstract class Vehicle extends Objects.CollidingObject {
      */
     public void update(){
         processInput();
-        setPosition(getX() + xSpeed, getY()+ySpeed);
 
-            ySpeed -= gravity;
+        ySpeed -= gravity;
+        for(CollidingObject object : level.getGameObstacleObjects()){
+            if (this.checkCollision(object.getBoundingRectangle())){
+                if(this.getRightRectangle().overlaps(object.getBoundingRectangle())){
+                    setPosition(object.getX() - this.getWidth(), getY()+ySpeed);
+                }
+
+                if(this.getBottomRectangle().overlaps(object.getBoundingRectangle())){
+                    groundlevel = object.getBoundingRectangle().y + object.getHeight()+5;
+
+                    setPosition(getX() + xSpeed, object.getY()+object.getHeight() +5);
+                }
+
+            } else {
+
+                groundlevel = 0;
+                setPosition(getX() + xSpeed, getY()+ySpeed);
+            }
+
+            if(getY() > groundlevel){
+                grounded = false;
+            } else {
+                grounded = true;
+            }
+        }
     }
 
     public void dispose(){
@@ -100,12 +127,10 @@ public abstract class Vehicle extends Objects.CollidingObject {
     protected void setPosition(float xPosition, float yPosition) {
         if(yPosition > groundlevel){
             sprite.setPosition(xPosition, yPosition);
-            if(grounded)
-                setGrounded(false);
+
         } else if(yPosition <= groundlevel ){
             sprite.setPosition(xPosition,groundlevel);
-            if(!grounded)
-                setGrounded(true);
+
         }
 
     }
@@ -154,6 +179,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
         setRegion(textureAtlas.findRegion("0003"));
     }
 
+
     private class DrivingAnimation extends Timer.Task {
         @Override
         public void run() {
@@ -180,6 +206,8 @@ public abstract class Vehicle extends Objects.CollidingObject {
         private final float MINVOLUME;
         private float volumeChangeRate;
         private float engineVolume;
+
+
 
 
         private VehicleSound(Sound engineSound, Sound jumpSound) {
