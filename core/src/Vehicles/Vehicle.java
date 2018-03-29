@@ -94,31 +94,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
         processInput();
 
         ySpeed -= gravity;
-        boolean bottomRectCollision = false;
-        CollidingObject object = level.getGameObstacleObjects().getFirst();
-
-            if (this.checkCollision(object.getBoundingRectangle())){
-                if(this.getRightRectangle().overlaps(object.getBoundingRectangle())){
-                    setPosition(object.getX() - this.getWidth(), getY()+ySpeed);
-                }
-
-                if(this.getBottomRectangle().overlaps(object.getBoundingRectangle())){
-                    groundlevel = object.getBoundingRectangle().y + object.getHeight()-2;
-                    bottomRectCollision = true;
-                }
-
-            }
-
-
-        if(bottomRectCollision){
-            setGrounded(true);
-
-        }else{
-            groundlevel = 0;
-
-        }
-
-        setPosition(getX() + xSpeed, getY()+ ySpeed);
+        collisionHandling();
 
     }
 
@@ -140,6 +116,36 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         }
 
+    }
+
+    private void collisionHandling(){
+        boolean bottomRectCollision = false;
+
+        for(CollidingObject object : level.getGameObstacleObjects()) {
+
+            if (this.checkCollision(object.getBoundingRectangle())) {
+                if (this.getRightRectangle().overlaps(object.getBoundingRectangle())) {
+
+                    setPosition(object.getX() - this.getWidth(), getY() + ySpeed);
+                }
+
+                if (this.getBottomRectangle().overlaps(object.getBoundingRectangle())) {
+                    groundlevel = object.getBoundingRectangle().y + object.getHeight() - 2;
+                    bottomRectCollision = true;
+                }
+
+            }
+
+        }
+        if(bottomRectCollision){
+            setGrounded(true);
+
+        }else{
+            groundlevel = 0;
+
+        }
+
+        setPosition(getX()+xSpeed, getY()+ ySpeed);
     }
 
     public void setGrounded(boolean grounded) {
