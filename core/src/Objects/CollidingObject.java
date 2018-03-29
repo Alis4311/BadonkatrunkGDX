@@ -7,9 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 public class CollidingObject extends GameObject {
     protected Rectangle boundingRectangle;
 
-    public CollidingObject(){
-
-    }
     public CollidingObject(Sprite sprite){
         super(sprite);
         this.boundingRectangle = sprite.getBoundingRectangle();

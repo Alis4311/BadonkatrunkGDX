@@ -17,9 +17,9 @@ import com.badlogic.gdx.utils.Timer;
  *
  * author Tim Normark
  */
-public abstract class Vehicle {
+public abstract class Vehicle extends Objects.CollidingObject {
     private VehicleSound vehicleSound;
-    private Sprite image;
+    //private Sprite image;
     private float accelerationRate;
     private float speed;
     private float ySpeed;
@@ -35,6 +35,7 @@ public abstract class Vehicle {
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, Map map) {
+        super(new Sprite(new TextureAtlas.AtlasRegion(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0001"))));
         vehicleSound = new VehicleSound(engineSound, jumpSound);
         this.maxSpeed = maxSpeed;
         this.accelerationRate = accelerationRate;
@@ -46,26 +47,13 @@ public abstract class Vehicle {
         currentAtlasKey = "0001";
         currentFrame = 1;
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
-        TextureAtlas.AtlasRegion region = textureAtlas.findRegion(currentAtlasKey);
-        image = new Sprite(region);
+
         map.setVehicle(this);
         setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
 
     private void setRegion(TextureRegion region) {
-        image.setRegion(region);
-    }
-
-    public Rectangle getBoundingRectangle() {
-        return image.getBoundingRectangle();
-    }
-
-    public float getX() {
-        return image.getX();
-    }
-
-    public float getY() {
-        return image.getY();
+        sprite.setRegion(region);
     }
 
     /**
@@ -112,19 +100,15 @@ public abstract class Vehicle {
 
     protected void setPosition(float xPosition, float yPosition) {
         if(yPosition > groundlevel){
-            image.setPosition(xPosition, yPosition);
+            sprite.setPosition(xPosition, yPosition);
             if(grounded)
                 setGrounded(false);
         } else if(yPosition <= groundlevel ){
-            image.setPosition(xPosition,groundlevel);
+            sprite.setPosition(xPosition,groundlevel);
             if(!grounded)
                 setGrounded(true);
         }
 
-    }
-
-    public void draw(Batch batch) {
-        image.draw(batch);
     }
 
     public void setGrounded(boolean grounded) {
@@ -139,12 +123,9 @@ public abstract class Vehicle {
     public void accelerate() {
         vehicleSound.accelerate();
 
-        if(speed < maxSpeed && grounded) {
+        if(speed < maxSpeed) {
             speed += accelerationRate;
         }
-
-
-
     }
 
     public void idling() {

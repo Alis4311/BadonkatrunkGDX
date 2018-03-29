@@ -7,9 +7,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class GameObject {
     protected Sprite sprite;
 
-    public GameObject(){
-
-    }
     public GameObject(Sprite sprite){
         this.sprite = sprite;
     }
@@ -30,8 +27,10 @@ public abstract class GameObject {
         this.sprite.setY(y);
     }
 
-    public void draw(SpriteBatch batch){
-        batch.draw(sprite.getTexture(), getX(),getY());
+    public void draw(Batch batch){
+
+        //batch.draw(sprite.getTexture(), getX(),getY());
+        sprite.draw(batch);
     }
 
 
