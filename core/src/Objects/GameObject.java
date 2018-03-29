@@ -11,11 +11,11 @@ public abstract class GameObject {
         this.sprite = sprite;
     }
 
-    public Float getX(){
+    public float getX(){
         return this.sprite.getX();
     }
 
-    public Float getY(){
+    public float getY(){
         return this.sprite.getY();
     }
 
@@ -25,6 +25,14 @@ public abstract class GameObject {
 
     public void setY(float y){
         this.sprite.setY(y);
+    }
+
+    public float getWidth(){
+        return sprite.getWidth();
+    }
+
+    public float getHeight(){
+        return sprite.getHeight();
     }
 
     public void draw(Batch batch){

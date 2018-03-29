@@ -12,14 +12,17 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.chris.badonkatrunk.Badonkatrunk;
+
 
 public class GameScreen implements Screen {
     OrthographicCamera camera;
     Vehicle vehicle;
     Map level;
     SpriteBatch batch;
-
+    ShapeRenderer shape;
 
     private Badonkatrunk badonkatrunk;
 
@@ -30,6 +33,7 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400,400);
         vehicle = new Car(level);
+        shape = new ShapeRenderer();
     }
 
 
@@ -64,12 +68,17 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
+        Rectangle rect = vehicle.getBoundingRectangle();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         level.draw(batch);
+        vehicle.draw(batch);
 
         batch.end();
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.rect(rect.x,rect.y,rect.width,rect.height);
+        shape.end();
 
 
     }

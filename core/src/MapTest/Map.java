@@ -3,8 +3,8 @@ package MapTest;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.LinkedList;
 
@@ -109,11 +109,11 @@ public class Map {
         return (int)getBackground().getHeight();
     }
 
-    public void draw(Batch batch){
+    public void draw(SpriteBatch batch){
         this.background.draw(batch);
         for(Sprite sprite : ObstacleObjectList){
             sprite.draw(batch);
         }
-        this.vehicle.draw(batch);
+
     }
 }

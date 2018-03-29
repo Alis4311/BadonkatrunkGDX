@@ -5,20 +5,21 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 public class CollidingObject extends GameObject {
-    protected Rectangle boundingRectangle;
+
 
     public CollidingObject(Sprite sprite){
         super(sprite);
-        this.boundingRectangle = sprite.getBoundingRectangle();
+
     }
 
     public Rectangle getBoundingRectangle(){
-        return this.boundingRectangle;
+
+        return new Rectangle(getX(),getY(),getWidth(),getHeight());
     }
 
 
     public boolean checkCollision(Rectangle rect){
-        return Intersector.overlaps(this.boundingRectangle, rect);
+        return true;
     }
 
 
