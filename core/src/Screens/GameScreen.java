@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
         batch = badonkatrunk.batch;
         level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        camera.setToOrtho(false,400,400);
         vehicle = new Car(level);
         shape = new ShapeRenderer();
     }
@@ -48,7 +48,7 @@ public class GameScreen implements Screen {
 
         if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
 
-            camera.translate(0f, 0, 0);
+            camera.translate(1f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
             camera.update();
 
@@ -77,12 +77,12 @@ public class GameScreen implements Screen {
         vehicle.draw(batch);
 
         batch.end();
-        shape.begin(ShapeRenderer.ShapeType.Line);
+/*        shape.begin(ShapeRenderer.ShapeType.Line);
         shape.setColor(Color.RED);
         shape.rect(carRect.x,carRect.y,carRect.width,carRect.height);
         shape.rect(rightRect.x, rightRect.y,rightRect.width,rightRect.height);
         shape.rect(bottomRect.x,bottomRect.y,bottomRect.width,bottomRect.height);
-        shape.end();
+        shape.end();*/
 
     }
 

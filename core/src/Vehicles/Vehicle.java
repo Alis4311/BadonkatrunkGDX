@@ -30,6 +30,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
     private float gravity;
     private float groundlevel;
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
+    private boolean stuck;
     private DrivingAnimation drivingAnimation;
     private Map level;
 
@@ -93,30 +94,32 @@ public abstract class Vehicle extends Objects.CollidingObject {
         processInput();
 
         ySpeed -= gravity;
-        for(CollidingObject object : level.getGameObstacleObjects()){
+        boolean bottomRectCollision = false;
+        CollidingObject object = level.getGameObstacleObjects().getFirst();
+
             if (this.checkCollision(object.getBoundingRectangle())){
                 if(this.getRightRectangle().overlaps(object.getBoundingRectangle())){
                     setPosition(object.getX() - this.getWidth(), getY()+ySpeed);
                 }
 
                 if(this.getBottomRectangle().overlaps(object.getBoundingRectangle())){
-                    groundlevel = object.getBoundingRectangle().y + object.getHeight()+5;
-
-                    setPosition(getX() + xSpeed, object.getY()+object.getHeight() +5);
+                    groundlevel = object.getBoundingRectangle().y + object.getHeight()-2;
+                    bottomRectCollision = true;
                 }
 
-            } else {
-
-                groundlevel = 0;
-                setPosition(getX() + xSpeed, getY()+ySpeed);
             }
 
-            if(getY() > groundlevel){
-                grounded = false;
-            } else {
-                grounded = true;
-            }
+
+        if(bottomRectCollision){
+            setGrounded(true);
+
+        }else{
+            groundlevel = 0;
+
         }
+
+        setPosition(getX() + xSpeed, getY()+ ySpeed);
+
     }
 
     public void dispose(){
@@ -126,9 +129,13 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
     protected void setPosition(float xPosition, float yPosition) {
         if(yPosition > groundlevel){
+            grounded = false;
+
             sprite.setPosition(xPosition, yPosition);
 
         } else if(yPosition <= groundlevel ){
+            grounded = true;
+            ySpeed = 0;
             sprite.setPosition(xPosition,groundlevel);
 
         }
