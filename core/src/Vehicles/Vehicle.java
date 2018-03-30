@@ -2,6 +2,7 @@ package Vehicles;
 
 import MapTest.Map;
 import Objects.CollidingObject;
+import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Timer;
+import com.chris.badonkatrunk.Badonkatrunk;
 
 
 /**
@@ -94,8 +96,15 @@ public abstract class Vehicle extends Objects.CollidingObject {
         processInput();
 
         ySpeed -= gravity;
+        checkIfGoalIsReached();
         collisionHandling();
 
+    }
+
+    private void checkIfGoalIsReached() {
+        if(this.getX() >= level.getGoalXCoordinates()){
+            System.out.println("Win");
+        }
     }
 
     public void dispose(){

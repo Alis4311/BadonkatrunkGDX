@@ -1,6 +1,7 @@
 package MapTest;
 
 import Objects.CollidingObject;
+import Objects.DecorativeObject;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,7 @@ public class Map {
     private Sprite background;
     private int goalXCoordinates;
     private LinkedList<CollidingObject> ObstacleObjectList;
-    private LinkedList<Sprite> backgroundObjectList;
+    private LinkedList<DecorativeObject> backgroundObjectList;
     private Vehicle vehicle;
 
     /**
@@ -26,19 +27,18 @@ public class Map {
      */
     public Map(Sprite background){
         this.background = background;
+        backgroundObjectList = new LinkedList<DecorativeObject>();
         ObstacleObjectList = new LinkedList<CollidingObject>();
-        CollidingObject object = new CollidingObject(new Sprite (new Texture(Gdx.files.internal("badlogic.jpg"))));
-        CollidingObject object2 = new CollidingObject(new Sprite (new Texture(Gdx.files.internal("badlogic.jpg"))));
+        goalXCoordinates = (int)background.getWidth()-75;
+        addGoalPost();
+        for(int i= 0; i<background.getWidth(); i+=32){
+            addObstacleObjects(new CollidingObject(new Sprite(new Texture(Gdx.files.internal("cobble.png"))),i,0));
+        }
 
-        object.setX(500);
-        object.setY(0);
-        object.setSize(64,64);
-        object2.setX(800);
-        object2.setY(0);
-        object2.setSize(100,150);
-        addObstacleObjects(object);
-        addObstacleObjects(object2);
-        backgroundObjectList = new LinkedList<Sprite>();
+
+
+
+
         this.background.setPosition(0,0);
     }
 
@@ -75,19 +75,18 @@ public class Map {
 
     /**
      * Adds sprites to the list that holds objects that has no collision.
-     * @param sprite - The Sprite that decorates the background.
+     * @param object - The Sprite that decorates the background.
      */
-    public void addBackgroundObjectList(Sprite sprite){
-        backgroundObjectList.add(sprite);
+    public void addBackgroundObjectList(DecorativeObject object){
+        backgroundObjectList.add(object);
     }
 
     /**
      * Returns a Sprite from the gameBackgroundObjectList.
-     * @param index - The index of the element in the list that returns.
      * @return - A Sprite.
      */
-    public Sprite getBackgroundObjectList(int index) {
-        return backgroundObjectList.get(index);
+    public LinkedList<DecorativeObject> getBackgroundObjectList() {
+        return backgroundObjectList;
     }
 
     /**
@@ -95,7 +94,6 @@ public class Map {
      * @return - int.
      */
     public int getGoalXCoordinates() {
-        goalXCoordinates = (int)getBackground().getWidth();
         return goalXCoordinates;
     }
 
@@ -117,9 +115,21 @@ public class Map {
 
     public void draw(SpriteBatch batch){
         this.background.draw(batch);
+        for(DecorativeObject decorativeObject : backgroundObjectList){
+            decorativeObject.draw(batch);
+        }
         for(CollidingObject object : ObstacleObjectList){
             object.draw(batch);
         }
 
     }
+
+    private void addGoalPost(){
+        DecorativeObject goalPost = new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("finish.png"))));
+        goalPost.setX(goalXCoordinates);
+        goalPost.setY(32);
+        goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
+        backgroundObjectList.add(goalPost);
+    }
+
 }

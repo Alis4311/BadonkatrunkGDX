@@ -66,9 +66,9 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
-        Rectangle carRect = vehicle.getBoundingRectangle();
-        Rectangle rightRect = vehicle.getRightRectangle();
-        Rectangle bottomRect = vehicle.getBottomRectangle();
+        if(vehicle.getX() >= level.getGoalXCoordinates()){
+            restart();
+        }
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -77,12 +77,6 @@ public class GameScreen implements Screen {
         vehicle.draw(batch);
 
         batch.end();
-/*        shape.begin(ShapeRenderer.ShapeType.Line);
-        shape.setColor(Color.RED);
-        shape.rect(carRect.x,carRect.y,carRect.width,carRect.height);
-        shape.rect(rightRect.x, rightRect.y,rightRect.width,rightRect.height);
-        shape.rect(bottomRect.x,bottomRect.y,bottomRect.width,bottomRect.height);
-        shape.end();*/
 
     }
 
@@ -108,6 +102,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        vehicle.dispose();
+    }
 
+    public void restart(){
+        badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+        this.dispose();
     }
 }
