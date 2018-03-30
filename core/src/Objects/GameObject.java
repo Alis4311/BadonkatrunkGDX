@@ -19,6 +19,10 @@ public abstract class GameObject {
         return this.sprite.getY();
     }
 
+    public void setSpritePosition(float x, float y){
+        sprite.setPosition(x,y);
+    }
+
     public void setX(float x){
         this.sprite.setX(x);
     }

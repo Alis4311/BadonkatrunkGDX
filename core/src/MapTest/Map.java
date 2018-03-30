@@ -31,12 +31,15 @@ public class Map {
         ObstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
         addGoalPost();
+        Texture cobbleTexture = new Texture(Gdx.files.internal("cobble.png"));
         for(int i= 0; i<background.getWidth(); i+=32){
-            addObstacleObjects(new CollidingObject(new Sprite(new Texture(Gdx.files.internal("cobble.png"))),i,0));
+            addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),i,0));
         }
 
-
-
+        addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),500,32));
+        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,32));
+        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),632,64));
+        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,64));
 
 
         this.background.setPosition(0,0);

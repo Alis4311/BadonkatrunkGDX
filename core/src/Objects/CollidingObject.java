@@ -14,8 +14,7 @@ public class CollidingObject extends GameObject {
 
     public CollidingObject(Sprite sprite, float x, float y){
         super(sprite);
-        this.setX(x);
-        this.setY(y);
+       this.setSpritePosition(x,y);
     }
 
     public Rectangle getBoundingRectangle(){
