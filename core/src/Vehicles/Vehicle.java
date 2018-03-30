@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
@@ -31,6 +32,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
     private int currentFrame;
     private float gravity;
     private float groundlevel;
+    private float roofLevel;
     private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
     private boolean stuck;
     private DrivingAnimation drivingAnimation;
@@ -125,11 +127,12 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         }
 
+
     }
 
     private void collisionHandling(){
         boolean bottomRectCollision = false;
-
+        boolean topRectCollision = false;
         for(CollidingObject object : level.getGameObstacleObjects()) {
 
             if (this.checkCollision(object.getBoundingRectangle())) {
@@ -143,6 +146,14 @@ public abstract class Vehicle extends Objects.CollidingObject {
                     bottomRectCollision = true;
                 }
 
+                if(this.getTopRectangle().overlaps(object.getBoundingRectangle())){
+                    roofLevel = object.getY();
+                    if(ySpeed > 0){
+                        ySpeed = 0;
+                    }
+                    topRectCollision = true;
+                }
+
             }
 
         }
@@ -154,7 +165,17 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         }
 
+        if (topRectCollision){
+
+        } else {
+            roofLevel = level.getHeight();
+        }
+
         setPosition(getX()+xSpeed, getY()+ ySpeed);
+    }
+
+    public Rectangle getTopRectangle(){
+        return new Rectangle(this.getX(),this.getY() + this.getHeight()/2, this.getWidth()-10, 5);
     }
 
     public void setGrounded(boolean grounded) {

@@ -77,7 +77,9 @@ public class GameScreen implements Screen {
         vehicle.draw(batch);
 
         batch.end();
-
+        /*shape.begin(ShapeRenderer.ShapeType.Line);
+        shape.rect(vehicle.getTopRectangle().x,vehicle.getTopRectangle().y,vehicle.getTopRectangle().width,vehicle.getTopRectangle().height);
+        shape.end();*/
     }
 
     @Override

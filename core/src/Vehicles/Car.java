@@ -19,6 +19,6 @@ public class Car extends Vehicle {
                 Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 4, 0.3f,
                 15, map);
 
-        setPosition(50, 250);
+        setPosition(50, 50);
     }
 }

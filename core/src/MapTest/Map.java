@@ -40,6 +40,7 @@ public class Map {
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,32));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),632,64));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,64));
+        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),400,96));
 
 
         this.background.setPosition(0,0);

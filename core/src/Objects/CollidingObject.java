@@ -30,6 +30,10 @@ public class CollidingObject extends GameObject {
         return new Rectangle(this.getX(),this.getY(),this.getWidth()-10,5);
     }
 
+    public Rectangle getTopRectangle(){
+        return new Rectangle(this.getX(),this.getY() + this.getHeight(), this.getWidth()-10, 5);
+    }
+
     public boolean checkCollision(Rectangle rect){
         return Intersector.overlaps(this.getBoundingRectangle(),rect);
     }
