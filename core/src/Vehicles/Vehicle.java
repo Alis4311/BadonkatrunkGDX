@@ -57,7 +57,6 @@ public abstract class Vehicle extends Objects.CollidingObject {
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         level = map;
         map.setVehicle(this);
-        setGrounded(true); // För att fordonet ska fungera vid test. Detta ska ställas in utifrån sen.
     }
 
     private void setRegion(TextureRegion region) {
@@ -79,7 +78,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
          *
          */
         boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
-        boolean jumpTouch = (Gdx.input.isTouched(0) && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 < Gdx.graphics.getWidth() / 2);
+        boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2);
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch){
             accelerate();
@@ -116,12 +115,9 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
     protected void setPosition(float xPosition, float yPosition) {
         if(yPosition > groundlevel){
-            grounded = false;
-
             sprite.setPosition(xPosition, yPosition);
 
         } else if(yPosition <= groundlevel ){
-            grounded = true;
             ySpeed = 0;
             sprite.setPosition(xPosition,groundlevel);
 
@@ -137,12 +133,11 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
             if (this.checkCollision(object.getBoundingRectangle())) {
                 if (this.getRightRectangle().overlaps(object.getBoundingRectangle())) {
-
                     xSpeed = 0;
                 }
 
                 if (this.getBottomRectangle().overlaps(object.getBoundingRectangle())) {
-                    groundlevel = object.getBoundingRectangle().y + object.getHeight() - 2;
+                    groundlevel = object.getBoundingRectangle().y + object.getHeight()-2;
                     bottomRectCollision = true;
                 }
 
@@ -162,6 +157,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         }else{
             groundlevel = 0;
+            setGrounded(false);
 
         }
 
@@ -180,11 +176,12 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
-        if(grounded)
+        if(grounded) {
             showDrivingAnimation();
-        else
+        }
+        else {
             showJumpImage();
-
+        }
     }
 
     public void accelerate() {
@@ -214,7 +211,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
        if(Timer.instance() != null){
            Timer.instance().clear();
        }
-        Timer.schedule(drivingAnimation,0,1/20.0f);
+        Timer.schedule(drivingAnimation,0,1/10.0f);
     }
 
     private void showJumpImage() {
@@ -266,6 +263,8 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
 
             engineSoundId = engineSound.loop();
+            engineSound.setPitch(engineSoundId,MINPITCH + 0.1f);
+            engineSound.setVolume(engineSoundId,MINVOLUME);
         }
 
         private void accelerate() {

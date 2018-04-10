@@ -4,15 +4,12 @@ import MapTest.Map;
 import Vehicles.Car;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.chris.badonkatrunk.Badonkatrunk;
-import org.w3c.dom.css.Rect;
 
 
 public class GameScreen implements Screen {
@@ -27,7 +24,7 @@ public class GameScreen implements Screen {
     public GameScreen(Badonkatrunk badonkatrunk){
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
-        level  = new Map(new Sprite(new Texture(Gdx.files.internal("test.png"))));
+        level  = new Map(new Sprite(new Texture(Gdx.files.internal("bakgrund2.png"))));
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,400);
         vehicle = new Car(level);
@@ -48,7 +45,7 @@ public class GameScreen implements Screen {
 
         if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
 
-            camera.translate(1f, 0, 0);
+            camera.translate(3f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
             camera.update();
 
@@ -56,6 +53,7 @@ public class GameScreen implements Screen {
 
             if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
                 vehicle.dispose();
+                restart();
             }
             if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
                 camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
@@ -79,7 +77,10 @@ public class GameScreen implements Screen {
         batch.end();
         /*shape.begin(ShapeRenderer.ShapeType.Line);
         shape.rect(vehicle.getTopRectangle().x,vehicle.getTopRectangle().y,vehicle.getTopRectangle().width,vehicle.getTopRectangle().height);
+        shape.rect(vehicle.getBottomRectangle().x,vehicle.getBottomRectangle().y,vehicle.getBottomRectangle().width,vehicle.getBottomRectangle().height);
+        shape.rect(vehicle.getRightRectangle().x,vehicle.getRightRectangle().y,vehicle.getRightRectangle().width,vehicle.getRightRectangle().height);
         shape.end();*/
+
     }
 
     @Override

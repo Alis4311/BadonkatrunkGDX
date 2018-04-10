@@ -7,7 +7,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.LinkedList;
 
 /**
@@ -36,14 +35,14 @@ public class Map {
             addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),i,0));
         }
 
-        addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),500,32));
+        addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),600,32));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,32));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),632,64));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,64));
-        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),400,96));
-
+        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),500,96));
 
         this.background.setPosition(0,0);
+
     }
 
     /**

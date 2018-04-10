@@ -11,18 +11,14 @@ public class Badonkatrunk extends Game{
 
 		@Override
 		public void create() {
-            batch = new SpriteBatch();
+			batch = new SpriteBatch();
 			this.setScreen(new MenuScreen(this));
 		}
 
 		@Override
-		public void render() {
+			public void render() {
             super.render();
 
 		}
-
-
-
-
 }
 
