@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Timer;
  *
  * author Tim Normark
  */
-public abstract class Vehicle extends Objects.CollidingObject {
+public class Vehicle extends Objects.CollidingObject {
     private VehicleSound vehicleSound;
     private float accelerationRate;
     private float xSpeed;
@@ -51,7 +51,6 @@ public abstract class Vehicle extends Objects.CollidingObject {
         currentFrame = 1;
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         level = map;
-        map.setVehicle(this);
     }
 
     private void setRegion(TextureRegion region) {

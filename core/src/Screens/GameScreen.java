@@ -1,7 +1,7 @@
 package Screens;
 
 import MapTest.Map;
-import Vehicles.Car;
+import Vehicles.VehicleFactory;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
         level  = new Map(new Sprite(new Texture(Gdx.files.internal("bakgrund2.png"))));
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,400);
-        vehicle = new Car(level);
+        vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
     }
 

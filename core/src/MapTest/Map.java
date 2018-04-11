@@ -18,7 +18,7 @@ public class Map {
     private int goalXCoordinates;
     private LinkedList<CollidingObject> ObstacleObjectList;
     private LinkedList<DecorativeObject> backgroundObjectList;
-    private Vehicle vehicle;
+    private int theme;
 
     /**
      * Constructor that instantiates local variables and sets the background to the one in the parameter.
@@ -45,13 +45,6 @@ public class Map {
 
     }
 
-    /**
-     * Set the vehicle associated.
-     * @param vehicle
-     */
-    public void setVehicle(Vehicle vehicle){
-        this.vehicle = vehicle;
-    }
     /**
      * Returns the background Sprite.
      * @return - Sprite.
@@ -114,6 +107,10 @@ public class Map {
      */
     public int getHeight(){
         return (int)getBackground().getHeight();
+    }
+
+    public int getTheme() {
+        return theme;
     }
 
     public void draw(SpriteBatch batch){
