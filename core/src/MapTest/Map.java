@@ -25,6 +25,7 @@ public class Map {
      * @param background - The sprite that is the background for the map.
      */
     public Map(Sprite background){
+        theme = 1;
         this.background = background;
         backgroundObjectList = new LinkedList<DecorativeObject>();
         ObstacleObjectList = new LinkedList<CollidingObject>();
