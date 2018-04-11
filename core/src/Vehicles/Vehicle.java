@@ -2,17 +2,14 @@ package Vehicles;
 
 import MapTest.Map;
 import Objects.CollidingObject;
-import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
-import com.chris.badonkatrunk.Badonkatrunk;
 
 
 /**
@@ -32,9 +29,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
     private int currentFrame;
     private float gravity;
     private float groundlevel;
-    private float roofLevel;
-    private boolean grounded; // ska vara sann om fordonet rör vid mark, falsk annars.
-    private boolean stuck;
+    private boolean grounded;
     private DrivingAnimation drivingAnimation;
     private Map level;
 
@@ -67,18 +62,16 @@ public abstract class Vehicle extends Objects.CollidingObject {
      * Handle input from user before updating car.
      */
     private void processInput(){
-        /**
-         * For whatever reason we need to specify two inputs in order to not automatically loop the input.
-         * TODO: figure out why?
-         */
+
+          //For whatever reason we need to specify two inputs in order to not automatically loop the input.
+          //TODO: figure out why?
+
         float x0 = Gdx.input.getX(0);
         float x1 = Gdx.input.getX(1);
-        /**
-         * Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
-         *
-         */
+
+        //Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
         boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
-        boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2);
+        boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth()/2) || (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() /2);
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch){
             accelerate();
@@ -128,7 +121,6 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
     private void collisionHandling(){
         boolean bottomRectCollision = false;
-        boolean topRectCollision = false;
         for(CollidingObject object : level.getGameObstacleObjects()) {
 
             if (this.checkCollision(object.getBoundingRectangle())) {
@@ -142,11 +134,9 @@ public abstract class Vehicle extends Objects.CollidingObject {
                 }
 
                 if(this.getTopRectangle().overlaps(object.getBoundingRectangle())){
-                    roofLevel = object.getY();
                     if(ySpeed > 0){
                         ySpeed = 0;
                     }
-                    topRectCollision = true;
                 }
 
             }
@@ -159,12 +149,6 @@ public abstract class Vehicle extends Objects.CollidingObject {
             groundlevel = 0;
             setGrounded(false);
 
-        }
-
-        if (topRectCollision){
-
-        } else {
-            roofLevel = level.getHeight();
         }
 
         setPosition(getX()+xSpeed, getY()+ ySpeed);
@@ -237,13 +221,13 @@ public abstract class Vehicle extends Objects.CollidingObject {
         private Sound engineSound;
         private long engineSoundId;
 
-        private final float MAXPITCH;
-        private final float MINPITCH;
+        private final float MAX_PITCH;
+        private final float MIN_PITCH;
         private float pitchChangeRate;
         private float pitch;
 
-        private final float MAXVOLUME;
-        private final float MINVOLUME;
+        private final float MAX_VOLUME;
+        private final float MIN_VOLUME;
         private float volumeChangeRate;
         private float engineVolume;
 
@@ -251,28 +235,29 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
 
         private VehicleSound(Sound engineSound, Sound jumpSound) {
-            this.engineSound = engineSound;
             this.jumpSound = jumpSound;
-            MAXPITCH = 2.0f;
-            MINPITCH = 0.5f;
+            this.engineSound = engineSound;
+
+            MAX_PITCH = 2.0f;
+            MIN_PITCH = 0.5f;
             pitchChangeRate = 0.1f;
 
-            MAXVOLUME = 1.0f;
-            MINVOLUME = 0.4F;
+            MAX_VOLUME = 1.0f;
+            MIN_VOLUME = 0.4F;
             volumeChangeRate = 0.1f;
 
-
             engineSoundId = engineSound.loop();
-            engineSound.setPitch(engineSoundId,MINPITCH + 0.1f);
-            engineSound.setVolume(engineSoundId,MINVOLUME);
-        }
+            engineSound.setPitch(engineSoundId, MIN_PITCH + 0.1f);
+            engineSound.setVolume(engineSoundId, MIN_VOLUME);
+    }
+
 
         private void accelerate() {
-            if(pitch < MAXPITCH) {
+            if(pitch < MAX_PITCH) {
                 engineSound.setPitch(engineSoundId, pitch);
                 pitch += pitchChangeRate;
 
-                if(engineVolume < MAXVOLUME) {
+                if(engineVolume < MAX_VOLUME) {
                     engineVolume += volumeChangeRate;
                     engineSound.setVolume(engineSoundId, engineVolume);
                 }
@@ -281,11 +266,11 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         private void decelerate() {
 
-            if(pitch > MINPITCH) {
+            if(pitch > MIN_PITCH) {
                 engineSound.setPitch(engineSoundId, pitch);
                 pitch -= pitchChangeRate;
 
-                if(engineVolume > MINVOLUME) {
+                if(engineVolume > MIN_VOLUME) {
                     engineVolume -= volumeChangeRate;
                     engineSound.setVolume(engineSoundId, engineVolume);
                 }
@@ -294,6 +279,7 @@ public abstract class Vehicle extends Objects.CollidingObject {
 
         private void jump() {
             jumpSound.play();
+
         }
     }
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Timer;
 public class Car extends Vehicle {
 
     public Car(Map map) {
-        super("car.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.wav")),
+        super("car.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.ogg")),
                 Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 4, 0.3f,
                 15, map);
 

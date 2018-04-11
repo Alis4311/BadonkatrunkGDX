@@ -45,7 +45,7 @@ public class GameScreen implements Screen {
 
         if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
 
-            camera.translate(3f, 0, 0);
+            camera.translate(1.5f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
             camera.update();
 
@@ -110,6 +110,7 @@ public class GameScreen implements Screen {
 
     public void restart(){
         badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+        vehicle.dispose();
         this.dispose();
     }
 }
