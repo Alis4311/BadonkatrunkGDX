@@ -47,5 +47,7 @@ public class VehicleFactory {
     public static void loadSoundObjects() {
         carEngineSound = Gdx.audio.newSound(Gdx.files.internal("enginesound.ogg"));
         carJumpSound = Gdx.audio.newSound(Gdx.files.internal("CarJump.wav"));
+        long id = carEngineSound.play(0);
+        carEngineSound.setLooping(id, true);
     }
 }
