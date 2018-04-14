@@ -2,11 +2,15 @@ package MapTest;
 
 import Objects.CollidingObject;
 import Objects.DecorativeObject;
-import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -16,7 +20,7 @@ import java.util.LinkedList;
 public class Map {
     private Sprite background;
     private int goalXCoordinates;
-    private LinkedList<CollidingObject> ObstacleObjectList;
+    private LinkedList<CollidingObject> obstacleObjectList;
     private LinkedList<DecorativeObject> backgroundObjectList;
     private int theme;
 
@@ -28,7 +32,7 @@ public class Map {
         theme = 1;
         this.background = background;
         backgroundObjectList = new LinkedList<DecorativeObject>();
-        ObstacleObjectList = new LinkedList<CollidingObject>();
+        obstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
         addGoalPost();
         Texture cobbleTexture = new Texture(Gdx.files.internal("cobble.png"));
@@ -43,6 +47,16 @@ public class Map {
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),500,96));
 
         this.background.setPosition(0,0);
+
+        //saveMapToText(0);
+    }
+
+    public Map(Sprite background, LinkedList<CollidingObject> obstacleObjectList, LinkedList<DecorativeObject> backgroundObjectList, int goalXCoordinates, int theme){
+        this.theme = theme;
+        this.background = background;
+        this.goalXCoordinates  = goalXCoordinates;
+        this.obstacleObjectList = obstacleObjectList;
+        this.backgroundObjectList = backgroundObjectList;
 
     }
 
@@ -59,7 +73,7 @@ public class Map {
 
      */
     public void addObstacleObjects(CollidingObject object){
-        ObstacleObjectList.add(object);
+        obstacleObjectList.add(object);
     }
 
     /**
@@ -67,7 +81,7 @@ public class Map {
      * @return - A Sprite.
      */
     public LinkedList<CollidingObject> getGameObstacleObjects() {
-        return ObstacleObjectList;
+        return obstacleObjectList;
     }
 
     /**
@@ -119,7 +133,7 @@ public class Map {
         for(DecorativeObject decorativeObject : backgroundObjectList){
             decorativeObject.draw(batch);
         }
-        for(CollidingObject object : ObstacleObjectList){
+        for(CollidingObject object : obstacleObjectList){
             object.draw(batch);
         }
 
@@ -131,6 +145,51 @@ public class Map {
         goalPost.setY(32);
         goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
         backgroundObjectList.add(goalPost);
+    }
+
+    private void saveMapToText(int nbr){
+        File file = new File(nbr+".txt");
+        if (!file.exists()){
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try{
+            int size  = obstacleObjectList.size();
+
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(this.theme + "");
+            bw.newLine();
+            bw.write(size + "" );
+            bw.newLine();
+            for(CollidingObject object : obstacleObjectList){
+                bw.write(object.getX() + "");
+                bw.newLine();
+                bw.write(object.getY() + "");
+                bw.newLine();
+                bw.write("1"); //TODO: Add objecttype of collidingobject here. To decide what image to load.
+                bw.newLine();
+            }
+            size = backgroundObjectList.size();
+            bw.write(size + "");
+            bw.newLine();
+            for(DecorativeObject object : backgroundObjectList){
+                bw.write(object.getX() + "");
+                bw.newLine();
+                bw.write(object.getY() + "");
+                bw.newLine();
+                bw.write("1"); //TODO Add objecttype of decorativeobject here. To decide what image to load.
+                bw.newLine();
+            }
+            bw.write(this.goalXCoordinates + "");
+            bw.flush();
+            bw.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
 }

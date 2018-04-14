@@ -1,6 +1,7 @@
 package Screens;
 
 import MapTest.Map;
+import MapTest.MapLoader;
 import Vehicles.VehicleFactory;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
@@ -24,7 +25,8 @@ public class GameScreen implements Screen {
     public GameScreen(Badonkatrunk badonkatrunk){
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
-        level  = new Map(new Sprite(new Texture(Gdx.files.internal("bakgrund2.png"))));
+        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("bakgrund2.png"))));
+        level = MapLoader.load(0);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,400,400);
         vehicle = VehicleFactory.create(level);
