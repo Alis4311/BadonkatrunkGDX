@@ -42,7 +42,8 @@ public class MenuScreen implements Screen {
         buttonLevels.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Levels btn presseds");
+                badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
+                stage.dispose();
             }
         });
         buttonExit.addListener(new ChangeListener() {
