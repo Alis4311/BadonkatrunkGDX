@@ -18,9 +18,8 @@ public class Badonkatrunk extends Game{
 		}
 
 		@Override
-			public void render() {
+		public void render() {
             super.render();
-
 		}
 }
 
