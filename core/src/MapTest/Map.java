@@ -3,6 +3,7 @@ package MapTest;
 import Objects.CollidingObject;
 import Objects.DecorativeObject;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,20 +36,27 @@ public class Map {
         obstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
         addGoalPost();
-        Texture cobbleTexture = new Texture(Gdx.files.internal("cobble.png"));
         for(int i= 0; i<background.getWidth(); i+=32){
-            addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),i,0));
+            //addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture), i ,0));
+            addObstacleObjects(new CollidingObject(0, i ,0));
         }
 
+        addBackgroundObjectList(new DecorativeObject(10,600,32));
+        addObstacleObjects(new CollidingObject(0,664,32));
+        addObstacleObjects(new CollidingObject(0,632,64));
+        addObstacleObjects(new CollidingObject(0,664,64));
+        addObstacleObjects(new CollidingObject(0,500,96));
+/*
         addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),600,32));
-        addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,32));
+        addObstacleObjects(new CollidingObject(0,664,32));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),632,64));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,64));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),500,96));
+*/
 
         this.background.setPosition(0,0);
 
-        //saveMapToText(0);
+        saveMapToText(0);
     }
 
     public Map(Sprite background, LinkedList<CollidingObject> obstacleObjectList, LinkedList<DecorativeObject> backgroundObjectList, int goalXCoordinates, int theme){
@@ -140,27 +148,20 @@ public class Map {
     }
 
     private void addGoalPost(){
-        DecorativeObject goalPost = new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("finish.png"))));
-        goalPost.setX(goalXCoordinates);
-        goalPost.setY(32);
+        DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,32);
         goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
         backgroundObjectList.add(goalPost);
     }
 
     private void saveMapToText(int nbr){
-        File file = new File(nbr+".txt");
-        if (!file.exists()){
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        FileHandle file = Gdx.files.local(nbr+".txt");
+        //File file = new File(nbr+".txt");
+
 
         try{
             int size  = obstacleObjectList.size();
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            BufferedWriter bw = new BufferedWriter(file.writer(true));
             bw.write(this.theme + "");
             bw.newLine();
             bw.write(size + "" );
@@ -170,7 +171,7 @@ public class Map {
                 bw.newLine();
                 bw.write(object.getY() + "");
                 bw.newLine();
-                bw.write("1"); //TODO: Add objecttype of collidingobject here. To decide what image to load.
+                bw.write(object.getId() + ""); //TODO: Add objecttype of collidingobject here. To decide what image to load.
                 bw.newLine();
             }
             size = backgroundObjectList.size();
@@ -181,7 +182,7 @@ public class Map {
                 bw.newLine();
                 bw.write(object.getY() + "");
                 bw.newLine();
-                bw.write("1"); //TODO Add objecttype of decorativeobject here. To decide what image to load.
+                bw.write(object.getId()+""); //TODO Add objecttype of decorativeobject here. To decide what image to load.
                 bw.newLine();
             }
             bw.write(this.goalXCoordinates + "");

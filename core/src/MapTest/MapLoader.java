@@ -3,6 +3,7 @@ package MapTest;
 import Objects.CollidingObject;
 import Objects.DecorativeObject;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -12,15 +13,16 @@ import java.util.LinkedList;
 public class MapLoader {
 
     public static Map load(int mapNbr){
-        File file = new File(mapNbr+".txt");
+        FileHandle file = Gdx.files.local(mapNbr+".txt");
+        //File file = new File(mapNbr+".txt");
         int theme = 1; // Load theme 1 if something is broken. 
         LinkedList<DecorativeObject> backgroundObjects = new LinkedList<DecorativeObject>();
         LinkedList<CollidingObject> obstacleObjects = new LinkedList<CollidingObject>();
         int goalXCoordinates = 0;
 
-        System.out.println(file.getAbsolutePath());
+
         try{
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(file.reader());
             theme = Integer.parseInt(br.readLine());
             System.out.println(theme);
             int nbrOfObstacleObjects = Integer.parseInt(br.readLine());
@@ -29,7 +31,7 @@ public class MapLoader {
                 float xPosition = Float.parseFloat(br.readLine());
                 float yPosition = Float.parseFloat(br.readLine());
                 int type = Integer.parseInt(br.readLine());
-                Sprite sprite = new Sprite(getTextureForObstacleObject(type));
+                Sprite sprite = new Sprite(getTextureForObject(type));
                 sprite.setPosition((int)xPosition,(int)yPosition);
                 obstacleObjects.add(new CollidingObject(sprite));
             }
@@ -38,7 +40,7 @@ public class MapLoader {
                 float xPosition = Float.parseFloat(br.readLine());
                 float yPosition = Float.parseFloat(br.readLine());
                 int type = Integer.parseInt(br.readLine());
-                Sprite sprite = new Sprite(getTextureForDecorativeObject(type));
+                Sprite sprite = new Sprite(getTextureForObject(type));
                 sprite.setPosition((int)xPosition,(int)yPosition);
                 backgroundObjects.add(new DecorativeObject(sprite));
             }
@@ -56,38 +58,55 @@ public class MapLoader {
         return new Map(getBackgroundImageForTheme(theme),obstacleObjects,backgroundObjects,goalXCoordinates,theme);
     }
 
-    private static Texture getTextureForObstacleObject(int type){
+    private static Texture getTextureForObject(int type) {
         //TODO: Add all objecttypes to switch case.
-        Texture texture;
-        switch (type){
-            case 1:
+        Texture texture = new Texture(Gdx.files.internal("error.png"));
+        switch (type) {
+            case 0:
                 texture = new Texture(Gdx.files.internal("cobble.png"));
                 break;
-            default:
-                texture = new Texture(Gdx.files.internal("cobble.png"));
-                break;
-        }
-
-        return texture;
-    }
-
-    private static Texture getTextureForDecorativeObject(int type){
-        //TODO: Add all objecttypes to switch case.
-        Texture texture;
-        switch (type){
             case 1:
-                texture = new Texture(Gdx.files.internal("house.png"));
                 break;
             case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
                 texture = new Texture(Gdx.files.internal("finish.png"));
                 break;
-            default:
-                texture = new Texture(Gdx.files.internal("finish.png"));
+            case 10:
+                texture = new Texture(Gdx.files.internal("house.png"));
                 break;
-        }
+            case 11:
+                break;
+            case 12:
+                break;
+            case 13:
+                break;
+            case 14:
+                break;
+            case 15:
+                break;
+            case 16:
+                break;
+            case 17:
+                break;
 
+
+        }
         return texture;
     }
+
 
     private static Sprite getBackgroundImageForTheme(int theme){
         //TODO: Write switch case for the three themes.

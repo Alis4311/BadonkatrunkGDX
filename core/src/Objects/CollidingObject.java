@@ -6,15 +6,16 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class CollidingObject extends GameObject {
 
-
     public CollidingObject(Sprite sprite){
         super(sprite);
-
     }
 
     public CollidingObject(Sprite sprite, float x, float y){
         super(sprite);
        this.setSpritePosition(x,y);
+    }
+    public CollidingObject(int id, float x, float y){
+        super(id, x, y);
     }
 
     public Rectangle getBoundingRectangle(){
@@ -37,8 +38,5 @@ public class CollidingObject extends GameObject {
     public boolean checkCollision(Rectangle rect){
         return Intersector.overlaps(this.getBoundingRectangle(),rect);
     }
-
-
-
 
 }
