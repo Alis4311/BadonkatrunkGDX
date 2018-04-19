@@ -25,10 +25,10 @@ public class GameScreen implements Screen {
     public GameScreen(Badonkatrunk badonkatrunk){
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
-        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("bakgrund2.png"))));
+        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
         level = MapLoader.load(0);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,400,400);
+        camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
     }
@@ -66,6 +66,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
+        System.out.println(level.getGoalXCoordinates());
         if(vehicle.getX() >= level.getGoalXCoordinates()){
             restart();
         }

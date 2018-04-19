@@ -161,7 +161,7 @@ public class Map {
         try{
             int size  = obstacleObjectList.size();
 
-            BufferedWriter bw = new BufferedWriter(file.writer(true));
+            BufferedWriter bw = new BufferedWriter(file.writer(false));
             bw.write(this.theme + "");
             bw.newLine();
             bw.write(size + "" );
@@ -186,6 +186,7 @@ public class Map {
                 bw.newLine();
             }
             bw.write(this.goalXCoordinates + "");
+            bw.newLine();
             bw.flush();
             bw.close();
         } catch (IOException e){

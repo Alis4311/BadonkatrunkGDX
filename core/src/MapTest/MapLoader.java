@@ -110,6 +110,6 @@ public class MapLoader {
 
     private static Sprite getBackgroundImageForTheme(int theme){
         //TODO: Write switch case for the three themes.
-        return new Sprite(new Texture(Gdx.files.internal("bakgrund2.png")));
+        return new Sprite(new Texture(Gdx.files.internal("cityBackground.png")));
     }
 }
