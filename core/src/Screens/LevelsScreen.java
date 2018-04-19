@@ -23,16 +23,16 @@ public class LevelsScreen implements Screen{
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        btn1 = menuButton.CreateImageButton("ButtonPictures/btn1.png", 50, 380);
-        btn2 = menuButton.CreateImageButton("ButtonPictures/btn2.png", 150, 380);
-        btn3 = menuButton.CreateImageButton("ButtonPictures/btn3.png", 250, 380);
-        btn4 = menuButton.CreateImageButton("ButtonPictures/btn4.png", 350, 380);
-        btn5 = menuButton.CreateImageButton("ButtonPictures/btn5.png", 100, 240);
-        btn6 = menuButton.CreateImageButton("ButtonPictures/btn6.png", 200, 240);
-        btn7 = menuButton.CreateImageButton("ButtonPictures/btn7.png", 300, 240);
-        btn8 = menuButton.CreateImageButton("ButtonPictures/btn8.png", 100, 100);
-        btn9 = menuButton.CreateImageButton("ButtonPictures/btn9.png", 200, 100);
-        btn10 = menuButton.CreateImageButton("ButtonPictures/btn10.png", 300, 100);
+        btn1 = menuButton.CreateImageButton("number1.png", 64, 320);
+        btn2 = menuButton.CreateImageButton("number2.png", 192, 320);
+        btn3 = menuButton.CreateImageButton("number3.png", 320, 320);
+        btn4 = menuButton.CreateImageButton("number4.png", 448, 320);
+        btn5 = menuButton.CreateImageButton("number5.png", 128, 192);
+        btn6 = menuButton.CreateImageButton("number6.png", 256, 192);
+        btn7 = menuButton.CreateImageButton("number7.png", 384, 192);
+        btn8 = menuButton.CreateImageButton("number8.png", 128, 64);
+        btn9 = menuButton.CreateImageButton("number9.png", 256, 64);
+        btn10 = menuButton.CreateImageButton("number10.png", 384, 64);
 
         stage.addActor(btn1);
         stage.addActor(btn2);
