@@ -15,21 +15,21 @@ import java.util.ArrayList;
 
 public class ServerLeaderboard {
 
-    private ArrayList<Long> ldrBrdTrack1 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdTrack2 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdTrack3 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdTrack4 = new ArrayList<Long>();
+    private ArrayList<Long> ldrBrdLevel1 = new ArrayList<Long>();
+    private ArrayList<Long> ldrBrdLevel2 = new ArrayList<Long>();
+    private ArrayList<Long> ldrBrdLevel3 = new ArrayList<Long>();
+    private ArrayList<Long> ldrBrdLevel4 = new ArrayList<Long>();
 
 
     public ServerLeaderboard() {
 
     }
 
-    public static void compareTime(int trackNr, long trackTime) {
+    public static void compareTime(int levelNr, long levelTime) {
 
     }
 
-    public ArrayList update(int trackNr, Long Tracktime){
+    public ArrayList update(int levelNr, Long levelTime){
 
         return null;
     }

@@ -58,9 +58,9 @@ public class ServerConnection implements Runnable {
             try {ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());
                  ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 while (true) {
-                    int track = dis.readInt();
-                    long trackTime = dis.readLong();
-                    //response = ServerLeaderboard.compareTime(track, trackTime);
+                    int level = dis.readInt();
+                    long levelTime = dis.readLong();
+                    //response = ServerLeaderboard.compareTime(track, levelTime);
                    // dos.writeUTF(response);
                     dos.flush();
                     dos.close();
