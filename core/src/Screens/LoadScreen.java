@@ -32,7 +32,7 @@ public class LoadScreen implements Screen {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {}
-        badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+        //badonkatrunk.setScreen(new GameScreen(badonkatrunk));
     }
 
     @Override

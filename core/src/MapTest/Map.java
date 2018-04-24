@@ -54,7 +54,7 @@ public class Map {
 
         this.background.setPosition(0,0);
 
-        saveMapToText(0);
+        saveMapToText(1);
     }
 
     public Map(Sprite background, LinkedList<CollidingObject> obstacleObjectList, LinkedList<DecorativeObject> backgroundObjectList, int goalXCoordinates, int theme){

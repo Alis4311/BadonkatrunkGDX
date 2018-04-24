@@ -48,8 +48,7 @@ public class LevelsScreen implements Screen{
         btn1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.currentlevel = 0;
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 1));
             }
         });
         btn2.addListener(new ChangeListener() {
@@ -107,6 +106,19 @@ public class LevelsScreen implements Screen{
             }
         });
 
+        switch(badonkatrunk.highestUnlockedLevel) {
+            case 1 : btn2.setDisabled(true);
+            case 2 : btn3.setDisabled(true);
+            case 3 : btn4.setDisabled(true);
+            case 4 : btn5.setDisabled(true);
+            case 5 : btn6.setDisabled(true);
+            case 6 : btn7.setDisabled(true);
+            case 7 : btn8.setDisabled(true);
+            case 8 : btn9.setDisabled(true);
+            case 9 : btn10.setDisabled(true);
+            case 10 : ;
+        }
+
     }
 
     @Override
@@ -117,7 +129,7 @@ public class LevelsScreen implements Screen{
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+            badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         }
     }
 

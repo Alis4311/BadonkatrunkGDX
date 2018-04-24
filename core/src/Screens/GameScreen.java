@@ -22,11 +22,11 @@ public class GameScreen implements Screen {
 
     private Badonkatrunk badonkatrunk;
 
-    public GameScreen(Badonkatrunk badonkatrunk) {
+    public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        level = MapLoader.load(badonkatrunk.currentlevel);
+        level = MapLoader.load(mapNbr);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
@@ -94,8 +94,6 @@ public class GameScreen implements Screen {
 
         //Kolla om fordonet kommit i mål.
         if(vehicle.getX() >= level.getGoalXCoordinates()){
-            badonkatrunk.currentlevel = Math.min(badonkatrunk.currentlevel+1, 1);
-
             restart();
         }
         camera.update();
@@ -139,7 +137,7 @@ public class GameScreen implements Screen {
     }
 
     public void restart(){
-        badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+        badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         vehicle.dispose();
         this.dispose();
     }
