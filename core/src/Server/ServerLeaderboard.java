@@ -1,6 +1,8 @@
 package Server;
 
 
+import ClientHighScore.HighScore;
+
 import java.util.ArrayList;
 
 /**
@@ -15,24 +17,101 @@ import java.util.ArrayList;
 
 public class ServerLeaderboard {
 
-    private ArrayList<Long> ldrBrdLevel1 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdLevel2 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdLevel3 = new ArrayList<Long>();
-    private ArrayList<Long> ldrBrdLevel4 = new ArrayList<Long>();
+    private ServerConnection server;
+
+    private ArrayList<HighScore> highScoreLevel1 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel2 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel3 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel4 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel5 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel6 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel7 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel8 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel9 = new ArrayList<HighScore>();
+    private ArrayList<HighScore> highScoreLevel10 = new ArrayList<HighScore>();
 
 
-    public ServerLeaderboard() {
+    private final int NUMBER_OF_HIGH_SCORES_PER_LEVEL = 10;
+    private final int NUMBER_OF_LEVELS = 10;
 
+
+
+    public ServerLeaderboard(ServerConnection server){
+        this.server = server;
+        addEmptyHighScore(highScoreLevel1);
+        addEmptyHighScore(highScoreLevel2);
+        addEmptyHighScore(highScoreLevel3);
+        addEmptyHighScore(highScoreLevel4);
+        addEmptyHighScore(highScoreLevel5);
+        addEmptyHighScore(highScoreLevel6);
+        addEmptyHighScore(highScoreLevel7);
+        addEmptyHighScore(highScoreLevel8);
+        addEmptyHighScore(highScoreLevel9);
+        addEmptyHighScore(highScoreLevel10);
     }
 
-    public static void compareTime(int levelNr, long levelTime) {
-
+    private void compareTime(ArrayList<HighScore> highScoreLevel, HighScore score) {
+        for (int i = 0; i < NUMBER_OF_HIGH_SCORES_PER_LEVEL; i++){
+            if (score.getMilliSecTime() < highScoreLevel.get(i).getMilliSecTime()){
+                update(highScoreLevel, score, i);
+                break;
+            }
+        }
     }
 
-    public ArrayList update(int levelNr, Long levelTime){
-
-        return null;
+    private void update(ArrayList<HighScore> highScoreLevel, HighScore score, int position){
+        highScoreLevel.add(position, score);
+        server.setNewLeaderBoard(highScoreLevel.get(position));
     }
 
+    public void checkHighScore(HighScore score){
+        switch (score.getLevelNbr()){
+            case 1 :
+                compareTime(highScoreLevel1, score);
+                break;
+
+            case 2 :
+                compareTime(highScoreLevel2, score);
+                break;
+
+            case 3 :
+                compareTime(highScoreLevel3, score);
+                break;
+
+            case 4 :
+                compareTime(highScoreLevel4, score);
+                break;
+
+            case 5 :
+                compareTime(highScoreLevel5, score);
+                break;
+
+            case 6 :
+                compareTime(highScoreLevel6, score);
+                break;
+
+            case 7 :
+                compareTime(highScoreLevel7, score);
+                break;
+
+            case 8 :
+                compareTime(highScoreLevel8, score);
+                break;
+
+            case 9 :
+                compareTime(highScoreLevel9, score);
+                break;
+
+            case 10 :
+                compareTime(highScoreLevel10, score);
+                break;
+        }
+    }
+
+    private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
+        for (int i = 0; i < NUMBER_OF_LEVELS; i++){
+            highScoreLevel.add(new HighScore(0, 0, "AAA"));
+        }
+    }
 
 }

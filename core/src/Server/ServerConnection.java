@@ -1,6 +1,8 @@
 package Server;
 
 
+import ClientHighScore.HighScore;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
@@ -25,9 +27,11 @@ public class ServerConnection implements Runnable {
 
     private Thread server = new Thread(this);
     private ServerSocket serverSocket;
+    private ServerLeaderboard leaderboard;
 
 
     public ServerConnection(int port) throws IOException {
+        leaderboard = new ServerLeaderboard(this);
         serverSocket = new ServerSocket(port);
         server.start();
     }
@@ -45,8 +49,13 @@ public class ServerConnection implements Runnable {
         }
     }
 
+    public void setNewLeaderboard(HighScore newScore){
+
+    }
+
     private class ClientHandler extends Thread {
         private Socket socket;
+        private HighScore score;
 
 
         public ClientHandler(Socket socket) {
@@ -55,11 +64,12 @@ public class ServerConnection implements Runnable {
 
         public void run() {
             System.out.println("Client connected");
-            try {ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());
-                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
+            try {
+                ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 while (true) {
-                    int level = dis.readInt();
-                    long levelTime = dis.readLong();
+                    score = (HighScore) dis.readObject();
+                    leaderboard.checkHighScore(score);
                     //response = ServerLeaderboard.compareTime(track, levelTime);
                    // dos.writeUTF(response);
                     dos.flush();
@@ -67,6 +77,8 @@ public class ServerConnection implements Runnable {
                     dis.close();
                 }
             } catch (IOException e) {
+            } catch (ClassNotFoundException ce){
+
             }
             try {
                 socket.close();
