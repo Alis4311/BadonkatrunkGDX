@@ -9,9 +9,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Badonkatrunk extends Game{
         public static SpriteBatch batch;
-
+		public int currentlevel;
 		@Override
 		public void create() {
+			currentlevel = 0;
 			batch = new SpriteBatch();
 			this.setScreen(new MenuScreen(this));
 		}

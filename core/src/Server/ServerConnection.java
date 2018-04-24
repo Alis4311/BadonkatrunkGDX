@@ -66,7 +66,7 @@ public class ServerConnection implements Runnable {
                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 while (true) {
                     score = (HighScore) dis.readObject();
-                    newLeaderboard = leaderboard.checkHighScore(score);
+                    //newLeaderboard = leaderboard.checkHighScore(score);
                     //response = ServerLeaderboard.compareTime(track, levelTime);
                     dos.writeObject(newLeaderboard);
                     dos.flush();
