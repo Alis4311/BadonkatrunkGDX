@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        level = MapLoader.load(0);
+        level = MapLoader.load(badonkatrunk.currentlevel);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
@@ -94,6 +94,8 @@ public class GameScreen implements Screen {
 
         //Kolla om fordonet kommit i mål.
         if(vehicle.getX() >= level.getGoalXCoordinates()){
+            badonkatrunk.currentlevel = Math.min(badonkatrunk.currentlevel+1, 1);
+
             restart();
         }
         camera.update();
