@@ -121,10 +121,6 @@ public class Vehicle extends Objects.CollidingObject {
 
     }
 
-    public float getYSpeed() {
-        return ySpeed;
-    }
-
     private void collisionHandling(){
         boolean bottomRectCollision = false;
         for(CollidingObject object : level.getGameObstacleObjects()) {
