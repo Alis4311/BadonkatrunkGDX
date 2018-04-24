@@ -31,7 +31,7 @@ public class ServerConnection implements Runnable {
 
 
     public ServerConnection(int port) throws IOException {
-        leaderboard = new ServerLeaderboard(this);
+        leaderboard = new ServerLeaderboard();
         serverSocket = new ServerSocket(port);
         server.start();
     }
@@ -49,13 +49,10 @@ public class ServerConnection implements Runnable {
         }
     }
 
-    public void setNewLeaderboard(HighScore newScore){
-
-    }
-
     private class ClientHandler extends Thread {
         private Socket socket;
         private HighScore score;
+        private HighScore newScore;
 
 
         public ClientHandler(Socket socket) {
@@ -69,9 +66,9 @@ public class ServerConnection implements Runnable {
                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 while (true) {
                     score = (HighScore) dis.readObject();
-                    leaderboard.checkHighScore(score);
+                    newScore = leaderboard.checkHighScore(score);
                     //response = ServerLeaderboard.compareTime(track, levelTime);
-                   // dos.writeUTF(response);
+                    dos.writeObject(newScore);
                     dos.flush();
                     dos.close();
                     dis.close();

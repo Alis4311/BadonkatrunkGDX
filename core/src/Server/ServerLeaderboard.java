@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class ServerLeaderboard {
 
-    private ServerConnection server;
+    private HighScore newHighScore;
 
     private ArrayList<HighScore> highScoreLevel1 = new ArrayList<HighScore>();
     private ArrayList<HighScore> highScoreLevel2 = new ArrayList<HighScore>();
@@ -36,8 +36,7 @@ public class ServerLeaderboard {
 
 
 
-    public ServerLeaderboard(ServerConnection server){
-        this.server = server;
+    public ServerLeaderboard(){
         addEmptyHighScore(highScoreLevel1);
         addEmptyHighScore(highScoreLevel2);
         addEmptyHighScore(highScoreLevel3);
@@ -61,10 +60,11 @@ public class ServerLeaderboard {
 
     private void update(ArrayList<HighScore> highScoreLevel, HighScore score, int position){
         highScoreLevel.add(position, score);
-        server.setNewLeaderBoard(highScoreLevel.get(position));
+        //server.setNewHighScore(highScoreLevel.get(position));
+        newHighScore = score;
     }
 
-    public void checkHighScore(HighScore score){
+    public HighScore checkHighScore(HighScore score){
         switch (score.getLevelNbr()){
             case 1 :
                 compareTime(highScoreLevel1, score);
@@ -106,6 +106,8 @@ public class ServerLeaderboard {
                 compareTime(highScoreLevel10, score);
                 break;
         }
+
+        return newHighScore;
     }
 
     private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
