@@ -52,7 +52,7 @@ public class ServerConnection implements Runnable {
     private class ClientHandler extends Thread {
         private Socket socket;
         private HighScore score;
-        private HighScore newScore;
+        private ArrayList<HighScore> newLeaderboard;
 
 
         public ClientHandler(Socket socket) {
@@ -66,9 +66,9 @@ public class ServerConnection implements Runnable {
                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 while (true) {
                     score = (HighScore) dis.readObject();
-                    newScore = leaderboard.checkHighScore(score);
+                    newLeaderboard = leaderboard.checkHighScore(score);
                     //response = ServerLeaderboard.compareTime(track, levelTime);
-                    dos.writeObject(newScore);
+                    dos.writeObject(newLeaderboard);
                     dos.flush();
                     dos.close();
                     dis.close();
