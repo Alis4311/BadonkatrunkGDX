@@ -35,7 +35,8 @@ public class MenuScreen implements Screen {
         buttonPlay.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
+                //badonkatrunk.setScreen(new GameScreen(badonkatrunk));
                 stage.dispose();
             }
         });

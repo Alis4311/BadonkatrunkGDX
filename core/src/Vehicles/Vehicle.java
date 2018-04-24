@@ -103,9 +103,9 @@ public class Vehicle extends Objects.CollidingObject {
     }
 
     public void dispose(){
-        vehicleSound.jumpSound.pause();
+        //vehicleSound.jumpSound.pause();
         //vehicleSound.engineSound.pause();
-        vehicleSound.silenceEngine();
+        vehicleSound.stop();
     }
 
     protected void setPosition(float xPosition, float yPosition) {
@@ -119,6 +119,10 @@ public class Vehicle extends Objects.CollidingObject {
         }
 
 
+    }
+
+    public float getYSpeed() {
+        return ySpeed;
     }
 
     private void collisionHandling(){
@@ -148,7 +152,7 @@ public class Vehicle extends Objects.CollidingObject {
             setGrounded(true);
 
         }else{
-            groundlevel = 0;
+            groundlevel = -200;
             setGrounded(false);
 
         }
@@ -240,6 +244,10 @@ public class Vehicle extends Objects.CollidingObject {
             this.jumpSound = jumpSound;
             this.engineSound = engineSound;
 
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e ) {}
+
             MAX_PITCH = 2.0f;
             MIN_PITCH = 0.5f;
             pitchChangeRate = 0.1f;
@@ -248,10 +256,9 @@ public class Vehicle extends Objects.CollidingObject {
             MIN_VOLUME = 0.4F;
             volumeChangeRate = 0.1f;
 
-
-            //engineSoundId = engineSound.loop();
-            engineSound.setPitch(engineSoundId, MIN_PITCH + 0.1f);
-            engineSound.setVolume(engineSoundId, MIN_VOLUME);
+            engineSoundId = this.engineSound.loop();
+            this.engineSound.setPitch(engineSoundId, MIN_PITCH + 0.1f);
+            this.engineSound.setVolume(engineSoundId, MIN_VOLUME);
     }
 
 
@@ -285,8 +292,10 @@ public class Vehicle extends Objects.CollidingObject {
 
         }
 
-        public void silenceEngine() {
-            engineSound.setVolume(engineSoundId, 0);
+        public void stop() {
+            engineSound.stop(engineSoundId);
+            engineSound.dispose();
+            jumpSound.dispose();
         }
     }
 

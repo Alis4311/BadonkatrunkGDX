@@ -14,7 +14,6 @@ public class Badonkatrunk extends Game{
 		public void create() {
 			batch = new SpriteBatch();
 			this.setScreen(new MenuScreen(this));
-			VehicleFactory.loadSoundObjects();
 		}
 
 		@Override
