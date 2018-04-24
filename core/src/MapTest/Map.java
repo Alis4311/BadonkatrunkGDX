@@ -43,9 +43,7 @@ public class Map {
 
         addBackgroundObjectList(new DecorativeObject(10,600,32));
         addObstacleObjects(new CollidingObject(0,664,32));
-        addObstacleObjects(new CollidingObject(0,632,64));
         addObstacleObjects(new CollidingObject(0,664,64));
-        addObstacleObjects(new CollidingObject(0,500,96));
 /*
         addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),600,32));
         addObstacleObjects(new CollidingObject(0,664,32));

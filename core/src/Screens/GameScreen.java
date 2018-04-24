@@ -45,7 +45,7 @@ public class GameScreen implements Screen {
 				//TODO: Write reset method
 
 
-        if (camera.position.x < level.getWidth() - camera.viewportWidth / 2) {
+        if (camera.position.x < level.getGoalXCoordinates()) {
 
             camera.translate(1.5f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
