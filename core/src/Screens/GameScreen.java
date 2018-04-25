@@ -19,6 +19,7 @@ public class GameScreen implements Screen {
     Map level;
     SpriteBatch batch;
     ShapeRenderer shape;
+    public static boolean isPaused;
 
     private Badonkatrunk badonkatrunk;
 
@@ -31,6 +32,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
+        isPaused = false;
     }
 
 
@@ -42,61 +44,59 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-				//TODO: Write reset method
-
-        //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
-        if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
-
-            camera.translate(1.5f, 0, 0);
-            //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
-            camera.update();
-
-				//TODO: Write death method.
-
-            //Kolla om fordonet hamnat bakom kameran, i så fall ska banan starta om.
-            if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
-                //vehicle.dispose();
-                restart();
-            }
-            //Kolla om bilen "kör om" kameran, i så fall ska kameran följa med bilen frammåt.
-            if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
-                camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
-            }
-        }
-
-
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        vehicle.update();
+        if(!isPaused){
+
+            //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
+            if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
+
+                camera.translate(1.5f, 0, 0);
+                //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
+                camera.update();
 
 
-        //Kolla om fordonet är i överkant av kamerans vy, i så fall följer kameran med uppåt, men inte ovanför bakgrundsbilden.
-        if(vehicle.getY() > camera.position.y + camera.viewportHeight/4 && camera.position.y + camera.viewportHeight /2 <= level.getHeight()) {
-            camera.position.y = vehicle.getY() - camera.viewportWidth / 4;
-            //Fullösning? om kameran hamnar ovanför bakgrundsbilden så hoppar den ner till bakgrundsbildens övre kant.
-            if(camera.position.y + camera.viewportHeight / 2 > level.getHeight()) {
-                camera.position.y = level.getHeight() - camera.viewportHeight / 2;
+                //Kolla om fordonet hamnat bakom kameran, i så fall ska banan starta om.
+                if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
+                    //vehicle.dispose();
+                    restart();
+                }
+                //Kolla om bilen "kör om" kameran, i så fall ska kameran följa med bilen frammåt.
+                if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
+                    camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
+                }
             }
-        }
-        //Kolla om fordonet är i underkant av kamerans vy, i så fall följer kameran med nedåt.
-        else if(vehicle.getY() < camera.position.y - camera.viewportHeight/4 && camera.position.y >= camera.viewportHeight /2) {
-            camera.position.y = vehicle.getY() + camera.viewportHeight / 4;
-            //Fullösning? om kameran hamnar nedanför bakgrundsbilden så hoppar den upp till bakgrundsbildens nedre kant.
-            if(camera.position.y -camera.viewportHeight / 2 < 0) {
-                camera.position.y = camera.viewportHeight / 2;
+
+
+            //Kolla om fordonet är i överkant av kamerans vy, i så fall följer kameran med uppåt, men inte ovanför bakgrundsbilden.
+            if(vehicle.getY() > camera.position.y + camera.viewportHeight/4 && camera.position.y + camera.viewportHeight /2 <= level.getHeight()) {
+                camera.position.y = vehicle.getY() - camera.viewportWidth / 4;
+                //Fullösning? om kameran hamnar ovanför bakgrundsbilden så hoppar den ner till bakgrundsbildens övre kant.
+                if(camera.position.y + camera.viewportHeight / 2 > level.getHeight()) {
+                    camera.position.y = level.getHeight() - camera.viewportHeight / 2;
+                }
             }
-        }
+            //Kolla om fordonet är i underkant av kamerans vy, i så fall följer kameran med nedåt.
+            else if(vehicle.getY() < camera.position.y - camera.viewportHeight/4 && camera.position.y >= camera.viewportHeight /2) {
+                camera.position.y = vehicle.getY() + camera.viewportHeight / 4;
+                //Fullösning? om kameran hamnar nedanför bakgrundsbilden så hoppar den upp till bakgrundsbildens nedre kant.
+                if(camera.position.y -camera.viewportHeight / 2 < 0) {
+                    camera.position.y = camera.viewportHeight / 2;
+                }
+            }
 
-        //Kolla om fordonet hamnat nedanför kamerans synfält
-        if(vehicle.getY() + vehicle.getHeight() < camera.position.y - camera.viewportHeight/2) {
-            restart();
-        }
+            //Kolla om fordonet hamnat nedanför kamerans synfält
+            if(vehicle.getY() + vehicle.getHeight() < camera.position.y - camera.viewportHeight/2) {
+                restart();
+            }
 
-        //Kolla om fordonet kommit i mål.
-        if(vehicle.getX() >= level.getGoalXCoordinates()){
-            restart();
+            //Kolla om fordonet kommit i mål.
+            if(vehicle.getX() >= level.getGoalXCoordinates()){
+                restart();
+            }
+            camera.update();
         }
-        camera.update();
+        vehicle.update(isPaused);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         level.draw(batch);

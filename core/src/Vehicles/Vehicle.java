@@ -80,6 +80,7 @@ public class Vehicle extends Objects.CollidingObject {
                 idling();
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch) {
+
                 jump();
             }
     }
@@ -87,20 +88,16 @@ public class Vehicle extends Objects.CollidingObject {
     /**
      * Update the position of the car, after processing user input.
      */
-    public void update(){
+    public void update(boolean isPaused){
         processInput();
-
-        ySpeed -= gravity;
-        checkIfGoalIsReached();
-        collisionHandling();
-
-    }
-
-    private void checkIfGoalIsReached() {
-        if(this.getX() >= level.getGoalXCoordinates()){
-            System.out.println("Win");
+        if(!isPaused){
+            ySpeed -= gravity;
+            collisionHandling();
         }
+
+
     }
+
 
     public void dispose(){
         //vehicleSound.jumpSound.pause();

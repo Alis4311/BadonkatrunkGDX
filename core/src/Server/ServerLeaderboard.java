@@ -63,7 +63,7 @@ public class ServerLeaderboard {
         newLeaderboard = highScoreLevel;
     }
 
-    public int checkHighScore(HighScore score){
+    public ArrayList<HighScore> checkHighScore(HighScore score){
         switch (score.getLevelNbr()){
             case 1 :
                 compareTime(highScoreLevel1, score);
@@ -106,7 +106,7 @@ public class ServerLeaderboard {
                 break;
         }
 
-        return 1;
+        return newLeaderboard;
     }
 
     private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
