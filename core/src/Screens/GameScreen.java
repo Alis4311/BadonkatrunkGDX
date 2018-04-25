@@ -32,7 +32,8 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
-        isPaused = false;
+        isPaused = true;
+
     }
 
 

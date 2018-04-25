@@ -2,6 +2,7 @@ package MapTest;
 
 import Objects.CollidingObject;
 import Objects.DecorativeObject;
+import Objects.PauseObject;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +25,8 @@ public class Map {
     private LinkedList<CollidingObject> obstacleObjectList;
     private LinkedList<DecorativeObject> backgroundObjectList;
     private int theme;
-
+    private boolean hasPauseObject;
+    private PauseObject pauseObject;
     /**
      * Constructor that instantiates local variables and sets the background to the one in the parameter.
      * @param background - The sprite that is the background for the map.
@@ -81,10 +83,11 @@ public class Map {
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),664,64));
         addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture),500,96));
 */
-
+        this.pauseObject = new PauseObject(new Sprite(), 600,0);
+        this.hasPauseObject = true;
         this.background.setPosition(0,0);
 
-        saveMapToText(3);
+        //saveMapToText(3);
     }
 
     public Map(Sprite background, LinkedList<CollidingObject> obstacleObjectList, LinkedList<DecorativeObject> backgroundObjectList, int goalXCoordinates, int theme){
@@ -179,6 +182,12 @@ public class Map {
         DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,64);
         goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
         backgroundObjectList.add(goalPost);
+    }
+    public PauseObject getPauseObject(){
+        return this.pauseObject;
+    }
+    public boolean hasPauseObject(){
+        return hasPauseObject;
     }
 
     private void saveMapToText(int nbr){

@@ -2,6 +2,7 @@ package MapTest;
 
 import Objects.CollidingObject;
 import Objects.DecorativeObject;
+import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;

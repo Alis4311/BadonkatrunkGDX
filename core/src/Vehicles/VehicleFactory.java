@@ -37,7 +37,7 @@ public class VehicleFactory {
         }
 
         if(vehicle != null) {
-            vehicle.setPosition(50, 50);
+            vehicle.setPosition(50, 100);
         }
 
         return vehicle;
