@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class ServerLeaderboard {
 
+    private boolean onLeaderboard;
     private ArrayList<HighScore> newLeaderboard;
 
     private ArrayList<HighScore> highScoreLevel1 = new ArrayList<HighScore>();
@@ -37,6 +38,8 @@ public class ServerLeaderboard {
 
 
     public ServerLeaderboard(){
+        onLeaderboard = false;
+
         addEmptyHighScore(highScoreLevel1);
         addEmptyHighScore(highScoreLevel2);
         addEmptyHighScore(highScoreLevel3);
@@ -59,6 +62,7 @@ public class ServerLeaderboard {
     }
 
     private void update(ArrayList<HighScore> highScoreLevel, HighScore score, int position){
+        onLeaderboard = true;
         highScoreLevel.add(position, score);
         newLeaderboard = highScoreLevel;
     }
@@ -113,6 +117,10 @@ public class ServerLeaderboard {
         for (int i = 0; i < NUMBER_OF_LEVELS; i++){
             highScoreLevel.add(new HighScore(0, 0, "AAA"));
         }
+    }
+
+    public boolean isOnLeaderboard(){
+        return onLeaderboard;
     }
 
 }

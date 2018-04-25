@@ -16,9 +16,8 @@ import java.util.ArrayList;
  * Has an inner class ClientHandler that gives the client its socket trasports
  * user track info to and from methods in the class ServerLeaderboard.
  *
- *
  * @author Peder Nilsson & xxxx & xxxxx & xxxxx
- *
+ * <p>
  * Bara ett utkast -  fixa och trixa - allihopa  - go!!
  */
 
@@ -52,6 +51,7 @@ public class ServerConnection implements Runnable {
     private class ClientHandler extends Thread {
         private Socket socket;
         private HighScore score;
+        private boolean onLeaderboard;
         private ArrayList<HighScore> newLeaderboard;
 
 
@@ -64,17 +64,17 @@ public class ServerConnection implements Runnable {
             try {
                 ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
-                while (true) {
-                    score = (HighScore) dis.readObject();
-                    newLeaderboard = leaderboard.checkHighScore(score);
-                    //response = ServerLeaderboard.compareTime(track, levelTime);
-                    dos.writeObject(newLeaderboard);
-                    dos.flush();
-                    dos.close();
-                    dis.close();
-                }
+                score = (HighScore) dis.readObject();
+                newLeaderboard = leaderboard.checkHighScore(score);
+                onLeaderboard = leaderboard.isOnLeaderboard();
+                dos.writeBoolean(onLeaderboard);
+                dos.writeObject(newLeaderboard);
+                dos.flush();
+                dos.close();
+                dis.close();
+
             } catch (IOException e) {
-            } catch (ClassNotFoundException ce){
+            } catch (ClassNotFoundException ce) {
 
             }
             try {
@@ -82,6 +82,14 @@ public class ServerConnection implements Runnable {
             } catch (Exception e) {
             }
             System.out.println("Client disconnected");
+        }
+
+        public ArrayList<HighScore> getNewLeaderboard() {
+            return newLeaderboard;
+        }
+
+        public boolean isOnLeaderboard() {
+            return onLeaderboard;
         }
     }
 
