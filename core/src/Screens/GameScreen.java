@@ -45,7 +45,7 @@ public class GameScreen implements Screen {
 				//TODO: Write reset method
 
         //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
-        if (camera.position.x < level.getGoalXCoordinates()) {
+        if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
 
             camera.translate(1.5f, 0, 0);
             //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
@@ -68,7 +68,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         vehicle.update();
-        System.out.println(level.getGoalXCoordinates());
+
 
         //Kolla om fordonet är i överkant av kamerans vy, i så fall följer kameran med uppåt, men inte ovanför bakgrundsbilden.
         if(vehicle.getY() > camera.position.y + camera.viewportHeight/4 && camera.position.y + camera.viewportHeight /2 <= level.getHeight()) {

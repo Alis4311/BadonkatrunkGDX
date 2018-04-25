@@ -54,7 +54,7 @@ public class LevelsScreen implements Screen{
         btn2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 2));
             }
         });
         btn3.addListener(new ChangeListener() {

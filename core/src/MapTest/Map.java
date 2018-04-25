@@ -36,14 +36,44 @@ public class Map {
         obstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
         addGoalPost();
-        for(int i= 0; i<background.getWidth(); i+=32){
+        for(int i= 0; i<60; i++){
             //addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture), i ,0));
-            addObstacleObjects(new CollidingObject(0, i ,0));
+            if(i>= 25 && i<=27){
+                continue;
+            }
+            addObstacleObjects(new CollidingObject(0, i*32 ,0));
         }
 
-        addBackgroundObjectList(new DecorativeObject(10,600,32));
-        addObstacleObjects(new CollidingObject(0,664,32));
-        addObstacleObjects(new CollidingObject(0,664,64));
+        for(int i =0; i<60; i++){
+            if(i>=13 && i<= 22){
+                continue;
+            }
+            if(i>= 25 && i<=27){
+                continue;
+            }
+            if(i>=30 && i<= 43){
+                continue;
+            }
+
+            addObstacleObjects(new CollidingObject(0, i*32 ,32));
+
+        }
+
+        for(int i =0; i<60; i++){
+            if(i>=7 && i<= 22){
+                continue;
+            }
+            if(i>= 25 && i<=27){
+                continue;
+            }
+            if(i>=30 && i<= 51){
+                continue;
+            }
+
+            addObstacleObjects(new CollidingObject(0, i*32 ,64));
+
+        }
+
 /*
         addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),600,32));
         addObstacleObjects(new CollidingObject(0,664,32));
@@ -54,7 +84,7 @@ public class Map {
 
         this.background.setPosition(0,0);
 
-        saveMapToText(1);
+        saveMapToText(3);
     }
 
     public Map(Sprite background, LinkedList<CollidingObject> obstacleObjectList, LinkedList<DecorativeObject> backgroundObjectList, int goalXCoordinates, int theme){
@@ -146,7 +176,7 @@ public class Map {
     }
 
     private void addGoalPost(){
-        DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,32);
+        DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,64);
         goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
         backgroundObjectList.add(goalPost);
     }
