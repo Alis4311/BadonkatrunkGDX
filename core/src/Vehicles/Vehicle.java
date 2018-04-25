@@ -77,15 +77,19 @@ public class Vehicle extends Objects.CollidingObject {
             boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
-                if(GameScreen.isPaused){
-                    //GameScreen.isPaused = false;
+                if(GameScreen.isPaused && !GameScreen.isPausedForJump){
+                    GameScreen.isPaused = false;
                 }
                 accelerate();
             } else {
                 idling();
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch) {
-                GameScreen.isPaused = false;
+                if(GameScreen.isPausedForJump){
+                    GameScreen.isPausedForJump = false;
+                    GameScreen.isPaused = false;
+                }
+
                 jump();
             }
     }
@@ -150,6 +154,7 @@ public class Vehicle extends Objects.CollidingObject {
         if(level.hasPauseObject()){
             if(this.checkCollision(level.getPauseObject().getBoundingRectangle())){
                 if(this.getRightRectangle().overlaps(level.getPauseObject().getBoundingRectangle())){
+                    GameScreen.isPausedForJump = true;
                     GameScreen.isPaused = true;
                 }
             }

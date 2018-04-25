@@ -20,19 +20,21 @@ public class GameScreen implements Screen {
     SpriteBatch batch;
     ShapeRenderer shape;
     public static boolean isPaused;
+    public static boolean isPausedForJump;
 
     private Badonkatrunk badonkatrunk;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         batch = badonkatrunk.batch;
-        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        level = MapLoader.load(mapNbr);
+        level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
+        //level = MapLoader.load(mapNbr);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
+
 
     }
 
