@@ -7,6 +7,7 @@ import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -21,7 +22,7 @@ public class GameScreen implements Screen {
     ShapeRenderer shape;
     public static boolean isPaused;
     public static boolean isPausedForJump;
-
+    public static boolean isPausedForAcceleration;
     private Badonkatrunk badonkatrunk;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
@@ -34,7 +35,6 @@ public class GameScreen implements Screen {
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
-
 
     }
 
@@ -102,7 +102,14 @@ public class GameScreen implements Screen {
         vehicle.update(isPaused);
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
         level.draw(batch);
+        if(isPausedForJump){
+            doJumpPauseStuff();
+        }
+        if(isPausedForAcceleration){
+            doAcceleratePauseStuff();
+        }
         vehicle.draw(batch);
 
         batch.end();
@@ -143,5 +150,47 @@ public class GameScreen implements Screen {
         badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         vehicle.dispose();
         this.dispose();
+    }
+
+    public void doJumpPauseStuff(){
+        Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUp.png")));
+        Sprite greyCar = new Sprite(new Texture(Gdx.files.internal("Introbana/greyCar.png")));
+        Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
+        Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
+        arrow.setPosition(camera.position.x - 150,300);
+        arrow.draw(batch);
+        greyCar.setPosition(camera.position.x -150,400);
+        greyCar.setSize(64,64);
+        line.setPosition(camera.position.x,0);
+        line.setSize(10, Gdx.graphics.getHeight());
+        line.draw(batch);
+        finger.setPosition(camera.position.x - 250, 200);
+        finger.setScale(0.5f);
+        greyCar.draw(batch);
+        finger.draw(batch);
+    }
+
+    public void doAcceleratePauseStuff(){
+        Sprite arrow1 = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowRight2.png")));
+        Sprite arrow2 = new Sprite(arrow1);
+        Sprite arrow3 = new Sprite(arrow1);
+        Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
+        Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
+        arrow2.setScale(1.5f);
+        arrow3.setScale(2f);
+        arrow1.setPosition(camera.position.x +100, 400);
+        arrow2.setPosition(camera.position.x +132, 400);
+        arrow3.setPosition(camera.position.x +164, 400);
+
+        line.setPosition(camera.position.x,0);
+        line.setSize(10, Gdx.graphics.getHeight());
+        line.draw(batch);
+
+        finger.setPosition(camera.position.x +75, 200);
+        finger.setScale(0.5f);
+        finger.draw(batch);
+        arrow1.draw(batch);
+        arrow2.draw(batch);
+        arrow3.draw(batch);
     }
 }

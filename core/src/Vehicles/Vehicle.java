@@ -79,6 +79,7 @@ public class Vehicle extends Objects.CollidingObject {
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
                 if(GameScreen.isPaused && !GameScreen.isPausedForJump){
                     GameScreen.isPaused = false;
+                    GameScreen.isPausedForAcceleration = false;
                 }
                 accelerate();
             } else {
@@ -103,7 +104,7 @@ public class Vehicle extends Objects.CollidingObject {
             ySpeed -= gravity;
             collisionHandling();
         }
-
+        System.out.println(this.getX());
 
     }
 
@@ -152,12 +153,16 @@ public class Vehicle extends Objects.CollidingObject {
         }
 
         if(level.hasPauseObject()){
-            if(this.checkCollision(level.getPauseObject().getBoundingRectangle())){
-                if(this.getRightRectangle().overlaps(level.getPauseObject().getBoundingRectangle())){
-                    GameScreen.isPausedForJump = true;
-                    GameScreen.isPaused = true;
+            if(!level.getPauseObject().isTriggered()){
+                if(this.checkCollision(level.getPauseObject().getBoundingRectangle())){
+                    if(this.getRightRectangle().overlaps(level.getPauseObject().getBoundingRectangle())){
+                        GameScreen.isPausedForJump = true;
+                        GameScreen.isPaused = true;
+                        level.getPauseObject().trigger();
+                    }
                 }
             }
+
         }
 
 

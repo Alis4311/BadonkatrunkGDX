@@ -40,41 +40,14 @@ public class Map {
         addGoalPost();
         for(int i= 0; i<60; i++){
             //addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture), i ,0));
-            if(i>= 25 && i<=27){
-                continue;
-            }
+
+
             addObstacleObjects(new CollidingObject(0, i*32 ,0));
-        }
-
-        for(int i =0; i<60; i++){
-            if(i>=13 && i<= 22){
-                continue;
-            }
-            if(i>= 25 && i<=27){
-                continue;
-            }
-            if(i>=30 && i<= 43){
-                continue;
-            }
-
-            addObstacleObjects(new CollidingObject(0, i*32 ,32));
 
         }
 
-        for(int i =0; i<60; i++){
-            if(i>=7 && i<= 22){
-                continue;
-            }
-            if(i>= 25 && i<=27){
-                continue;
-            }
-            if(i>=30 && i<= 51){
-                continue;
-            }
-
-            addObstacleObjects(new CollidingObject(0, i*32 ,64));
-
-        }
+        addObstacleObjects(new CollidingObject(0,600,32));
+        addObstacleObjects(new CollidingObject(0,600,64));
 
 /*
         addBackgroundObjectList(new DecorativeObject(new Sprite(new Texture(Gdx.files.internal("house.png"))),600,32));
