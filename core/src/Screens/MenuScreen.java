@@ -3,10 +3,15 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 public class MenuScreen implements Screen {
@@ -16,13 +21,19 @@ public class MenuScreen implements Screen {
     private ImageButton buttonPlay;
     private ImageButton buttonLevels;
     private ImageButton buttonExit;
+    private Camera camera;
 
     private Badonkatrunk badonkatrunk;
 
     public MenuScreen(final Badonkatrunk badonkatrunk){
+        Camera camera = new OrthographicCamera();
+        Viewport viewport = new StretchViewport(500, 500, camera);
+        viewport.apply();
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
         this.badonkatrunk = badonkatrunk;
 
-        stage = new Stage();
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         buttonPlay = menuButton.CreateImageButton("PlayButton.png", 150, 350);
@@ -36,6 +47,7 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
+
                 badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
                 stage.dispose();
             }

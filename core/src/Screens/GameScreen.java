@@ -24,18 +24,21 @@ public class GameScreen implements Screen {
     public static boolean isPausedForJump;
     public static boolean isPausedForAcceleration;
     private Badonkatrunk badonkatrunk;
+    private int mapNbr;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
-        batch = badonkatrunk.batch;
-        level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        //level = MapLoader.load(mapNbr);
+        batch = Badonkatrunk.batch;
+        this.mapNbr = mapNbr;
+        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
+        level = MapLoader.load(mapNbr);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
-        isPausedForAcceleration = true;
+
+
 
     }
 
@@ -96,7 +99,7 @@ public class GameScreen implements Screen {
 
             //Kolla om fordonet kommit i mål.
             if(vehicle.getX() >= level.getGoalXCoordinates()){
-                restart();
+                nextLevel();
             }
             camera.update();
         }
@@ -148,7 +151,13 @@ public class GameScreen implements Screen {
     }
 
     public void restart(){
-        badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+        badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr));
+        vehicle.dispose();
+        this.dispose();
+    }
+
+    private void nextLevel(){
+        badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
         vehicle.dispose();
         this.dispose();
     }

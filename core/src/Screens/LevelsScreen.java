@@ -3,24 +3,32 @@ package Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 public class LevelsScreen implements Screen{
     private MenuButton menuButton = new MenuButton();
     private Stage stage;
     private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10;
-
+    private Camera camera;
     private Badonkatrunk badonkatrunk;
 
     public LevelsScreen(final Badonkatrunk badonkatrunk){
-        this.badonkatrunk = badonkatrunk;
-
-        stage = new Stage();
+        Camera camera = new OrthographicCamera();
+        Viewport viewport = new StretchViewport(600, 600, camera);
+        viewport.apply();
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         btn1 = menuButton.CreateImageButton("number1.png", 64, 320);
@@ -49,12 +57,14 @@ public class LevelsScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new GameScreen(badonkatrunk, 1));
+                stage.dispose();
             }
         });
         btn2.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new GameScreen(badonkatrunk, 2));
+                stage.dispose();
             }
         });
         btn3.addListener(new ChangeListener() {

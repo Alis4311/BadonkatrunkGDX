@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.chris.badonkatrunk.Badonkatrunk;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,7 +38,7 @@ public class Map {
         backgroundObjectList = new LinkedList<DecorativeObject>();
         obstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
-        addGoalPost();
+        addGoalPost(32);
         for(int i= 0; i<60; i++){
             //addObstacleObjects(new CollidingObject(new Sprite(cobbleTexture), i ,0));
 
@@ -151,8 +152,8 @@ public class Map {
 
     }
 
-    private void addGoalPost(){
-        DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,64);
+    private void addGoalPost(int height){
+        DecorativeObject goalPost = new DecorativeObject(9,goalXCoordinates,height);
         goalPost.setSize(goalPost.getWidth(),goalPost.getHeight()*2);
         backgroundObjectList.add(goalPost);
     }

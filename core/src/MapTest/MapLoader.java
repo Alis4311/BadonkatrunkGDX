@@ -14,7 +14,14 @@ import java.util.LinkedList;
 public class MapLoader {
 
     public static Map load(int mapNbr){
+        if(mapNbr == 1){
+            return new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
+        }
+        FileHandle fileInternal = Gdx.files.internal(mapNbr+".txt");
         FileHandle file = Gdx.files.local(mapNbr+".txt");
+        if(!Gdx.files.local(mapNbr+".txt").exists()){
+            fileInternal.copyTo(file);
+        }
         //File file = new File(mapNbr+".txt");
         int theme = 1; // Load theme 1 if something is broken. 
         LinkedList<DecorativeObject> backgroundObjects = new LinkedList<DecorativeObject>();

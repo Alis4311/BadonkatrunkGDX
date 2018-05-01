@@ -77,7 +77,7 @@ public class Vehicle extends Objects.CollidingObject {
             boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
-                if(GameScreen.isPaused && !GameScreen.isPausedForJump){
+                if(GameScreen.isPausedForAcceleration || (GameScreen.isPaused && !GameScreen.isPausedForJump)){
                     GameScreen.isPaused = false;
                     GameScreen.isPausedForAcceleration = false;
                 }
@@ -104,7 +104,6 @@ public class Vehicle extends Objects.CollidingObject {
             ySpeed -= gravity;
             collisionHandling();
         }
-        System.out.println(this.getX());
 
     }
 
@@ -162,7 +161,6 @@ public class Vehicle extends Objects.CollidingObject {
                     }
                 }
             }
-
         }
 
 
