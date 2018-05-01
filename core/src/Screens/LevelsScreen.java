@@ -18,7 +18,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 public class LevelsScreen implements Screen{
     private MenuButton menuButton = new MenuButton();
     private Stage stage;
-    private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10;
+    private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnBack;
     private Camera camera;
     private Badonkatrunk badonkatrunk;
 
@@ -31,6 +31,7 @@ public class LevelsScreen implements Screen{
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
+        btnBack = menuButton.CreateImageButton("back.png", 10, 450);
         btn1 = menuButton.CreateImageButton("number1.png", 64, 320);
         btn2 = menuButton.CreateImageButton("number2.png", 192, 320);
         btn3 = menuButton.CreateImageButton("number3.png", 320, 320);
@@ -42,6 +43,7 @@ public class LevelsScreen implements Screen{
         btn9 = menuButton.CreateImageButton("number9.png", 256, 64);
         btn10 = menuButton.CreateImageButton("number10.png", 384, 64);
 
+        stage.addActor(btnBack);
         stage.addActor(btn1);
         stage.addActor(btn2);
         stage.addActor(btn3);
@@ -53,6 +55,13 @@ public class LevelsScreen implements Screen{
         stage.addActor(btn9);
         stage.addActor(btn10);
 
+        btnBack.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                badonkatrunk.setScreen(new MenuScreen(badonkatrunk));
+                stage.dispose();
+            }
+        });
         btn1.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

@@ -38,8 +38,6 @@ public class GameScreen implements Screen {
         shape = new ShapeRenderer();
         isPaused = true;
 
-
-
     }
 
 
