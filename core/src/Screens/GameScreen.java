@@ -35,6 +35,7 @@ public class GameScreen implements Screen {
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
+        isPausedForAcceleration = true;
 
     }
 
@@ -162,7 +163,7 @@ public class GameScreen implements Screen {
         greyCar.setPosition(camera.position.x -150,400);
         greyCar.setSize(64,64);
         line.setPosition(camera.position.x,0);
-        line.setSize(10, Gdx.graphics.getHeight());
+        line.setSize(10, camera.viewportHeight);
         line.draw(batch);
         finger.setPosition(camera.position.x - 250, 200);
         finger.setScale(0.5f);
@@ -183,7 +184,7 @@ public class GameScreen implements Screen {
         arrow3.setPosition(camera.position.x +164, 400);
 
         line.setPosition(camera.position.x,0);
-        line.setSize(10, Gdx.graphics.getHeight());
+        line.setSize(10, camera.viewportHeight);
         line.draw(batch);
 
         finger.setPosition(camera.position.x +75, 200);
