@@ -15,6 +15,7 @@ public class MapLoader {
 
     public static Map load(int mapNbr){
         if(mapNbr == 1){
+            GameScreen.isPausedForAcceleration = true;
             return new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
         }
         FileHandle fileInternal = Gdx.files.internal(mapNbr+".txt");
