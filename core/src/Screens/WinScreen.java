@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 
 public class WinScreen implements Screen {
@@ -30,6 +32,7 @@ public class WinScreen implements Screen {
     private MenuButton menuButton = new MenuButton();
     private ImageButton buttonNextLevel;
     private ImageButton buttonLevels;
+    private ImageButton buttonHighScore;
 
     private BitmapFont font;
     private Skin skinButton;
@@ -37,10 +40,13 @@ public class WinScreen implements Screen {
     private TextButton.TextButtonStyle textButtonStyle;
     private TextButton winButton;
 
-    public WinScreen(final Badonkatrunk badonkatrunk, final int mapNbr, long levelTime) {
+    public WinScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long levelTime) {
         this.badonkatrunk = badonkatrunk;
         this.mapNbr = mapNbr;
         this.levelTime = levelTime;
+
+        double seconds = ((double)levelTime / 1000) % 60 ;
+
         Camera camera = new OrthographicCamera();
         Viewport viewport = new StretchViewport(500, 500, camera);
         viewport.apply();
@@ -61,21 +67,22 @@ public class WinScreen implements Screen {
         textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         winButton=new TextButton("Finish",textButtonStyle);
-        winButton.setText("Congratulations! \n Time: " + levelTime);
-        winButton.setHeight(230);
-        winButton.setWidth(500);
-        winButton.setPosition(10,10);
+        winButton.setText("Congratulations! \n Time: " + seconds + "s");
+        winButton.setHeight(50);
+        winButton.setWidth(100);
+        winButton.setPosition(160,400);
         stage.addActor(winButton);
 
-        buttonNextLevel = menuButton.CreateImageButton("PlayButton.png", 150, 300);
-        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 150);
+        buttonNextLevel = menuButton.CreateImageButton("nextLevel.png", 150, 300);
+        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 200);
+        buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 150, 100);
 
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
 
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr + 1));
+                badonkatrunk.setScreen(new GameScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
                 stage.dispose();
             }
         });
@@ -87,8 +94,16 @@ public class WinScreen implements Screen {
             }
         });
 
+        buttonHighScore.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                badonkatrunk.setScreen(new HighScoreScreen(badonkatrunk, mapNbr, levelTime));
+            }
+        });
+
         stage.addActor(buttonNextLevel);
         stage.addActor(buttonLevels);
+        stage.addActor(buttonHighScore);
     }
 
     @Override
