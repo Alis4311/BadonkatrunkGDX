@@ -155,6 +155,7 @@ public class GameScreen implements Screen {
     }
 
     private void nextLevel(){
+        badonkatrunk.highestUnlockedLevel = Math.min(mapNbr+1, 10);
         badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
         vehicle.dispose();
         this.dispose();

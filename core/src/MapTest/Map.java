@@ -73,6 +73,8 @@ public class Map {
 
     }
 
+
+
     /**
      * Returns the background Sprite.
      * @return - Sprite.
@@ -163,7 +165,6 @@ public class Map {
     public boolean hasPauseObject(){
         return hasPauseObject;
     }
-
     private void saveMapToText(int nbr){
         FileHandle file = Gdx.files.local(nbr+".txt");
         //File file = new File(nbr+".txt");

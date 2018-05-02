@@ -3,7 +3,6 @@ package Vehicles;
 import MapTest.Map;
 import Objects.CollidingObject;
 import Screens.GameScreen;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Sound;
@@ -68,13 +67,19 @@ public class Vehicle extends Objects.CollidingObject {
 
           //For whatever reason we need to specify two inputs in order to not automatically loop the input.
           //TODO: figure out why?
+        // The reason is that the pointer keeps its values after touchUp.
+        float x0 = Gdx.input.getX(0);
+        float x1 = -1;
+            if(Gdx.input.justTouched()){
+                x0 = Gdx.input.getX(0);
+                x1 = Gdx.input.getX(1);
+            }
 
-            float x0 = Gdx.input.getX(0);
-            float x1 = Gdx.input.getX(1);
+
 
             //Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
             boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
-            boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2) || (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2);
+            boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2 && x0 > 0) || (Gdx.input.justTouched() && x1 < Gdx.graphics.getWidth() / 2 && x1 > 0);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
                 if(GameScreen.isPausedForAcceleration || (GameScreen.isPaused && !GameScreen.isPausedForJump)){

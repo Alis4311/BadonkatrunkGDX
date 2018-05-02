@@ -19,10 +19,13 @@ public class Badonkatrunk extends Game{
 
 		@Override
 		public void create() {
+
 			FileHandle file = Gdx.files.local("unlockedLevels.txt");
-			file.writeString("3",false);
-            System.out.println(Gdx.files.internal("cityBackground.png").file().getAbsolutePath());
-			System.out.println(file.file().getAbsolutePath());
+			FileHandle fileInternal = Gdx.files.internal("unlockedLevels.txt");
+			if(!file.exists()){
+				fileInternal.copyTo(file);
+			}
+
 			try {
 				BufferedReader br = new BufferedReader(file.reader());
 				highestUnlockedLevel = Integer.parseInt(br.readLine());
