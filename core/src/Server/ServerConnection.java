@@ -13,12 +13,10 @@ import java.util.ArrayList;
 
 /**
  * Sets up the connection between server and client.
- * Has an inner class ClientHandler that gives the client its socket trasports
- * user track info to and from methods in the class ServerLeaderboard.
+ * Has an inner class ClientHandler that gives the client its socket. Receives and sends information.
  *
- * @author Peder Nilsson & xxxx & xxxxx & xxxxx
- * <p>
- * Bara ett utkast -  fixa och trixa - allihopa  - go!!
+ * @author Peder Nilsson & Markus Wendler
+ *
  */
 
 public class ServerConnection implements Runnable {
@@ -36,6 +34,9 @@ public class ServerConnection implements Runnable {
     }
 
 
+    /**
+     * Run method that accepts clients and assigns a ClientHandler and a thread.
+     */
     public void run() {
         System.out.println("Server running");
         while (true) {
@@ -48,6 +49,9 @@ public class ServerConnection implements Runnable {
         }
     }
 
+    /**
+     * A class that handles every client that connects.
+     */
     private class ClientHandler extends Thread {
         private Socket socket;
         private HighScore score;
@@ -59,6 +63,9 @@ public class ServerConnection implements Runnable {
             this.socket = socket;
         }
 
+        /**
+         * Run method that establishes a connection and then receives a high score and handles that high score.
+         */
         public void run() {
             System.out.println("Client connected");
             try {
@@ -84,10 +91,18 @@ public class ServerConnection implements Runnable {
             System.out.println("Client disconnected");
         }
 
+        /**
+         * Returns the ArrayList with all the high scores.
+         * @return - ArrayList<HighScore>
+         */
         public ArrayList<HighScore> getNewLeaderboard() {
             return newLeaderboard;
         }
 
+        /**
+         * Returns true if the received high score is on the leaderboard.
+         * @return
+         */
         public boolean isOnLeaderboard() {
             return onLeaderboard;
         }

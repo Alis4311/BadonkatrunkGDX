@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 
 /**
- * Handels a connection to Server sending and recieving information to and
+ * Handels a connection to Server sending and receiving information to and
  * from ServerLeaderboard via Serverconnection.
  *
- * @author Peder Nilsson and xx and xx
+ * @author Markus Wendler & Peder Nilsson
  */
 
 
@@ -32,6 +32,9 @@ public class ClientConnection extends Thread {
         start();
     }
 
+    /**
+     * Run method that opens a connection to the server and sends the high score achieved on the current map.
+     */
     public void run() {
         try {
             socket = new Socket(ip, port);
