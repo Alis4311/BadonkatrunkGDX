@@ -25,6 +25,8 @@ public class GameScreen implements Screen {
     public static boolean isPausedForAcceleration;
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
+    private boolean clockStarted;
+    private long startTime;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
@@ -37,7 +39,8 @@ public class GameScreen implements Screen {
         vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
-
+        clockStarted = false;
+        startTime = 0;
     }
 
 
@@ -49,9 +52,16 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
+
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(!isPaused){
+
+            if(clockStarted == false) {
+                clockStarted = true;
+                startTime = System.currentTimeMillis();
+                //System.out.println(startTime);
+            }
 
             //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
             if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
@@ -97,7 +107,7 @@ public class GameScreen implements Screen {
 
             //Kolla om fordonet kommit i mål.
             if(vehicle.getX() >= level.getGoalXCoordinates()){
-                nextLevel();
+                nextLevel(startTime);
             }
             camera.update();
         }
@@ -154,10 +164,13 @@ public class GameScreen implements Screen {
         this.dispose();
     }
 
-    private void nextLevel(){
+    private void nextLevel(long startTime){
+        long levelTime = System.currentTimeMillis() - startTime;
         badonkatrunk.highestUnlockedLevel = Math.min(mapNbr+1, 10);
-        badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
+        //badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
         vehicle.dispose();
+        //this.dispose();
+        badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, levelTime));
         this.dispose();
     }
 
