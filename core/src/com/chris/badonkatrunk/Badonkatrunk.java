@@ -1,5 +1,6 @@
 package com.chris.badonkatrunk;
 
+import Screens.EnterNameScreen;
 import Screens.MenuScreen;
 
 import Vehicles.VehicleFactory;
@@ -14,6 +15,7 @@ import java.io.IOException;
 public class Badonkatrunk extends Game{
         public static SpriteBatch batch;
         public int highestUnlockedLevel = 0;
+        public String username;
 
 		@Override
 		public void create() {
@@ -29,7 +31,16 @@ public class Badonkatrunk extends Game{
 			}
 			batch = new SpriteBatch();
 			System.out.println(highestUnlockedLevel);
-			this.setScreen(new MenuScreen(this));
+
+			FileHandle fileUsername = Gdx.files.local("username.txt");
+			String usernameFromFile = fileUsername.readString();
+			if(usernameFromFile.isEmpty()){
+				this.username = usernameFromFile;
+				this.setScreen(new EnterNameScreen(this));
+			}
+			else{
+				this.setScreen(new MenuScreen(this));
+			}
 		}
 
 		@Override

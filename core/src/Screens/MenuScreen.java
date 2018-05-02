@@ -21,7 +21,7 @@ public class MenuScreen implements Screen {
     private Stage stage;
     private ImageButton buttonPlay;
     private ImageButton buttonLevels;
-    private ImageButton buttonExit;
+    private ImageButton buttonChangeUsername;
     private Camera camera;
 
     private Badonkatrunk badonkatrunk;
@@ -37,12 +37,13 @@ public class MenuScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        buttonPlay = menuButton.CreateImageButton("PlayButton.png", 150, 350);
-        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 200);
-        buttonExit = menuButton.CreateImageButton("ExitButton.png", 150, 50);
+        buttonPlay = menuButton.CreateImageButton("PlayButton.png", 150, 300);
+        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 150);
+        buttonChangeUsername = menuButton.CreateImageButton("changeUser.png", 10, 400);
+        buttonChangeUsername.setSize(50,50);
         stage.addActor(buttonPlay);
         stage.addActor(buttonLevels);
-        stage.addActor(buttonExit);
+        stage.addActor(buttonChangeUsername);
 
         buttonPlay.addListener(new ChangeListener() {
             @Override
@@ -60,13 +61,13 @@ public class MenuScreen implements Screen {
                 stage.dispose();
             }
         });
-        buttonExit.addListener(new ChangeListener() {
+        buttonChangeUsername.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                badonkatrunk.setScreen(new EnterNameScreen(badonkatrunk));
+                stage.dispose();
             }
         });
-
     }
 
     @Override
