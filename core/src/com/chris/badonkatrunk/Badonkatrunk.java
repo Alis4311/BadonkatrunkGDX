@@ -10,6 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 
 public class Badonkatrunk extends Game{
@@ -36,6 +37,10 @@ public class Badonkatrunk extends Game{
 			System.out.println(highestUnlockedLevel);
 
 			FileHandle fileUsername = Gdx.files.local("username.txt");
+			FileHandle usernameInternal = Gdx.files.internal("username.txt");
+			if(!fileUsername.exists()){
+				usernameInternal.copyTo(fileUsername);
+			}
 			String usernameFromFile = fileUsername.readString();
 			if(usernameFromFile.isEmpty()){
 				this.username = usernameFromFile;
