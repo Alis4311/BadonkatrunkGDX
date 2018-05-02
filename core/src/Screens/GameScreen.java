@@ -5,6 +5,7 @@ import MapTest.MapLoader;
 import Vehicles.VehicleFactory;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
@@ -15,7 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen{
     OrthographicCamera camera;
     Vehicle vehicle;
     Map level;
