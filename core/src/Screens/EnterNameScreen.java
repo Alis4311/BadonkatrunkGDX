@@ -63,6 +63,8 @@ public class EnterNameScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 FileHandle fileUsername = Gdx.files.local("username.txt");
                 String username = tfUsername.getText();
+                System.out.println(tfUsername.getText());
+                badonkatrunk.username = tfUsername.getText();
                 fileUsername.writeString(username, false);
 
                 badonkatrunk.setScreen(new MenuScreen(badonkatrunk));

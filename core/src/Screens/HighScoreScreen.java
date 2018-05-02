@@ -8,9 +8,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -25,19 +29,49 @@ public class HighScoreScreen implements Screen {
     private Stage stage;
     private Camera camera;
 
+    private BitmapFont font;
+    private Skin skinButton;
+    private TextureAtlas buttonAtlas;
+    private TextButton.TextButtonStyle textButtonStyle;
     private Badonkatrunk badonkatrunk;
+    private TextButton[] buttons;
 
-    public HighScoreScreen(final Badonkatrunk badonkatrunk, int mapNbr, long time) {
+    public HighScoreScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long time) {
+
+        this.badonkatrunk = badonkatrunk;
+
         Camera camera = new OrthographicCamera();
         Viewport viewport = new StretchViewport(500, 500, camera);
         viewport.apply();
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
-        this.badonkatrunk = badonkatrunk;
 
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
+        font = new BitmapFont();
+        skinButton=new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("textButton.txt"));
+        skinButton.addRegions(buttonAtlas);
+        textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = font;
+
+        textButtonStyle.up = skinButton.getDrawable("rounded_rectangle_button");
+        textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
+        textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
+        buttons = getButtons();
+        MenuButton menuButton = new MenuButton();
+       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextLevel.png", 150, 300);
+        buttonNextLevel.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
+
+                badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, time));
+                stage.dispose();
+            }
+        });
+        stage.addActor(buttonNextLevel);
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         ClientConnection connection = new ClientConnection("127.0.0.1",3464,highScore, this);
     }
@@ -87,12 +121,31 @@ public class HighScoreScreen implements Screen {
     public void isOnLeaderboard(boolean onLeaderboard){
         if(onLeaderboard){
             //TODO: Display congratulations.
+            System.out.println("Congratulations!");
+        } else {
+            System.out.println("You suck!");
         }
     }
 
     public void showLeaderboard(ArrayList<HighScore> newLeaderboard){
-        for (HighScore score : newLeaderboard) {
-            //TODO: compose list and display.
+        for(int i = 0; i<10; i++){
+            buttons[i].setText(10-i + ".     " +newLeaderboard.get(9-i).getUserName() + "      " + newLeaderboard.get(9-i).getMilliSecTime());
         }
+
+    }
+
+    private TextButton[] getButtons(){
+        TextButton[] buttons = new TextButton[10];
+        for(int i = 0; i<buttons.length; i++){
+            buttons[i] = new TextButton("",textButtonStyle);
+
+            buttons[i].setText("");
+            buttons[i].setHeight(50);
+            buttons[i].setWidth(400);
+            buttons[i].setPosition(50,(i*30)+30);
+            stage.addActor(buttons[i]);
+        }
+
+        return buttons;
     }
 }

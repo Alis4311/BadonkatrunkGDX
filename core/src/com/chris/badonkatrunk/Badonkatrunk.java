@@ -43,10 +43,11 @@ public class Badonkatrunk extends Game{
 			}
 			String usernameFromFile = fileUsername.readString();
 			if(usernameFromFile.isEmpty()){
-				this.username = usernameFromFile;
+
 				this.setScreen(new EnterNameScreen(this));
 			}
 			else{
+				this.username = usernameFromFile;
 				this.setScreen(new MenuScreen(this));
 			}
 		}

@@ -72,10 +72,15 @@ public class ServerConnection implements Runnable {
                 ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream dis = new ObjectInputStream(socket.getInputStream());
                 score = (HighScore) dis.readObject();
+                System.out.println("Score received");
                 newLeaderboard = leaderboard.checkHighScore(score);
+                System.out.println("Leaderboard created");
                 onLeaderboard = leaderboard.isOnLeaderboard();
+                System.out.println("On Leaderboard: " + onLeaderboard);
                 dos.writeBoolean(onLeaderboard);
+                System.out.println("sent onLeaderboard");
                 dos.writeObject(newLeaderboard);
+                System.out.println("sent newLeaderboard");
                 dos.flush();
                 dos.close();
                 dis.close();

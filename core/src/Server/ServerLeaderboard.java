@@ -39,16 +39,16 @@ public class ServerLeaderboard {
     public ServerLeaderboard(){
         onLeaderboard = false;
 
-        addEmptyHighScore(highScoreLevel1);
-        addEmptyHighScore(highScoreLevel2);
-        addEmptyHighScore(highScoreLevel3);
-        addEmptyHighScore(highScoreLevel4);
-        addEmptyHighScore(highScoreLevel5);
-        addEmptyHighScore(highScoreLevel6);
-        addEmptyHighScore(highScoreLevel7);
-        addEmptyHighScore(highScoreLevel8);
-        addEmptyHighScore(highScoreLevel9);
-        addEmptyHighScore(highScoreLevel10);
+        addEmptyHighScore(highScoreLevel1,1);
+        addEmptyHighScore(highScoreLevel2,2);
+        addEmptyHighScore(highScoreLevel3,3);
+        addEmptyHighScore(highScoreLevel4,4);
+        addEmptyHighScore(highScoreLevel5,5);
+        addEmptyHighScore(highScoreLevel6,6);
+        addEmptyHighScore(highScoreLevel7,7);
+        addEmptyHighScore(highScoreLevel8,8);
+        addEmptyHighScore(highScoreLevel9,9);
+        addEmptyHighScore(highScoreLevel10,10);
     }
 
     /**
@@ -132,9 +132,9 @@ public class ServerLeaderboard {
      * Sets the fist leaderboard to be empty.
      * @param highScoreLevel - the leaderboard to set.
      */
-    private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
+    private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel, int mapnumber){
         for (int i = 0; i < NUMBER_OF_HIGH_SCORES_PER_LEVEL; i++){
-            highScoreLevel.add(new HighScore(0, 0, "AAA"));
+            highScoreLevel.add(new HighScore(mapnumber, 600000, "AAA"));
         }
     }
 

@@ -1,10 +1,12 @@
 package ClientHighScore;
 
+import java.io.Serializable;
+
 /**
  * Class that holds information about the high score on a specific map.
  * @author Markus Wendler
  */
-public class HighScore {
+public class HighScore implements Serializable {
 
     private int levelNbr;
     private long milliSecTime;

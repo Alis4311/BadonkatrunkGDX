@@ -24,7 +24,7 @@ public class ClientConnection extends Thread {
     private int port;
     private HighScore score;
     private HighScoreScreen screen;
-    private boolean onLeaderboard;
+    private boolean onLeaderboard = false;
     private ArrayList<HighScore> newLeaderboard = new ArrayList<HighScore>();
 
 
@@ -49,16 +49,18 @@ public class ClientConnection extends Thread {
             onLeaderboard = ois.readBoolean();
             newLeaderboard = (ArrayList<HighScore>) ois.readObject();
 
-
             oos.close();
             ois.close();
-            screen.isOnLeaderboard(onLeaderboard);
-            screen.showLeaderboard(newLeaderboard);
+
 
         } catch (IOException e) {
+
             e.printStackTrace();
         } catch (ClassNotFoundException ce){
             ce.printStackTrace();
+        } finally {
+            screen.isOnLeaderboard(onLeaderboard);
+            screen.showLeaderboard(newLeaderboard);
         }
     }
 
