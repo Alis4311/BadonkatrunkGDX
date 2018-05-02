@@ -133,7 +133,7 @@ public class ServerLeaderboard {
      * @param highScoreLevel - the leaderboard to set.
      */
     private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
-        for (int i = 0; i < NUMBER_OF_LEVELS; i++){
+        for (int i = 0; i < NUMBER_OF_HIGH_SCORES_PER_LEVEL; i++){
             highScoreLevel.add(new HighScore(0, 0, "AAA"));
         }
     }
