@@ -1,5 +1,7 @@
 package ClientHighScore;
 
+import Screens.HighScoreScreen;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -21,14 +23,16 @@ public class ClientConnection extends Thread {
     private String ip;
     private int port;
     private HighScore score;
+    private HighScoreScreen screen;
     private boolean onLeaderboard;
     private ArrayList<HighScore> newLeaderboard = new ArrayList<HighScore>();
 
 
-    public ClientConnection(String ip, int port, HighScore score){
+    public ClientConnection(String ip, int port, HighScore score, HighScoreScreen screen){
         this.ip = ip;
         this.port = port;
         this.score = score;
+        this.screen = screen;
         start();
     }
 
@@ -48,10 +52,14 @@ public class ClientConnection extends Thread {
 
             oos.close();
             ois.close();
+            screen.isOnLeaderboard(onLeaderboard);
+            screen.showLeaderboard(newLeaderboard);
+
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException ce){
             ce.printStackTrace();
         }
     }
+
 }

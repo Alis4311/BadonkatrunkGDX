@@ -7,10 +7,10 @@ package ClientHighScore;
 public class HighScore {
 
     private int levelNbr;
-    private int milliSecTime;
+    private long milliSecTime;
     private String userName;
 
-    public HighScore(int levelNbr, int milliSecTime, String userName){
+    public HighScore(int levelNbr, long milliSecTime, String userName){
         this.levelNbr = levelNbr;
         this.milliSecTime = milliSecTime;
         this.userName = userName;
@@ -36,7 +36,7 @@ public class HighScore {
      * Returns the current high scores time in milliseconds.
      * @return - int, the time in milliseconds.
      */
-    public int getMilliSecTime() {
+    public long getMilliSecTime() {
         return milliSecTime;
     }
 
@@ -44,7 +44,7 @@ public class HighScore {
      * Sets the time for the map.
      * @param miliSecTime - the time the map was finished on.
      */
-    public void setMiliSecTime(int miliSecTime) {
+    public void setMiliSecTime(long miliSecTime) {
         this.milliSecTime = miliSecTime;
     }
 
