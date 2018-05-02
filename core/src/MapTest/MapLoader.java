@@ -97,34 +97,34 @@ public class MapLoader {
                 texture = new Texture(Gdx.files.internal("house.png"));
                 break;
             case 11:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn1.png"));
+                texture = new Texture(Gdx.files.internal("number1.png"));
                 break;
             case 12:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn2.png"));
+                texture = new Texture(Gdx.files.internal("number2.png"));
                 break;
             case 13:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn3.png"));
+                texture = new Texture(Gdx.files.internal("number3.png"));
                 break;
             case 14:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn4.png"));
+                texture = new Texture(Gdx.files.internal("number4.png"));
                 break;
             case 15:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn5.png"));
+                texture = new Texture(Gdx.files.internal("number5.png"));
                 break;
             case 16:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn6.png"));
+                texture = new Texture(Gdx.files.internal("number6.png"));
                 break;
             case 17:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn7.png"));
+                texture = new Texture(Gdx.files.internal("number7.png"));
                 break;
             case 18:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn8.png"));
+                texture = new Texture(Gdx.files.internal("number8.png"));
                 break;
             case 19:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn9.png"));
+                texture = new Texture(Gdx.files.internal("number9.png"));
                 break;
             case 20:
-                texture = new Texture(Gdx.files.internal("ButtonPictures/btn10.png"));
+                texture = new Texture(Gdx.files.internal("number10.png"));
                 break;
 
         }

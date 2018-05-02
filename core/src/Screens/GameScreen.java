@@ -6,6 +6,7 @@ import Vehicles.VehicleFactory;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen{
     OrthographicCamera camera;
     Vehicle vehicle;
     Map level;
@@ -165,9 +166,17 @@ public class GameScreen implements Screen {
     }
 
     private void nextLevel(long startTime){
+        int nextLevel = Math.min(mapNbr+1,10);
+        if(nextLevel > badonkatrunk.highestUnlockedLevel){
+            badonkatrunk.highestUnlockedLevel = nextLevel;
+            FileHandle file = Gdx.files.local("unlockedLevels.txt");
+            file.writeString(nextLevel+"",false);
+        }
+
         long levelTime = System.currentTimeMillis() - startTime;
         badonkatrunk.highestUnlockedLevel = Math.min(mapNbr+1, 10);
         //badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
+
         vehicle.dispose();
         //this.dispose();
         badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, levelTime));

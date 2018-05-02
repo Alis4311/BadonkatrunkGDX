@@ -2,17 +2,22 @@ package Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AssetLoader;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
@@ -37,13 +42,19 @@ public class EnterNameScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-        tfUsername = new TextField("", skin);
+        //Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        TextField.TextFieldStyle style = new TextField.TextFieldStyle();
+        style.font = new BitmapFont(Gdx.files.internal("default.fnt"));
+        style.fontColor = new Color(255,255,255,255);
+
+
+
+        tfUsername = new TextField("",style);
         tfUsername.setMessageText("Write username here");
         tfUsername.setPosition(150, 300);
         tfUsername.setWidth(170);
-        stage.addActor(tfUsername);
 
+        stage.addActor(tfUsername);
         btnContinue = menuButton.CreateImageButton("continue.png", 160, 150);
         stage.addActor(btnContinue);
 

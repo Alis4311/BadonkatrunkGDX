@@ -5,6 +5,7 @@ import Objects.CollidingObject;
 import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.utils.Timer;
  *
  * author Tim Normark
  */
-public class Vehicle extends Objects.CollidingObject {
+public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private VehicleSound vehicleSound;
     private float accelerationRate;
     private float xSpeed;
@@ -34,6 +35,8 @@ public class Vehicle extends Objects.CollidingObject {
     private DrivingAnimation drivingAnimation;
     private Map level;
 
+    private boolean accelerateTouch = false;
+    private boolean jumpTouch = false;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, Map map) {
@@ -53,7 +56,7 @@ public class Vehicle extends Objects.CollidingObject {
         currentFrame = 1;
 
         level = map;
-
+        Gdx.input.setInputProcessor(this);
     }
 
     private void setRegion(TextureRegion region) {
@@ -68,18 +71,30 @@ public class Vehicle extends Objects.CollidingObject {
           //For whatever reason we need to specify two inputs in order to not automatically loop the input.
           //TODO: figure out why?
         // The reason is that the pointer keeps its values after touchUp.
-        float x0 = Gdx.input.getX(0);
-        float x1 = -1;
+/*            float x0;
+            float x1;
+            boolean accelerateTouch = false;
+            boolean jumpTouch = false;
+
+            if(Gdx.input.isTouched()){
+                x0 = Gdx.input.getX(0);
+                x1 = Gdx.input.getX(1);
+
+            } else {
+                x0 = 0;
+                x1 = 0;
+            }
+            accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
             if(Gdx.input.justTouched()){
                 x0 = Gdx.input.getX(0);
                 x1 = Gdx.input.getX(1);
-            }
+                jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2 && x0 > 0) || (Gdx.input.justTouched() && x1 < Gdx.graphics.getWidth() / 2 && x1 > 0);
+            } else {
+                jumpTouch = false;
+            }*/
 
 
 
-            //Define  "buttons" for the acceleration and the jump, at this point there are two "buttons" each covering one half of the screen.
-            boolean accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
-            boolean jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2 && x0 > 0) || (Gdx.input.justTouched() && x1 < Gdx.graphics.getWidth() / 2 && x1 > 0);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
                 if(GameScreen.isPausedForAcceleration || (GameScreen.isPaused && !GameScreen.isPausedForJump)){
@@ -228,6 +243,64 @@ public class Vehicle extends Objects.CollidingObject {
     private void showJumpImage() {
         Timer.instance().clear();
         setRegion(textureAtlas.findRegion("0003"));
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if(Input.Keys.RIGHT == keycode){
+            accelerateTouch = true;
+        }
+
+        if(Input.Keys.SPACE == keycode){
+            jumpTouch = true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if(Input.Keys.RIGHT == keycode){
+            accelerateTouch = false;
+        }
+
+        if(Input.Keys.SPACE == keycode){
+            jumpTouch = false;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = true;
+        if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = true;
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = false;
+        if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = false;
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 
 

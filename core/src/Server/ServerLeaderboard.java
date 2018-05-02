@@ -6,13 +6,12 @@ import ClientHighScore.HighScore;
 import java.util.ArrayList;
 
 /**
- * The Leaderboard containing list of highscores for each track.
+ * The Leaderboard containing list of high scores for each track.
  * Provides a leaderboard, compares a users time, can add the tracktime
- * plus a user nick to a leaderboard for each track.
+ * plus a username to a leaderboard for each track.
  *
- * @author Peder Nilsson & xxxx &  xxxx & xxxxx
+ * @author Peder Nilsson & Markus Wendler
  *
- * Bara ett utkast -  fixa och trixa - allihopa  - go!!
  */
 
 public class ServerLeaderboard {
@@ -52,6 +51,11 @@ public class ServerLeaderboard {
         addEmptyHighScore(highScoreLevel10);
     }
 
+    /**
+     * Method that compares a new high score with the existing high scores on the leaderboard.
+     * @param highScoreLevel - all the top high scores on a specific map.
+     * @param score - the new high score.
+     */
     private void compareTime(ArrayList<HighScore> highScoreLevel, HighScore score) {
         for (int i = 0; i < NUMBER_OF_HIGH_SCORES_PER_LEVEL; i++){
             if (score.getMilliSecTime() < highScoreLevel.get(i).getMilliSecTime()){
@@ -61,12 +65,23 @@ public class ServerLeaderboard {
         }
     }
 
+    /**
+     * Updates the current leaderboard and sets new value on the variables to return.
+     * @param highScoreLevel - the current high score list (leaderboard)
+     * @param score - the new high score.
+     * @param position - the position on the leaderboard that the new high score should be.
+     */
     private void update(ArrayList<HighScore> highScoreLevel, HighScore score, int position){
         onLeaderboard = true;
         highScoreLevel.add(position, score);
         newLeaderboard = highScoreLevel;
     }
 
+    /**
+     * Chooses the right ArrayList (leaderboard) associated with the new high score.
+     * @param score - the new high score.
+     * @return ArrayList<HighScore>, the new leaderboard.
+     */
     public ArrayList<HighScore> checkHighScore(HighScore score){
         switch (score.getLevelNbr()){
             case 1 :
@@ -113,12 +128,20 @@ public class ServerLeaderboard {
         return newLeaderboard;
     }
 
+    /**
+     * Sets the fist leaderboard to be empty.
+     * @param highScoreLevel - the leaderboard to set.
+     */
     private void addEmptyHighScore(ArrayList<HighScore> highScoreLevel){
         for (int i = 0; i < NUMBER_OF_LEVELS; i++){
             highScoreLevel.add(new HighScore(0, 0, "AAA"));
         }
     }
 
+    /**
+     * Returns if the new high score is on the leaderboard.
+     * @return - boolean, true if new high score is on leaderboard.
+     */
     public boolean isOnLeaderboard(){
         return onLeaderboard;
     }
