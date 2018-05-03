@@ -382,6 +382,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
 
         private void jump() {
+            jumpSound.stop();
             jumpSound.play();
 
         }

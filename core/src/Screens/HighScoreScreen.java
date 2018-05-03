@@ -61,16 +61,25 @@ public class HighScoreScreen implements Screen {
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         buttons = getButtons();
         MenuButton menuButton = new MenuButton();
-       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextLevel.png", 150, 300);
+       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextLevel.png", 225, 400);
+        ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 20, 400);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
 
-                badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, time));
+                badonkatrunk.setScreen(new GameScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
                 stage.dispose();
             }
         });
+        buttonLevels.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
+                stage.dispose();
+            }
+        });
+        stage.addActor(buttonLevels);
         stage.addActor(buttonNextLevel);
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         ClientConnection connection = new ClientConnection("127.0.0.1",3464,highScore, this);
@@ -128,7 +137,7 @@ public class HighScoreScreen implements Screen {
     }
 
     public void showLeaderboard(ArrayList<HighScore> newLeaderboard){
-        for(int i = 0; i<10; i++){
+        for(int i = 0; i<Math.min(10,newLeaderboard.size()); i++){
             buttons[i].setText(10-i + ".     " +newLeaderboard.get(9-i).getUserName() + "      " + newLeaderboard.get(9-i).getMilliSecTime());
         }
 

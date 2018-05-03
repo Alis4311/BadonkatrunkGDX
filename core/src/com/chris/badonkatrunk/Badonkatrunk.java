@@ -3,6 +3,7 @@ package com.chris.badonkatrunk;
 import Screens.EnterNameScreen;
 import Screens.MenuScreen;
 
+import Screens.WinScreen;
 import Vehicles.VehicleFactory;
 import com.badlogic.gdx.*;
 
@@ -49,6 +50,7 @@ public class Badonkatrunk extends Game{
 			else{
 				this.username = usernameFromFile;
 				this.setScreen(new MenuScreen(this));
+				//this.setScreen(new WinScreen(this,1,9000));
 			}
 		}
 

@@ -51,6 +51,7 @@ public class EnterNameScreen implements Screen {
 
         tfUsername = new TextField("",style);
         tfUsername.setMessageText("Write username here");
+        tfUsername.setMaxLength(3);
         tfUsername.setPosition(150, 300);
         tfUsername.setWidth(170);
 
@@ -62,9 +63,9 @@ public class EnterNameScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 FileHandle fileUsername = Gdx.files.local("username.txt");
-                String username = tfUsername.getText();
-                System.out.println(tfUsername.getText());
-                badonkatrunk.username = tfUsername.getText();
+                String username = tfUsername.getText().toUpperCase();
+                System.out.println(username);
+                badonkatrunk.username = username;
                 fileUsername.writeString(username, false);
 
                 badonkatrunk.setScreen(new MenuScreen(badonkatrunk));

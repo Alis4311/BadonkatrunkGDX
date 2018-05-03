@@ -46,6 +46,7 @@ public class ClientConnection extends Thread {
             ois = new ObjectInputStream(socket.getInputStream());
             oos.writeObject(score);
             oos.flush();
+            System.out.println("Reading");
             onLeaderboard = ois.readBoolean();
             newLeaderboard = (ArrayList<HighScore>) ois.readObject();
 
