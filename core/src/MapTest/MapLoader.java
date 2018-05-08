@@ -64,6 +64,7 @@ public class MapLoader {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
+        GameScreen.isPaused = true;
         return new Map(getBackgroundImageForTheme(theme),obstacleObjects,backgroundObjects,goalXCoordinates,theme);
     }
 
@@ -75,12 +76,16 @@ public class MapLoader {
                 texture = new Texture(Gdx.files.internal("cobble.png"));
                 break;
             case 1:
+                texture = new Texture(Gdx.files.internal("hayBale.png"));
                 break;
             case 2:
+                texture = new Texture(Gdx.files.internal("moonPiece.png"));
                 break;
             case 3:
+                texture = new Texture(Gdx.files.internal("moonGoalFlag.png"));
                 break;
             case 4:
+                texture = new Texture(Gdx.files.internal(""));
                 break;
             case 5:
                 break;
@@ -133,7 +138,18 @@ public class MapLoader {
 
 
     private static Sprite getBackgroundImageForTheme(int theme){
-        //TODO: Write switch case for the three themes.
-        return new Sprite(new Texture(Gdx.files.internal("cityBackground.png")));
+        Sprite sprite = new Sprite();
+        switch(theme){
+            case 1:
+                sprite = new Sprite(new Texture(Gdx.files.internal("cityBackground.png")));
+                break;
+            case 2:
+                sprite = new Sprite(new Texture(Gdx.files.internal("farmBackground.png")));
+                break;
+            case 3:
+                sprite = new Sprite(new Texture(Gdx.files.internal("spaceBackground.png")));
+                break;
+        }
+        return sprite;
     }
 }
