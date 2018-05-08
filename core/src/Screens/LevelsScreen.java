@@ -35,7 +35,7 @@ public class LevelsScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
 
         buttons = new ImageButton[10];
-        btnBack = menuButton.CreateImageButton("back.png", 10, 450);
+        btnBack = menuButton.CreateImageButton("arrowLeft.png", 10, 450);
         buttons[0] = menuButton.CreateImageButton("number1.png", 64, 320);
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);

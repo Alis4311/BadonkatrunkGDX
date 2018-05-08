@@ -30,11 +30,12 @@ public class GameScreen implements Screen{
     private long startTime;
     private long currentExpiredTime;
     private BitmapFont font;
+    private String timeString;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         font = new BitmapFont();
-        font.setColor(Color.RED);
+        font.setColor(Color.WHITE);
         batch = Badonkatrunk.batch;
         this.mapNbr = mapNbr;
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
@@ -121,8 +122,13 @@ public class GameScreen implements Screen{
         batch.begin();
 
         level.draw(batch);
+
         currentExpiredTime = System.currentTimeMillis() - startTime;
-        font.draw(batch, "Time: " + (float)currentExpiredTime/1000,camera.position.x,camera.position.y + 200);
+        if(currentExpiredTime > 10000){
+            currentExpiredTime = 0;
+        }
+        timeString = "Time: " +  currentExpiredTime/1000;
+        font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2,camera.position.y + 200);
         if(isPausedForJump){
             doJumpPauseStuff();
         }
