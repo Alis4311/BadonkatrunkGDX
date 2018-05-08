@@ -28,9 +28,13 @@ public class GameScreen implements Screen{
     private int mapNbr;
     private boolean clockStarted;
     private long startTime;
+    private long currentExpiredTime;
+    private BitmapFont font;
 
     public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
+        font = new BitmapFont();
+        font.setColor(Color.RED);
         batch = Badonkatrunk.batch;
         this.mapNbr = mapNbr;
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
@@ -117,6 +121,8 @@ public class GameScreen implements Screen{
         batch.begin();
 
         level.draw(batch);
+        currentExpiredTime = System.currentTimeMillis() - startTime;
+        font.draw(batch, "Time: " + (float)currentExpiredTime/1000,camera.position.x,camera.position.y + 200);
         if(isPausedForJump){
             doJumpPauseStuff();
         }
@@ -171,11 +177,12 @@ public class GameScreen implements Screen{
             badonkatrunk.highestUnlockedLevel = nextLevel;
             FileHandle file = Gdx.files.local("unlockedLevels.txt");
             file.writeString(nextLevel+"",false);
+
         }
 
+
         long levelTime = System.currentTimeMillis() - startTime;
-        badonkatrunk.highestUnlockedLevel = Math.min(mapNbr+1, 10);
-        //badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr+1));
+
 
         vehicle.dispose();
         //this.dispose();
