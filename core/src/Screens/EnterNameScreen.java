@@ -56,7 +56,7 @@ public class EnterNameScreen implements Screen {
         tfUsername.setWidth(170);
 
         stage.addActor(tfUsername);
-        btnContinue = menuButton.CreateImageButton("continue.png", 160, 150);
+        btnContinue = menuButton.CreateImageButton("arrowRight.png", 160, 150);
         stage.addActor(btnContinue);
 
         btnContinue.addListener(new ChangeListener() {
