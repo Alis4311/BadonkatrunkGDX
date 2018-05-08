@@ -73,7 +73,7 @@ public class WinScreen implements Screen {
         winButton.setPosition(200,400);
         stage.addActor(winButton);
 
-        buttonNextLevel = menuButton.CreateImageButton("nextLevelButton.png", 122, 300);
+        buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 300);
         buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
         buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
 

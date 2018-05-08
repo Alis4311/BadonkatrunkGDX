@@ -53,6 +53,8 @@ public class Badonkatrunk extends Game{
 				this.setScreen(new MenuScreen(this));
 				//this.setScreen(new WinScreen(this,1,9000));
 			}
+
+			
 		}
 
 		@Override

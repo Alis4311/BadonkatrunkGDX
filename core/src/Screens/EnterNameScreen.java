@@ -42,7 +42,6 @@ public class EnterNameScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        //Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextField.TextFieldStyle style = new TextField.TextFieldStyle();
         style.font = new BitmapFont(Gdx.files.internal("default.fnt"));
         style.fontColor = new Color(255,255,255,255);
