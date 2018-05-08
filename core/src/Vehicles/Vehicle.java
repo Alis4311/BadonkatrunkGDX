@@ -40,7 +40,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, Map map) {
-        super(new Sprite(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0001")));
+        super(new Sprite(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0002")));
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         vehicleSound = new VehicleSound(engineSound, jumpSound);
         this.maxSpeed = maxSpeed;
