@@ -70,12 +70,12 @@ public class WinScreen implements Screen {
         winButton.setText("Congratulations! \n Time: " + seconds + "s");
         winButton.setHeight(50);
         winButton.setWidth(100);
-        winButton.setPosition(160,400);
+        winButton.setPosition(200,400);
         stage.addActor(winButton);
 
-        buttonNextLevel = menuButton.CreateImageButton("nextLevelButton.png", 150, 300);
-        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 200);
-        buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 150, 100);
+        buttonNextLevel = menuButton.CreateImageButton("nextLevelButton.png", 122, 300);
+        buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
+        buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
 
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
