@@ -114,7 +114,7 @@ public class ServerConnection implements Runnable {
     }
 
     public static void main(String[] args) throws IOException {
-        new ServerConnection(3464);
+        new ServerConnection(8080);
     }
 }
 

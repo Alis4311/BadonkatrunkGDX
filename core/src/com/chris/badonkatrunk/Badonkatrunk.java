@@ -31,6 +31,7 @@ public class Badonkatrunk extends Game{
 			try {
 				BufferedReader br = new BufferedReader(file.reader());
 				highestUnlockedLevel = Integer.parseInt(br.readLine());
+                //highestUnlockedLevel = 1;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

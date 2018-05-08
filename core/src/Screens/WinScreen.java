@@ -80,7 +80,7 @@ public class WinScreen implements Screen {
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
 
                 badonkatrunk.setScreen(new GameScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
                 stage.dispose();

@@ -36,6 +36,8 @@ public class LevelsScreen implements Screen{
         btn2 = menuButton.CreateImageButton("number2.png", 192, 320);
         btn3 = menuButton.CreateImageButton("number3.png", 320, 320);
         btn4 = menuButton.CreateImageButton("number4.png", 448, 320);
+        ImageButton lock4 = menuButton.CreateImageButton("lock.png", (int)(btn4.getX()+btn4.getWidth()-64),(int)btn4.getY()+64);
+        lock4.setSize(64,64);
         btn5 = menuButton.CreateImageButton("number5.png", 128, 192);
         btn6 = menuButton.CreateImageButton("number6.png", 256, 192);
         btn7 = menuButton.CreateImageButton("number7.png", 384, 192);
@@ -48,6 +50,7 @@ public class LevelsScreen implements Screen{
         stage.addActor(btn2);
         stage.addActor(btn3);
         stage.addActor(btn4);
+        stage.addActor(lock4);
         stage.addActor(btn5);
         stage.addActor(btn6);
         stage.addActor(btn7);

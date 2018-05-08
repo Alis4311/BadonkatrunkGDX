@@ -9,7 +9,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import static com.badlogic.gdx.Gdx.gl;
 
-public class LoadScreen implements Screen {
+public class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private Texture logo;
     private SpriteBatch spriteBatch;

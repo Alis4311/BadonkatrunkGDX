@@ -82,7 +82,8 @@ public class HighScoreScreen implements Screen {
         stage.addActor(buttonLevels);
         stage.addActor(buttonNextLevel);
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
-        ClientConnection connection = new ClientConnection("127.0.0.1",3464,highScore, this);
+        //ClientConnection connection = new ClientConnection("192.168.43.22",80,highScore, this);
+        ClientConnection connection = new ClientConnection("127.0.0.1",8080,highScore, this);
     }
 
     @Override
