@@ -48,9 +48,7 @@ public class MenuScreen implements Screen {
         buttonPlay.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
-
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
                 stage.dispose();
             }
         });
@@ -78,7 +76,7 @@ public class MenuScreen implements Screen {
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         }
     }
 

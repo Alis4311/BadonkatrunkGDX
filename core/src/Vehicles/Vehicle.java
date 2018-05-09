@@ -339,7 +339,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             this.engineSound = engineSound;
 
             try {
-                Thread.sleep(800);
+                Thread.sleep(1000);
             } catch (InterruptedException e ) {}
 
             MAX_PITCH = 2.0f;

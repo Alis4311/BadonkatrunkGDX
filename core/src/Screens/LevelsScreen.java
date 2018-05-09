@@ -63,70 +63,70 @@ public class LevelsScreen implements Screen{
         buttons[0].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 1));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 1));
                 stage.dispose();
             }
         });
         buttons[1].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 2));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 2));
                 stage.dispose();
             }
         });
         buttons[2].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 3));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 3));
                 stage.dispose();
             }
         });
         buttons[3].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 4));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 4));
                 stage.dispose();
             }
         });
         buttons[4].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 5));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 5));
                 stage.dispose();
             }
         });
         buttons[5].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 6));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 6));
                 stage.dispose();
             }
         });
         buttons[6].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 7));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 7));
                 stage.dispose();
             }
         });
         buttons[7].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 8));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 8));
                 stage.dispose();
             }
         });
         buttons[8].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 9));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 9));
                 stage.dispose();
             }
         });
         buttons[9].addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, 10));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, 10));
                 stage.dispose();
             }
         });
@@ -150,7 +150,7 @@ public class LevelsScreen implements Screen{
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         }
     }
 

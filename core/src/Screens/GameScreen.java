@@ -32,21 +32,26 @@ public class GameScreen implements Screen{
     private BitmapFont font;
     private String timeString;
 
-    public GameScreen(Badonkatrunk badonkatrunk, int mapNbr) {
+    public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
+        this.vehicle = vehicle;
+        this.level = level;
+        this.mapNbr = mapNbr;
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         batch = Badonkatrunk.batch;
-        this.mapNbr = mapNbr;
+        //this.mapNbr = mapNbr;
+
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        level = MapLoader.load(mapNbr);
+        //level = MapLoader.load(mapNbr);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
-        vehicle = VehicleFactory.create(level);
+        //vehicle = VehicleFactory.create(level);
         shape = new ShapeRenderer();
         isPaused = true;
         clockStarted = false;
         startTime = 0;
+
     }
 
 
@@ -172,7 +177,7 @@ public class GameScreen implements Screen{
     }
 
     public void restart(){
-        badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr));
+        badonkatrunk.setScreen(new LoadScreen(badonkatrunk, mapNbr));
         vehicle.dispose();
         this.dispose();
     }
@@ -186,12 +191,9 @@ public class GameScreen implements Screen{
 
         }
 
-
         long levelTime = System.currentTimeMillis() - startTime;
 
-
         vehicle.dispose();
-        //this.dispose();
         badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, levelTime));
         this.dispose();
     }

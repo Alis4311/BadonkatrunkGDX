@@ -1,38 +1,71 @@
 package Screens;
 
+import MapTest.Map;
+import MapTest.MapLoader;
+import Vehicles.Vehicle;
+import Vehicles.VehicleFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 import static com.badlogic.gdx.Gdx.gl;
 
 public class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
-    private Texture logo;
-    private SpriteBatch spriteBatch;
+    private int mapNbr;
+    private int counter = 0;
 
-    public LoadScreen(Badonkatrunk badonkatrunk) {
+    private Stage stage;
+    private MenuButton menuButton = new MenuButton();
+    private ImageButton loadImage;
+
+    public LoadScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
+        this.mapNbr = mapNbr;
+
+        Camera camera = new OrthographicCamera();
+        Viewport viewport = new StretchViewport(500, 500, camera);
+        viewport.apply();
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+
+        stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+
+        loadImage = menuButton.CreateImageButton("loadingBackground.png", 0, 0);
+        stage.addActor(loadImage);
     }
 
     @Override
     public void show() {
-        logo = new Texture(Gdx.files.internal("error.png"));
-        spriteBatch = new SpriteBatch();
+
     }
 
     @Override
     public void render(float delta) {
-        spriteBatch.begin();
-        spriteBatch.draw(logo, 0, 0);
-        spriteBatch.end();
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {}
-        //badonkatrunk.setScreen(new GameScreen(badonkatrunk));
+        Gdx.gl.glClearColor(0,0,0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.draw();
+
+        if(counter > 3) {
+            Map level = MapLoader.load(mapNbr);
+            Vehicle vehicle = VehicleFactory.create(level);
+            badonkatrunk.setScreen(new GameScreen(badonkatrunk, vehicle, level, mapNbr));
+            stage.dispose();
+        }
+        counter++;
+
     }
 
     @Override

@@ -61,14 +61,12 @@ public class HighScoreScreen implements Screen {
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         buttons = getButtons();
         MenuButton menuButton = new MenuButton();
-       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextLevel.png", 225, 400);
+       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 225, 400);
         ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 20, 400);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
-
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
                 stage.dispose();
             }
         });
@@ -94,7 +92,7 @@ public class HighScoreScreen implements Screen {
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         }
     }
 

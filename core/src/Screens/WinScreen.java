@@ -80,9 +80,7 @@ public class WinScreen implements Screen {
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                badonkatrunk.setScreen(new LoadScreen(badonkatrunk));
-
-                badonkatrunk.setScreen(new GameScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
+                badonkatrunk.setScreen(new LoadScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
                 stage.dispose();
             }
         });
@@ -108,8 +106,7 @@ public class WinScreen implements Screen {
 
     @Override
     public void show() {
-        System.out.println(levelTime);
-        //badonkatrunk.setScreen(new GameScreen(badonkatrunk, mapNbr + 1));
+
     }
 
     @Override
@@ -120,7 +117,7 @@ public class WinScreen implements Screen {
         stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new GameScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
         }
     }
 
