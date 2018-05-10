@@ -87,7 +87,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-
+        badonkatrunk.playMenuMusic();
     }
 
     @Override

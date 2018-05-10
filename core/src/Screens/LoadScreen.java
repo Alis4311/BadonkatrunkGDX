@@ -24,6 +24,8 @@ public class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private int counter = 0;
+    private Map level;
+    private Vehicle vehicle;
 
     private Stage stage;
     private MenuButton menuButton = new MenuButton();
@@ -48,6 +50,7 @@ public class    LoadScreen implements Screen {
 
     @Override
     public void show() {
+        badonkatrunk.stopMenuMusic();
 
     }
 
@@ -58,9 +61,9 @@ public class    LoadScreen implements Screen {
 
         stage.draw();
 
-        if(counter > 3) {
-            Map level = MapLoader.load(mapNbr);
-            Vehicle vehicle = VehicleFactory.create(level);
+        if(counter > 50) {
+            level = MapLoader.load(mapNbr);
+            vehicle = VehicleFactory.create(level);
             badonkatrunk.setScreen(new GameScreen(badonkatrunk, vehicle, level, mapNbr));
             stage.dispose();
         }

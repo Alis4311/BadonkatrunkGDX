@@ -57,7 +57,7 @@ public class GameScreen implements Screen{
 
     @Override
     public void show() {
-
+        //badonkatrunk.playGameMusic();
     }
 
     @Override
@@ -192,8 +192,9 @@ public class GameScreen implements Screen{
         }
 
         long levelTime = System.currentTimeMillis() - startTime;
-
+        //badonkatrunk.stopGameMusic();
         vehicle.dispose();
+        badonkatrunk.playMenuMusic();
         badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, levelTime));
         this.dispose();
     }
