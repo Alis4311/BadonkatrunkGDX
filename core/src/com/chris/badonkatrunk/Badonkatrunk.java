@@ -25,7 +25,7 @@ public class Badonkatrunk extends Game{
 
 		@Override
 		public void create() {
-			menuMusic = new BadonkaMusic("loop2.ogg");
+			menuMusic = new BadonkaMusic("loop3.mp3");
 			gameMusic = new BadonkaMusic("loop2.ogg");
 			FileHandle file = Gdx.files.local("unlockedLevels.txt");
 			FileHandle fileInternal = Gdx.files.internal("unlockedLevels.txt");
