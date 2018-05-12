@@ -29,13 +29,13 @@ public class VehicleFactory {
 
             case 2 :
                 vehicle = new Vehicle("tractor.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.ogg")),
-                        Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 4, 0.3f,
+                        Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 2, 0.6f,
                         15, 1f, map);
                 break;
 
             case 3 :
                 vehicle = new Vehicle("rocket.atlas", Gdx.audio.newSound(Gdx.files.internal("enginesound.ogg")),
-                        Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 4, 0.3f,
+                        Gdx.audio.newSound(Gdx.files.internal("CarJump.wav")), 12, 2f,
                         15, 0.2f, map);
                 break;
         }

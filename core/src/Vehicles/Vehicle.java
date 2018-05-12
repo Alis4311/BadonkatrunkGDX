@@ -308,10 +308,23 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         @Override
         public void run() {
             currentFrame++;
-            if(currentFrame > 4)
-                currentFrame = 1;
+            if (currentFrame >= 1 && currentFrame < 5) {
+                currentAtlasKey = "0001";
+            } else if(currentFrame >= 5 && currentFrame <10){
+                currentAtlasKey = "0002";
+            } else if(currentFrame >= 15 && currentFrame <20){
+                currentAtlasKey = "0003";
+            } else{
 
-            currentAtlasKey = String.format("%04d", currentFrame);
+                /*if(currentFrame >= 20 && currentFrame < 25){
+                currentAtlasKey = "0002";
+            } else {*/
+                currentFrame = 1;
+            }
+
+
+
+            //currentAtlasKey = String.format("%04d", currentFrame);
             setRegion(textureAtlas.findRegion(currentAtlasKey));
         }
     }

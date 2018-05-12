@@ -37,8 +37,8 @@ public class MenuScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        buttonPlay = menuButton.CreateImageButton("PlayButton.png", 150, 300);
-        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 150, 150);
+        buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 300);
+        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 150);
         buttonChangeUsername = menuButton.CreateImageButton("changeUser.png", 10, 400);
         buttonChangeUsername.setSize(50,50);
         stage.addActor(buttonPlay);

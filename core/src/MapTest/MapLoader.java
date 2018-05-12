@@ -21,10 +21,12 @@ public class MapLoader {
         FileHandle fileInternal = Gdx.files.internal(mapNbr+".txt");
         FileHandle file = Gdx.files.local(mapNbr+".txt");
         if(!Gdx.files.local(mapNbr+".txt").exists()){
+         //if(true){
             fileInternal.copyTo(file);
         }
         //File file = new File(mapNbr+".txt");
-        int theme = 1; // Load theme 1 if something is broken. 
+        //int theme = 1; // Load theme 1 if something is broken.
+        int theme = 0;
         LinkedList<DecorativeObject> backgroundObjects = new LinkedList<DecorativeObject>();
         LinkedList<CollidingObject> obstacleObjects = new LinkedList<CollidingObject>();
         int goalXCoordinates = 0;

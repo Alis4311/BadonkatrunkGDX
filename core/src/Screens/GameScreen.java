@@ -129,7 +129,7 @@ public class GameScreen implements Screen{
         level.draw(batch);
 
         currentExpiredTime = System.currentTimeMillis() - startTime;
-        if(currentExpiredTime > 10000){
+        if(currentExpiredTime > 1000000){
             currentExpiredTime = 0;
         }
         timeString = "Time: " +  currentExpiredTime/1000;
