@@ -96,6 +96,7 @@ public class WinScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new HighScoreScreen(badonkatrunk, mapNbr, levelTime));
+                stage.dispose();
             }
         });
 
