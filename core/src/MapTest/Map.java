@@ -73,7 +73,9 @@ public class Map {
 
     }
 
+    public void dispose(){
 
+    }
 
     /**
      * Returns the background Sprite.

@@ -27,7 +27,6 @@ public class WinScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private long levelTime;
-
     private Stage stage;
     private MenuButton menuButton = new MenuButton();
     private ImageButton buttonNextLevel;
@@ -81,14 +80,16 @@ public class WinScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new LoadScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
-                stage.dispose();
+                WinScreen.this.dispose();
+
             }
         });
         buttonLevels.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
-                stage.dispose();
+                WinScreen.this.dispose();
+
             }
         });
 
@@ -96,7 +97,8 @@ public class WinScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new HighScoreScreen(badonkatrunk, mapNbr, levelTime));
-                stage.dispose();
+                WinScreen.this.dispose();
+
             }
         });
 
@@ -144,6 +146,8 @@ public class WinScreen implements Screen {
 
     @Override
     public void dispose() {
+        font.dispose();
+        stage.dispose();
 
     }
 

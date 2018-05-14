@@ -39,7 +39,7 @@ public class MenuScreen implements Screen {
 
         buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 300);
         buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 150);
-        buttonChangeUsername = menuButton.CreateImageButton("changeUser.png", 10, 400);
+        buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 0, 450);
         buttonChangeUsername.setSize(50,50);
         stage.addActor(buttonPlay);
         stage.addActor(buttonLevels);

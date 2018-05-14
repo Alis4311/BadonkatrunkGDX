@@ -18,6 +18,7 @@ public class BadonkaMusic {
         }
         music.setVolume(1f);
         music.setLooping(true);
+
         music.play();
 
         while(music.isPlaying() == false) {

@@ -51,7 +51,6 @@ public class GameScreen implements Screen{
         isPaused = true;
         clockStarted = false;
         startTime = 0;
-
     }
 
 
@@ -173,6 +172,8 @@ public class GameScreen implements Screen{
 
     @Override
     public void dispose() {
+        font.dispose();
+        shape.dispose();
         vehicle.dispose();
     }
 

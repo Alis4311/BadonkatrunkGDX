@@ -69,6 +69,7 @@ public class EnterNameScreen implements Screen {
 
                 badonkatrunk.setScreen(new MenuScreen(badonkatrunk));
                 stage.dispose();
+
             }
         });
     }

@@ -67,14 +67,15 @@ public class HighScoreScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new LoadScreen(badonkatrunk, Math.min(mapNbr + 1, 10)));
-                stage.dispose();
+                HighScoreScreen.this.dispose();
+
             }
         });
         buttonLevels.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
-                stage.dispose();
+                HighScoreScreen.this.dispose();
             }
         });
         stage.addActor(buttonLevels);
@@ -93,12 +94,16 @@ public class HighScoreScreen implements Screen {
 
         if(Gdx.input.isKeyPressed(Input.Keys.Q)){
             badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
+            this.dispose();
         }
     }
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        font.dispose();
+        skinButton.dispose();
+        buttonAtlas.dispose();
     }
 
     @Override

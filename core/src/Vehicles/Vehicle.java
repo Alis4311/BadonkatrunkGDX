@@ -68,30 +68,6 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
      */
     private void processInput(){
 
-          //For whatever reason we need to specify two inputs in order to not automatically loop the input.
-          //TODO: figure out why?
-        // The reason is that the pointer keeps its values after touchUp.
-/*            float x0;
-            float x1;
-            boolean accelerateTouch = false;
-            boolean jumpTouch = false;
-
-            if(Gdx.input.isTouched()){
-                x0 = Gdx.input.getX(0);
-                x1 = Gdx.input.getX(1);
-
-            } else {
-                x0 = 0;
-                x1 = 0;
-            }
-            accelerateTouch = (Gdx.input.isTouched(0) && x0 > Gdx.graphics.getWidth() / 2) || (Gdx.input.isTouched(1) && x1 > Gdx.graphics.getWidth() / 2);
-            if(Gdx.input.justTouched()){
-                x0 = Gdx.input.getX(0);
-                x1 = Gdx.input.getX(1);
-                jumpTouch = (Gdx.input.justTouched() && x0 < Gdx.graphics.getWidth() / 2 && x0 > 0) || (Gdx.input.justTouched() && x1 < Gdx.graphics.getWidth() / 2 && x1 > 0);
-            } else {
-                jumpTouch = false;
-            }*/
 
 
 
@@ -111,7 +87,9 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
                     GameScreen.isPaused = false;
                 }
 
-                jump();
+                    jump();
+
+
             }
     }
 
@@ -121,7 +99,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     public void update(boolean isPaused){
         processInput();
         if(!isPaused){
-            ySpeed -= gravity;
+            ySpeed = Math.max(ySpeed-gravity, -31);
             collisionHandling();
         }
 
@@ -129,9 +107,8 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
 
     public void dispose(){
-        //vehicleSound.jumpSound.pause();
-        //vehicleSound.engineSound.pause();
         vehicleSound.stop();
+        textureAtlas.dispose();
     }
 
     protected void setPosition(float xPosition, float yPosition) {
@@ -227,7 +204,9 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
     public void jump() {
         if(grounded) {
-            vehicleSound.jump();
+            if(ySpeed <= 0) {
+                vehicleSound.jump();
+            }
             ySpeed = this.jumpHeight;
             grounded = false;
         }
@@ -395,7 +374,6 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
 
         private void jump() {
-            jumpSound.stop();
             jumpSound.play();
 
         }
