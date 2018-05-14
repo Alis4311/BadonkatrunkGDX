@@ -335,23 +335,25 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             } catch (InterruptedException e ) {}
 
             MAX_PITCH = 1.5f;
-            MIN_PITCH = 0.5f;
-            pitchChangeRate = 0.1f;
+            MIN_PITCH = 0.8f;
+            pitchChangeRate = 0.05f;
 
             MAX_VOLUME = 1.0f;
-            MIN_VOLUME = 0.4F;
-            volumeChangeRate = 0.1f;
+            MIN_VOLUME = 0.7F;
 
+            volumeChangeRate = 0.05f;
             engineSoundId = this.engineSound.loop();
-            this.engineSound.setPitch(engineSoundId, MIN_PITCH + 0.1f);
-            this.engineSound.setVolume(engineSoundId, MIN_VOLUME);
+            pitch = MIN_PITCH;
+            engineVolume = MIN_VOLUME;
+            this.engineSound.setPitch(engineSoundId, pitch);
+            this.engineSound.setVolume(engineSoundId, engineVolume);
     }
 
 
         private void accelerate() {
             if(pitch < MAX_PITCH) {
-                engineSound.setPitch(engineSoundId, pitch);
                 pitch += pitchChangeRate;
+                engineSound.setPitch(engineSoundId, pitch);
 
                 if(engineVolume < MAX_VOLUME) {
                     engineVolume += volumeChangeRate;
@@ -363,8 +365,8 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         private void decelerate() {
 
             if(pitch > MIN_PITCH) {
-                engineSound.setPitch(engineSoundId, pitch);
                 pitch -= pitchChangeRate;
+                engineSound.setPitch(engineSoundId, pitch);
 
                 if(engineVolume > MIN_VOLUME) {
                     engineVolume -= volumeChangeRate;
