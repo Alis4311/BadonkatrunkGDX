@@ -334,7 +334,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
                 Thread.sleep(1000);
             } catch (InterruptedException e ) {}
 
-            MAX_PITCH = 2.0f;
+            MAX_PITCH = 1.5f;
             MIN_PITCH = 0.5f;
             pitchChangeRate = 0.1f;
 
