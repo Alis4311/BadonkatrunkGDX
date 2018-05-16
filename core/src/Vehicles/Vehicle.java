@@ -37,6 +37,9 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
     private boolean accelerateTouch = false;
     private boolean jumpTouch = false;
+    private boolean pauseTouch = false;
+    private boolean resumeTouch = false;
+    private boolean levelsTouch = false;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, float gravity, Map map) {
@@ -68,28 +71,42 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
      */
     private void processInput(){
 
-
-
-
-
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
-                if(GameScreen.isPausedForAcceleration || (GameScreen.isPaused && !GameScreen.isPausedForJump)){
+            if(GameScreen.isPausedForButton) {
+                if(resumeTouch) {
+                    GameScreen.isPausedForButton = false;
                     GameScreen.isPaused = false;
-                    GameScreen.isPausedForAcceleration = false;
+
+                    //För säkerhets skull, kan annars bli fel vid swipe.
+                    pauseTouch = false;
+                    resumeTouch = false;
+                    jumpTouch = false;
+                } else if(levelsTouch) {
+                    GameScreen.returnToLevels = true;
+                    GameScreen.isPausedForButton = false;
+                    GameScreen.isPaused = false;
                 }
-                accelerate();
+
             } else {
-                idling();
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch) {
-                if(GameScreen.isPausedForJump){
-                    GameScreen.isPausedForJump = false;
-                    GameScreen.isPaused = false;
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || accelerateTouch) {
+                    if (GameScreen.isPausedForAcceleration || (GameScreen.isPaused && !GameScreen.isPausedForJump)) {
+                        GameScreen.isPaused = false;
+                        GameScreen.isPausedForAcceleration = false;
+                    }
+                    accelerate();
+                } else {
+                    idling();
                 }
-
+                if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || jumpTouch) {
+                    if (GameScreen.isPausedForJump) {
+                        GameScreen.isPausedForJump = false;
+                        GameScreen.isPaused = false;
+                    }
                     jump();
-
-
+                }
+                if (pauseTouch) {
+                    GameScreen.isPausedForButton = true;
+                    GameScreen.isPaused = true;
+                }
             }
     }
 
@@ -255,8 +272,24 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //Kolla om spelaren tryckt på höger sida av skärmen
         if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = true;
-        if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = true;
+
+        //Kolla först om spelaren tryckt uppe till vänster, runt pausknapp. Annars om spelaren tryckt någonstans på vänster sida av skärmen.
+        if(screenX < 75 && screenY < 75) {
+            pauseTouch = true;
+        } else if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = true;
+
+        //Kolla om spelaren tryckt inom x-koordinaterna som resume- och levels-knapparna ligger.
+        if(screenX > Gdx.graphics.getWidth() / 4 && screenX < Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 4)) {
+            //Kolla om spelaren tryckt inom y-koordinaterna för resume-knapp, annars om inom koordinater för levels-knapp.
+            if(screenY < Gdx.graphics.getHeight() / 2 && screenY > Gdx.graphics.getHeight() / 4) {
+                resumeTouch = true;
+            } else if(screenY > Gdx.graphics.getHeight() / 2 && screenY < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 4) {
+                levelsTouch = true;
+            }
+        }
+
         return false;
     }
 
@@ -264,6 +297,18 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = false;
         if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = false;
+        if(screenX < 75 && screenY < 75) pauseTouch = false;
+
+        //Kolla om spelaren släppt inom x-koordinaterna som resume- och levels-knapparna ligger.
+        if(screenX > Gdx.graphics.getWidth() / 4 && screenX < Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 4)) {
+            //Kolla om spelaren släppt inom y-koordinaterna för resume-knapp, annars om inom koordinater för levels-knapp.
+            if(screenY < Gdx.graphics.getHeight() / 2 && screenY > Gdx.graphics.getHeight() / 4) {
+                resumeTouch = false;
+            } else if(screenY > Gdx.graphics.getHeight() / 2 && screenY < Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 4) {
+                levelsTouch = false;
+            }
+        }
+
         return false;
     }
 

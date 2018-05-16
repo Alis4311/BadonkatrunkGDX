@@ -12,7 +12,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
+import com.sun.prism.image.ViewPort;
 
 
 public class GameScreen implements Screen{
@@ -24,6 +32,8 @@ public class GameScreen implements Screen{
     public static boolean isPaused;
     public static boolean isPausedForJump;
     public static boolean isPausedForAcceleration;
+    public static boolean isPausedForButton;
+    public static boolean returnToLevels;
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private boolean clockStarted;
@@ -31,6 +41,10 @@ public class GameScreen implements Screen{
     private long currentExpiredTime;
     private BitmapFont font;
     private String timeString;
+
+    private Sprite pauseButton;
+    private Sprite resumeButton;
+    private Sprite levelsButton;
 
     public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
@@ -40,7 +54,6 @@ public class GameScreen implements Screen{
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         batch = Badonkatrunk.batch;
-        //this.mapNbr = mapNbr;
 
         //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
         //level = MapLoader.load(mapNbr);
@@ -51,6 +64,11 @@ public class GameScreen implements Screen{
         isPaused = true;
         clockStarted = false;
         startTime = 0;
+
+        pauseButton = new Sprite(new Texture(Gdx.files.internal("pauseButton.png")));
+        resumeButton = new Sprite(new Texture(Gdx.files.internal("resumeButton.png")));
+        levelsButton = new Sprite(new Texture(Gdx.files.internal("levelsButtonBig.png")));
+
     }
 
 
@@ -133,11 +151,21 @@ public class GameScreen implements Screen{
         }
         timeString = "Time: " +  currentExpiredTime/1000;
         font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2,camera.position.y + 200);
+
+        pauseButton.setPosition(camera.position.x - (camera.viewportWidth / 2) + 15, camera.position.y + (camera.viewportHeight / 2) - 50);
+        pauseButton.draw(batch, 1f);
+
         if(isPausedForJump){
             doJumpPauseStuff();
         }
         if(isPausedForAcceleration){
             doAcceleratePauseStuff();
+        }
+        if(isPausedForButton) {
+            doPauseForButtonStuff();
+        }
+        if(returnToLevels) {
+            returnToLevels();
         }
         vehicle.draw(batch);
 
@@ -200,6 +228,14 @@ public class GameScreen implements Screen{
         this.dispose();
     }
 
+    public void returnToLevels() {
+        returnToLevels = false;
+        vehicle.dispose();
+        badonkatrunk.playMenuMusic();
+        badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
+        dispose();
+    }
+
     public void doJumpPauseStuff(){
         Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUp.png")));
         Sprite greyCar = new Sprite(new Texture(Gdx.files.internal("Introbana/greyCar.png")));
@@ -240,5 +276,12 @@ public class GameScreen implements Screen{
         arrow1.draw(batch);
         arrow2.draw(batch);
         arrow3.draw(batch);
+    }
+
+    public void doPauseForButtonStuff() {
+        resumeButton.setPosition(camera.position.x  - 120, camera.position.y + 40);
+        levelsButton.setPosition(camera.position.x - 120, camera.position.y - 100);
+        resumeButton.draw(batch);
+        levelsButton.draw(batch);
     }
 }
