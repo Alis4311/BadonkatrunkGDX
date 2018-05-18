@@ -35,6 +35,7 @@ public class Map {
     public Map(Sprite background){
         theme = 1;
         this.background = background;
+
         backgroundObjectList = new LinkedList<DecorativeObject>();
         obstacleObjectList = new LinkedList<CollidingObject>();
         goalXCoordinates = (int)background.getWidth()-75;
@@ -81,7 +82,7 @@ public class Map {
      * Returns the background Sprite.
      * @return - Sprite.
      */
-    public Sprite getBackground(){
+    private Sprite getBackground(){
         return background;
     }
 
@@ -89,7 +90,7 @@ public class Map {
      * Adds sprites to the list that holds objects that has collision.
 
      */
-    public void addObstacleObjects(CollidingObject object){
+    private void addObstacleObjects(CollidingObject object){
         obstacleObjectList.add(object);
     }
 
@@ -146,7 +147,8 @@ public class Map {
     }
 
     public void draw(SpriteBatch batch){
-        this.background.draw(batch);
+        //this.background.draw(batch);
+        batch.draw(background.getTexture(),0,0);
         for(DecorativeObject decorativeObject : backgroundObjectList){
             decorativeObject.draw(batch);
         }

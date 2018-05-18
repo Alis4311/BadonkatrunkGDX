@@ -25,11 +25,8 @@ import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
 
 public class EnterNameScreen implements Screen {
-    private MenuButton menuButton = new MenuButton();
     private Stage stage;
     private TextField tfUsername;
-    private ImageButton btnContinue;
-    private Badonkatrunk badonkatrunk;
 
     public EnterNameScreen(final Badonkatrunk badonkatrunk){
         Camera camera = new OrthographicCamera();
@@ -37,7 +34,7 @@ public class EnterNameScreen implements Screen {
         viewport.apply();
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
         camera.update();
-        this.badonkatrunk = badonkatrunk;
+        Badonkatrunk badonkatrunk1 = badonkatrunk;
 
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
@@ -55,7 +52,8 @@ public class EnterNameScreen implements Screen {
         tfUsername.setWidth(170);
 
         stage.addActor(tfUsername);
-        btnContinue = menuButton.CreateImageButton("arrowRight.png", 160, 150);
+        MenuButton menuButton = new MenuButton();
+        ImageButton btnContinue = menuButton.CreateImageButton("arrowRight.png", 160, 150);
         stage.addActor(btnContinue);
 
         btnContinue.addListener(new ChangeListener() {

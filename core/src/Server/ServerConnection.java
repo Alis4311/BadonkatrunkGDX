@@ -19,17 +19,17 @@ import java.util.ArrayList;
  *
  */
 
-public class ServerConnection implements Runnable {
+class ServerConnection implements Runnable {
 
 
-    private Thread server = new Thread(this);
     private ServerSocket serverSocket;
     private ServerLeaderboard leaderboard;
 
 
-    public ServerConnection(int port) throws IOException {
+    private ServerConnection(int port) throws IOException {
         leaderboard = new ServerLeaderboard();
         serverSocket = new ServerSocket(port);
+        Thread server = new Thread(this);
         server.start();
     }
 
@@ -44,7 +44,7 @@ public class ServerConnection implements Runnable {
                 Socket socket = serverSocket.accept();
                 new ClientHandler(socket).start();
             } catch (IOException e) {
-                System.err.println(e);
+                e.printStackTrace();
             }
         }
     }
@@ -59,7 +59,7 @@ public class ServerConnection implements Runnable {
         private ArrayList<HighScore> newLeaderboard;
 
 
-        public ClientHandler(Socket socket) {
+        ClientHandler(Socket socket) {
             this.socket = socket;
         }
 

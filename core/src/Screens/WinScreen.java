@@ -26,23 +26,14 @@ import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 public class WinScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
-    private long levelTime;
     private Stage stage;
-    private MenuButton menuButton = new MenuButton();
-    private ImageButton buttonNextLevel;
-    private ImageButton buttonLevels;
-    private ImageButton buttonHighScore;
 
     private BitmapFont font;
-    private Skin skinButton;
-    private TextureAtlas buttonAtlas;
-    private TextButton.TextButtonStyle textButtonStyle;
-    private TextButton winButton;
 
     public WinScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long levelTime) {
         this.badonkatrunk = badonkatrunk;
         this.mapNbr = mapNbr;
-        this.levelTime = levelTime;
+        long levelTime1 = levelTime;
 
         double seconds = ((double)levelTime / 1000) % 60 ;
 
@@ -56,25 +47,26 @@ public class WinScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         font = new BitmapFont();
-        skinButton=new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("textButton.txt"));
+        Skin skinButton = new Skin();
+        TextureAtlas buttonAtlas = new TextureAtlas(Gdx.files.internal("textButton.txt"));
         skinButton.addRegions(buttonAtlas);
-        textButtonStyle = new TextButton.TextButtonStyle();
+        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
 
         textButtonStyle.up = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
-        winButton=new TextButton("Finish",textButtonStyle);
+        TextButton winButton = new TextButton("Finish", textButtonStyle);
         winButton.setText("Congratulations! \n Time: " + seconds + "s");
         winButton.setHeight(50);
         winButton.setWidth(100);
         winButton.setPosition(200,400);
         stage.addActor(winButton);
 
-        buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 300);
-        buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
-        buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
+        MenuButton menuButton = new MenuButton();
+        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 300);
+        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
+        ImageButton buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
 
         buttonNextLevel.addListener(new ChangeListener() {
             @Override

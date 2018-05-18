@@ -17,11 +17,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 public class MenuScreen implements Screen {
 
-    private MenuButton menuButton = new MenuButton();
     private Stage stage;
-    private ImageButton buttonPlay;
-    private ImageButton buttonLevels;
-    private ImageButton buttonChangeUsername;
     private Camera camera;
 
     private Badonkatrunk badonkatrunk;
@@ -37,9 +33,10 @@ public class MenuScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 300);
-        buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 150);
-        buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 0, 450);
+        MenuButton menuButton = new MenuButton();
+        ImageButton buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 300);
+        ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 150);
+        ImageButton buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 0, 450);
         buttonChangeUsername.setSize(50,50);
         stage.addActor(buttonPlay);
         stage.addActor(buttonLevels);

@@ -17,11 +17,18 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import java.util.ArrayList;
 
-public class LevelsScreen implements Screen{
-    private MenuButton menuButton = new MenuButton();
+class LevelsScreen implements Screen{
     private Stage stage;
-    private ImageButton btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn10, btnBack;
-    private ImageButton[] buttons;
+    private ImageButton btn1;
+    private ImageButton btn2;
+    private ImageButton btn3;
+    private ImageButton btn4;
+    private ImageButton btn5;
+    private ImageButton btn6;
+    private ImageButton btn7;
+    private ImageButton btn8;
+    private ImageButton btn9;
+    private ImageButton btn10;
     private Camera camera;
     private Badonkatrunk badonkatrunk;
 
@@ -33,8 +40,9 @@ public class LevelsScreen implements Screen{
         camera.update();
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        buttons = new ImageButton[10];
-        btnBack = menuButton.CreateImageButton("arrowLeft.png", 10, 450);
+        ImageButton[] buttons = new ImageButton[10];
+        MenuButton menuButton = new MenuButton();
+        ImageButton btnBack = menuButton.CreateImageButton("arrowLeft.png", 10, 450);
         buttons[0] = menuButton.CreateImageButton("number1.png", 64, 320);
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);
@@ -49,7 +57,7 @@ public class LevelsScreen implements Screen{
         buttons[9] = menuButton.CreateImageButton("number10.png", 384, 64);
 
         stage.addActor(btnBack);
-        for(int i = 0; i <buttons.length; i++){
+        for(int i = 0; i < buttons.length; i++){
             stage.addActor(buttons[i]);
         }
         btnBack.addListener(new ChangeListener() {
@@ -133,7 +141,7 @@ public class LevelsScreen implements Screen{
         for(int i = 0; i<10; i++){
             if(i+1 > badonkatrunk.highestUnlockedLevel){
                 buttons[i].setDisabled(true);
-                ImageButton button = menuButton.CreateImageButton("lock.png", (int)(buttons[i].getX()+buttons[i].getWidth()-64),(int)buttons[i].getY()+64);
+                ImageButton button = menuButton.CreateImageButton("lock.png", (int)(buttons[i].getX()+ buttons[i].getWidth()-64),(int) buttons[i].getY()+64);
                 button.setSize(64,64);
                 stage.addActor(button);
             }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  */
 
-public class ServerLeaderboard {
+class ServerLeaderboard {
 
     private boolean onLeaderboard;
     private ArrayList<HighScore> newLeaderboard;

@@ -16,9 +16,6 @@ import java.util.ArrayList;
 
 
 public class ClientConnection extends Thread {
-    private Socket socket;
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
 
     private String ip;
     private int port;
@@ -41,9 +38,9 @@ public class ClientConnection extends Thread {
      */
     public void run() {
         try {
-            socket = new Socket(ip, port);
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+            Socket socket = new Socket(ip, port);
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             oos.writeObject(score);
             oos.flush();
             System.out.println("Reading");

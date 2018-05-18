@@ -8,13 +8,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class GameObject {
     protected Sprite sprite;
-    protected int id;
+    private int id;
 
-    public GameObject(Sprite sprite){
+    GameObject(Sprite sprite){
         this.sprite = sprite;
     }
 
-    public GameObject(int id, float x, float y){
+    GameObject(int id, float x, float y){
         sprite = getSpriteForID(id);
         this.id = id;
         setSpritePosition(x,y);
@@ -28,7 +28,7 @@ public abstract class GameObject {
         return this.sprite.getY();
     }
 
-    public void setSpritePosition(float x, float y){
+    void setSpritePosition(float x, float y){
         sprite.setPosition(x,y);
     }
 

@@ -20,16 +20,12 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import static com.badlogic.gdx.Gdx.gl;
 
-public class    LoadScreen implements Screen {
+class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private int counter = 0;
-    private Map level;
-    private Vehicle vehicle;
 
     private Stage stage;
-    private MenuButton menuButton = new MenuButton();
-    private ImageButton loadImage;
 
     public LoadScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
@@ -44,7 +40,8 @@ public class    LoadScreen implements Screen {
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
-        loadImage = menuButton.CreateImageButton("loadingBackground.png", 0, 0);
+        MenuButton menuButton = new MenuButton();
+        ImageButton loadImage = menuButton.CreateImageButton("loadingBackground.png", 0, 0);
         stage.addActor(loadImage);
     }
 
@@ -62,8 +59,8 @@ public class    LoadScreen implements Screen {
         stage.draw();
 
         if(counter > 50) {
-            level = MapLoader.load(mapNbr);
-            vehicle = VehicleFactory.create(level);
+            Map level = MapLoader.load(mapNbr);
+            Vehicle vehicle = VehicleFactory.create(level);
             badonkatrunk.setScreen(new GameScreen(badonkatrunk, vehicle, level, mapNbr));
             stage.dispose();
         }

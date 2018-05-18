@@ -10,7 +10,7 @@ public class CollidingObject extends GameObject {
         super(sprite);
     }
 
-    public CollidingObject(Sprite sprite, float x, float y) {
+    CollidingObject(Sprite sprite, float x, float y) {
         super(sprite);
         this.setSpritePosition(x, y);
     }
