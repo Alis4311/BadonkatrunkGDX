@@ -21,7 +21,7 @@ public class MapLoader {
         FileHandle fileInternal = Gdx.files.internal(mapNbr+".txt");
         FileHandle file = Gdx.files.local(mapNbr+".txt");
         if(!Gdx.files.local(mapNbr+".txt").exists()){
-            //if(true){
+           // if(true){
             fileInternal.copyTo(file);
         }
         //File file = new File(mapNbr+".txt");

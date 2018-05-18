@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class Badonkatrunk extends Game{
         public static SpriteBatch batch;
-        public int highestUnlockedLevel = 0;
+        public int highestUnlockedLevel = 1;
         public String username;
         private BadonkaMusic menuMusic;
         private BadonkaMusic gameMusic;

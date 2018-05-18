@@ -47,8 +47,6 @@ class LevelsScreen implements Screen{
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);
         buttons[3] = menuButton.CreateImageButton("number4.png", 448, 320);
-/*        ImageButton lock4 = menuButton.CreateImageButton("lock.png", (int)(btn4.getX()+btn4.getWidth()-64),(int)btn4.getY()+64);
-        lock4.setSize(64,64);*/
         buttons[4] = menuButton.CreateImageButton("number5.png", 128, 192);
         buttons[5] = menuButton.CreateImageButton("number6.png", 256, 192);
         buttons[6] = menuButton.CreateImageButton("number7.png", 384, 192);

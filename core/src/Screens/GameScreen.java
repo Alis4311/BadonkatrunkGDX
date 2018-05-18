@@ -1,8 +1,6 @@
 package Screens;
 
 import MapTest.Map;
-import MapTest.MapLoader;
-import Vehicles.VehicleFactory;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -12,15 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
-import com.sun.prism.image.ViewPort;
 
 
 public class GameScreen implements Screen{
@@ -38,13 +28,18 @@ public class GameScreen implements Screen{
     private int mapNbr;
     private boolean clockStarted;
     private long startTime;
-    private long currentExpiredTime;
     private BitmapFont font;
-    private String timeString;
 
     private Sprite pauseButton;
     private Sprite resumeButton;
     private Sprite levelsButton;
+    private Sprite arrow1 = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowRight2.png")));
+    private Sprite arrow2 = new Sprite(arrow1);
+    private Sprite arrow3 = new Sprite(arrow1);
+    private Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUp.png")));
+    private Sprite greyCar = new Sprite(new Texture(Gdx.files.internal("Introbana/greyCar.png")));
+    private Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
+    private Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
 
     public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
@@ -55,15 +50,15 @@ public class GameScreen implements Screen{
         font.setColor(Color.WHITE);
         batch = Badonkatrunk.batch;
 
-        //level  = new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
-        //level = MapLoader.load(mapNbr);
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
-        //vehicle = VehicleFactory.create(level);
+
         shape = new ShapeRenderer();
         isPaused = true;
         clockStarted = false;
         startTime = 0;
+
+
 
         pauseButton = new Sprite(new Texture(Gdx.files.internal("pauseButton.png")));
         resumeButton = new Sprite(new Texture(Gdx.files.internal("resumeButton.png")));
@@ -74,7 +69,7 @@ public class GameScreen implements Screen{
 
     @Override
     public void show() {
-        //badonkatrunk.playGameMusic();
+
     }
 
     @Override
@@ -88,7 +83,6 @@ public class GameScreen implements Screen{
             if(clockStarted == false) {
                 clockStarted = true;
                 startTime = System.currentTimeMillis();
-                //System.out.println(startTime);
             }
 
             //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
@@ -145,11 +139,11 @@ public class GameScreen implements Screen{
 
         level.draw(batch);
 
-        currentExpiredTime = System.currentTimeMillis() - startTime;
+        long currentExpiredTime = System.currentTimeMillis() - startTime;
         if(currentExpiredTime > 1000000){
             currentExpiredTime = 0;
         }
-        timeString = "Time: " +  currentExpiredTime/1000;
+        String timeString = "Time: " + currentExpiredTime / 1000;
         font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2,camera.position.y + 200);
 
         pauseButton.setPosition(camera.position.x - (camera.viewportWidth / 2) + 15, camera.position.y + (camera.viewportHeight / 2) - 50);
@@ -170,11 +164,6 @@ public class GameScreen implements Screen{
         vehicle.draw(batch);
 
         batch.end();
-        /*shape.begin(ShapeRenderer.ShapeType.Line);
-        shape.rect(vehicle.getTopRectangle().x,vehicle.getTopRectangle().y,vehicle.getTopRectangle().width,vehicle.getTopRectangle().height);
-        shape.rect(vehicle.getBottomRectangle().x,vehicle.getBottomRectangle().y,vehicle.getBottomRectangle().width,vehicle.getBottomRectangle().height);
-        shape.rect(vehicle.getRightRectangle().x,vehicle.getRightRectangle().y,vehicle.getRightRectangle().width,vehicle.getRightRectangle().height);
-        shape.end();*/
 
     }
 
@@ -221,7 +210,6 @@ public class GameScreen implements Screen{
         }
 
         long levelTime = System.currentTimeMillis() - startTime;
-        //badonkatrunk.stopGameMusic();
         vehicle.dispose();
         badonkatrunk.playMenuMusic();
         badonkatrunk.setScreen(new WinScreen(badonkatrunk, mapNbr, levelTime));
@@ -237,10 +225,7 @@ public class GameScreen implements Screen{
     }
 
     public void doJumpPauseStuff(){
-        Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUp.png")));
-        Sprite greyCar = new Sprite(new Texture(Gdx.files.internal("Introbana/greyCar.png")));
-        Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
-        Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
+
         arrow.setPosition(camera.position.x - 150,300);
         arrow.draw(batch);
         greyCar.setPosition(camera.position.x -150,400);
@@ -255,11 +240,7 @@ public class GameScreen implements Screen{
     }
 
     public void doAcceleratePauseStuff(){
-        Sprite arrow1 = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowRight2.png")));
-        Sprite arrow2 = new Sprite(arrow1);
-        Sprite arrow3 = new Sprite(arrow1);
-        Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
-        Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
+
         arrow2.setScale(1.5f);
         arrow3.setScale(2f);
         arrow1.setPosition(camera.position.x +100, 400);
