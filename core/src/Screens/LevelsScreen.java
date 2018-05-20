@@ -17,7 +17,16 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import java.util.ArrayList;
 
-class LevelsScreen implements Screen{
+
+/**
+ * Screen showing 10 levels. Levelbuttons are pictures and are checked every time if Level
+ * is unlocked or locked - this is shown with another picture and buttons are
+ * .setEnabled() true or false accordingly.
+ *
+ * @ author  XXX & Peder Nilsson
+ */
+
+class LevelsScreen implements Screen {
     private Stage stage;
     private ImageButton btn1;
     private ImageButton btn2;
@@ -32,7 +41,15 @@ class LevelsScreen implements Screen{
     private Camera camera;
     private Badonkatrunk badonkatrunk;
 
-    public LevelsScreen(final Badonkatrunk badonkatrunk){
+
+    /**
+     * Construct this screen in provided Batch.
+     * Sets up instances of OrtographicCamera, Viewport, Stage and adds listener to every button.
+     *
+     * @param badonkatrunk
+     */
+
+    public LevelsScreen(final Badonkatrunk badonkatrunk) {
         Camera camera = new OrthographicCamera();
         Viewport viewport = new StretchViewport(600, 600, camera);
         viewport.apply();
@@ -54,10 +71,16 @@ class LevelsScreen implements Screen{
         buttons[8] = menuButton.CreateImageButton("number9.png", 256, 64);
         buttons[9] = menuButton.CreateImageButton("number10.png", 384, 64);
 
+        // adds  every button on stage.
+
         stage.addActor(btnBack);
-        for(int i = 0; i < buttons.length; i++){
+        for (int i = 0; i < buttons.length; i++) {
             stage.addActor(buttons[i]);
         }
+
+
+        // adds listeners to every button.
+
         btnBack.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -136,53 +159,87 @@ class LevelsScreen implements Screen{
             }
         });
 
-        for(int i = 0; i<10; i++){
-            if(i+1 > badonkatrunk.highestUnlockedLevel){
+        //Checks if level is not completed, disable button and adds a picture of a lock
+
+        for (int i = 0; i < 10; i++) {
+            if (i + 1 > badonkatrunk.highestUnlockedLevel) {
                 buttons[i].setDisabled(true);
-                ImageButton button = menuButton.CreateImageButton("lock.png", (int)(buttons[i].getX()+ buttons[i].getWidth()-64),(int) buttons[i].getY()+64);
-                button.setSize(64,64);
+                ImageButton button = menuButton.CreateImageButton("lock.png", (int) (buttons[i].getX() + buttons[i].getWidth() - 64), (int) buttons[i].getY() + 64);
+                button.setSize(64, 64);
                 stage.addActor(button);
             }
         }
 
     }
 
+
+    /**
+     * Renders information and sets color.
+     *
+     * @param delta
+     */
+
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
+        if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
         }
     }
+
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void dispose() {
 
     }
 
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
+
     @Override
     public void show() {
 
     }
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void resize(int width, int height) {
 
     }
 
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
+
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
+
     @Override
     public void resume() {
 
     }
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void hide() {
