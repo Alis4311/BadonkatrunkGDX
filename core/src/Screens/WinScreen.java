@@ -94,9 +94,12 @@ public class WinScreen implements Screen {
             }
         });
 
-        stage.addActor(buttonNextLevel);
+
         stage.addActor(buttonLevels);
         stage.addActor(buttonHighScore);
+        if(mapNbr != 10) {
+            stage.addActor(buttonNextLevel);
+        }
     }
 
     @Override
