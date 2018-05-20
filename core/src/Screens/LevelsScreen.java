@@ -57,24 +57,30 @@ class LevelsScreen implements Screen {
         camera.update();
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
-        ImageButton[] buttons = new ImageButton[10];
+        ImageButton[] buttons = new ImageButton[13];
         MenuButton menuButton = new MenuButton();
-        ImageButton btnBack = menuButton.CreateImageButton("arrowLeft.png", 10, 450);
+        ImageButton btnBack = menuButton.CreateImageButton("arrowLeft.png", 64, 480);
         buttons[0] = menuButton.CreateImageButton("number1.png", 64, 320);
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);
         buttons[3] = menuButton.CreateImageButton("number4.png", 448, 320);
-        buttons[4] = menuButton.CreateImageButton("number5.png", 128, 192);
-        buttons[5] = menuButton.CreateImageButton("number6.png", 256, 192);
-        buttons[6] = menuButton.CreateImageButton("number7.png", 384, 192);
-        buttons[7] = menuButton.CreateImageButton("number8.png", 128, 64);
-        buttons[8] = menuButton.CreateImageButton("number9.png", 256, 64);
-        buttons[9] = menuButton.CreateImageButton("number10.png", 384, 64);
+        buttons[4] = menuButton.CreateImageButton("number5.png", 192, 192);
+        buttons[5] = menuButton.CreateImageButton("number6.png", 320, 192);
+        buttons[6] = menuButton.CreateImageButton("number7.png", 448, 192);
+        buttons[7] = menuButton.CreateImageButton("number8.png", 192, 64);
+        buttons[8] = menuButton.CreateImageButton("number9.png", 320, 64);
+        buttons[9] = menuButton.CreateImageButton("number10.png", 448, 64);
+        buttons[10] = menuButton.CreateImageButton("carLevelscreen.png", 315, 450);
+        buttons[11] = menuButton.CreateImageButton("tractorLevelscreen.png", 78, 180);
+        buttons[12] = menuButton.CreateImageButton("RocketLevelscreen.png", 64, 64);
 
         // adds  every button on stage.
 
         stage.addActor(btnBack);
+
         for (int i = 0; i < buttons.length; i++) {
+            btnBack.setSize(100,100);
+            buttons[i].setSize(100,100);
             stage.addActor(buttons[i]);
         }
 
