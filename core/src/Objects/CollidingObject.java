@@ -39,17 +39,6 @@ public class CollidingObject extends GameObject {
     }
 
 
-    /**
-     * Contructs the instance with provided id and coordinates.
-     *
-     * @param id
-     * @param x
-     * @param y
-     */
-
-    public CollidingObject(int id, float x, float y) {
-        super(id, x, y);
-    }
 
 
     /**
