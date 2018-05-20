@@ -1,6 +1,6 @@
 package Vehicles;
 
-import MapTest.Map;
+import Map.Map;
 import Objects.CollidingObject;
 import Screens.GameScreen;
 import com.badlogic.gdx.Gdx;

@@ -1,7 +1,7 @@
 package Screens;
 
-import MapTest.Map;
-import MapTest.MapLoader;
+import Map.Map;
+import Map.MapLoader;
 import Vehicles.Vehicle;
 import Vehicles.VehicleFactory;
 import com.badlogic.gdx.Gdx;
@@ -9,16 +9,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
-
-import static com.badlogic.gdx.Gdx.gl;
 
 class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;

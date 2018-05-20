@@ -1,4 +1,4 @@
-package MapTest;
+package Map;
 
 import Objects.CollidingObject;
 import Objects.DecorativeObject;

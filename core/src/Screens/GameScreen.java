@@ -1,6 +1,6 @@
 package Screens;
 
-import MapTest.Map;
+import Map.Map;
 import Vehicles.Vehicle;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,11 +19,13 @@ public class GameScreen implements Screen{
     Map level;
     SpriteBatch batch;
     ShapeRenderer shape;
+
     public static boolean isPaused;
     public static boolean isPausedForJump;
     public static boolean isPausedForAcceleration;
     public static boolean isPausedForButton;
     public static boolean returnToLevels;
+
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private boolean clockStarted;
