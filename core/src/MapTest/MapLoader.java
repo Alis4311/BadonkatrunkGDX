@@ -11,21 +11,44 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.io.*;
 import java.util.LinkedList;
 
+/**
+ *  Helper class used to read textfiles containing levels.
+ * @author Christoffer Book
+ */
 public class MapLoader {
-
+    /**
+     * Takes the map to load as inparameter, reads the file, converts to objects, returns a map based on created objects.
+     *
+     * The files follow the following pattern
+     * line 1: theme of the level.
+     * line 2: number of colliding objects;
+     * for as many objects as read in line 2;
+     *      line3: xCoordinate of the object.
+     *      line4: yCoordinate of the object.
+     *      line5: objectType (Used to load the correct texture).
+     * line6: number of decorative objects.
+     * for as many objects as read in line6;
+     *      line7: xCoordinate of the object.
+     *      line8: yCoordinate of the object.
+     *      line9: objectType (Used to load the correct texture).
+     * line10: xPosition of the goalline. This is where the level ends.
+     *
+     * This class and it´s functionality is not directly linked to any requirements.
+     * It´s more of a Quality of Life implementation for developers.
+     * @param mapNbr - the number of the level to load, technically this is a reference to the file.
+     * @return {@link Map}
+     * @author Christoffer Book
+     */
     public static Map load(int mapNbr){
+        /*If the level is 1 use a different constructor to create the map, in order to setup the pauses
+         * required to make the level an introductionlevel.
+         */
         if(mapNbr == 1){
             GameScreen.isPausedForAcceleration = true;
             return new Map(new Sprite(new Texture(Gdx.files.internal("cityBackground.png"))));
         }
-        FileHandle fileInternal = Gdx.files.internal(mapNbr+".txt");
-        FileHandle file = Gdx.files.local(mapNbr+".txt");
-        if(!Gdx.files.local(mapNbr+".txt").exists()){
-           // if(true){
-            fileInternal.copyTo(file);
-        }
-        //File file = new File(mapNbr+".txt");
-        //int theme = 1; // Load theme 1 if something is broken.
+        FileHandle file = Gdx.files.internal(mapNbr+".txt");
+
         int theme = 0;
         LinkedList<DecorativeObject> backgroundObjects = new LinkedList<DecorativeObject>();
         LinkedList<CollidingObject> obstacleObjects = new LinkedList<CollidingObject>();
@@ -34,10 +57,9 @@ public class MapLoader {
 
         try{
             BufferedReader br = new BufferedReader(file.reader());
-            theme = Integer.parseInt(br.readLine());
-            System.out.println(theme);
-            int nbrOfObstacleObjects = Integer.parseInt(br.readLine());
-            System.out.println(nbrOfObstacleObjects);
+            theme = Integer.parseInt(br.readLine()); //Read the theme.
+            int nbrOfObstacleObjects = Integer.parseInt(br.readLine()); //Read number of obstacleobjects.
+            //For the number of obstacleobjects, read coordinates and type, and create an object, place in list.
             for(int i = 0; i < nbrOfObstacleObjects; i++) {
                 float xPosition = Float.parseFloat(br.readLine());
                 float yPosition = Float.parseFloat(br.readLine());
@@ -46,7 +68,8 @@ public class MapLoader {
                 sprite.setPosition((int)xPosition,(int)yPosition);
                 obstacleObjects.add(new CollidingObject(sprite));
             }
-            int nbrOfDecorativeObjects = Integer.parseInt(br.readLine());
+            int nbrOfDecorativeObjects = Integer.parseInt(br.readLine()); // Read number of decorativeobjects.
+            // For the number of decorativeobjects, read coordinates and type, create object and place in list.
             for(int i = 0; i < nbrOfDecorativeObjects; i++){
                 float xPosition = Float.parseFloat(br.readLine());
                 float yPosition = Float.parseFloat(br.readLine());
@@ -56,7 +79,7 @@ public class MapLoader {
                 backgroundObjects.add(new DecorativeObject(sprite));
             }
 
-            goalXCoordinates = Integer.parseInt(br.readLine());
+            goalXCoordinates = Integer.parseInt(br.readLine());// Read the position of the goalline.
             br.close();
 
         } catch (FileNotFoundException e) {
@@ -66,10 +89,16 @@ public class MapLoader {
             // TODO Auto-generated catch block
             e1.printStackTrace();
         }
-        GameScreen.isPaused = true;
-        return new Map(getBackgroundImageForTheme(theme),obstacleObjects,backgroundObjects,goalXCoordinates,theme);
+        GameScreen.isPaused = true; //Pause the game, since each level starts with the game paused.
+        return new Map(getBackgroundImageForTheme(theme),obstacleObjects,backgroundObjects,goalXCoordinates,theme); // build level based on the objects read.
     }
 
+    /**
+     * Take the "type" of object, and return the appropriate texture.
+     * @param type -  a number linked to a specific texture.
+     * @return {@link Texture}
+     * @author Christoffer Book
+     */
     private static Texture getTextureForObject(int type) {
         //TODO: Add all objecttypes to switch case.
         Texture texture = new Texture(Gdx.files.internal("error.png"));
@@ -138,9 +167,14 @@ public class MapLoader {
         return texture;
     }
 
-
+    /**
+     * Take the theme as number and return the appropriate texture linked to that number.
+     * @param theme - The number indicating the theme.
+     * @return {@link Texture}
+     * @author Christoffer Book
+     */
     private static Sprite getBackgroundImageForTheme(int theme){
-        Sprite sprite = new Sprite();
+        Sprite sprite;
         switch(theme){
             case 1:
                 sprite = new Sprite(new Texture(Gdx.files.internal("cityBackground.png")));
@@ -152,6 +186,9 @@ public class MapLoader {
                 Texture texture = new Texture(Gdx.files.internal("spaceBackground.png"));
                 texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
                 sprite = new Sprite(texture);
+                break;
+            default:
+                sprite = new Sprite(new Texture(Gdx.files.internal("cityBackground.png")));
                 break;
         }
         return sprite;

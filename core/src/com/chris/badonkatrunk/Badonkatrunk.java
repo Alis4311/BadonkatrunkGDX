@@ -20,13 +20,11 @@ public class Badonkatrunk extends Game{
         public int highestUnlockedLevel = 1;
         public String username;
         private BadonkaMusic menuMusic;
-        private BadonkaMusic gameMusic;
 
 
 		@Override
 		public void create() {
 			menuMusic = new BadonkaMusic("loop3.mp3");
-			gameMusic = new BadonkaMusic("loop2.ogg");
 			FileHandle file = Gdx.files.local("unlockedLevels.txt");
 			FileHandle fileInternal = Gdx.files.internal("unlockedLevels.txt");
 			if(!file.exists()){
@@ -36,7 +34,6 @@ public class Badonkatrunk extends Game{
 			try {
 				BufferedReader br = new BufferedReader(file.reader());
 				highestUnlockedLevel = Integer.parseInt(br.readLine());
-                //highestUnlockedLevel = 1;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -56,7 +53,6 @@ public class Badonkatrunk extends Game{
 			else{
 				this.username = usernameFromFile;
 				this.setScreen(new MenuScreen(this));
-				//this.setScreen(new WinScreen(this,1,9000));
 			}
 
 
@@ -76,12 +72,5 @@ public class Badonkatrunk extends Game{
 			menuMusic.fadeOut();
 		}
 
-		public void playGameMusic() {
-			gameMusic.play();
-		}
-
-		public void stopGameMusic() {
-			gameMusic.fadeOut();
-		}
 }
 

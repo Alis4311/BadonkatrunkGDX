@@ -14,12 +14,6 @@ public abstract class GameObject {
         this.sprite = sprite;
     }
 
-    GameObject(int id, float x, float y){
-        sprite = getSpriteForID(id);
-        this.id = id;
-        setSpritePosition(x,y);
-    }
-
     public float getX(){
         return this.sprite.getX();
     }
@@ -28,20 +22,8 @@ public abstract class GameObject {
         return this.sprite.getY();
     }
 
-    void setSpritePosition(float x, float y){
+    public void setSpritePosition(float x, float y){
         sprite.setPosition(x,y);
-    }
-
-    public void setX(float x){
-        this.sprite.setX(x);
-    }
-
-    public void setY(float y){
-        this.sprite.setY(y);
-    }
-
-    public void setSize(float width, float height){
-        this.sprite.setSize(width,height);
     }
 
     public float getWidth(){

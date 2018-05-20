@@ -23,19 +23,28 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import java.util.ArrayList;
 
+/**
+ * Screen to display the HighScore-screen.o
+ * @author Christoffer Book
+ * From Requirements number : FO-1 Leaderboard
+ */
 public class HighScoreScreen implements Screen {
 
-
-    private Stage stage;
-    private Camera camera;
-
+    private Badonkatrunk badonkatrunk;
     private BitmapFont font;
     private Skin skinButton;
-    private TextureAtlas buttonAtlas;
-    private TextButton.TextButtonStyle textButtonStyle;
-    private Badonkatrunk badonkatrunk;
+    private Stage stage;
     private TextButton[] buttons;
+    private TextButton.TextButtonStyle textButtonStyle;
+    private TextureAtlas buttonAtlas;
 
+    /**
+     * Constructor for the HighScore-screen.
+     *
+     * @param badonkatrunk - Referemce to the "main"-class, that is responsible for the switching of screens.
+     * @param mapNbr - The level played.
+     * @param time - The time in milliseconds in which the level was completed.
+     */
     public HighScoreScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long time) {
 
         this.badonkatrunk = badonkatrunk;
@@ -91,13 +100,11 @@ public class HighScoreScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
-
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
-            this.dispose();
-        }
     }
 
+    /**
+     * Dispose everything used, in order to not cause memoryleaks.
+     */
     @Override
     public void dispose() {
         stage.dispose();
@@ -140,6 +147,11 @@ public class HighScoreScreen implements Screen {
         }
     }
 
+    /**
+     * Iterate through the list and place names and times in ascending order based on time.
+     * @param newLeaderboard the list to iterate through
+     * @author Christoffer Book
+     */
     public void showLeaderboard(ArrayList<HighScore> newLeaderboard){
         for(int i = 0; i<Math.min(10,newLeaderboard.size()); i++){
             buttons[i].setText(10-i + ".     " +newLeaderboard.get(9-i).getUserName() + "      " + newLeaderboard.get(9-i).getMilliSecTime());
@@ -147,6 +159,11 @@ public class HighScoreScreen implements Screen {
 
     }
 
+    /**
+     * Create the buttons and place them in appropriate locations.
+     * @return the array of buttons, that are placed on the stage.
+     * @author Christoffer Book
+     */
     private TextButton[] getButtons(){
         TextButton[] buttons = new TextButton[10];
         for(int i = 0; i<buttons.length; i++){

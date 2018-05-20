@@ -9,12 +9,4 @@ public class DecorativeObject extends GameObject {
         super(sprite);
     }
 
-    public DecorativeObject(Sprite sprite, float x, float y){
-        super(sprite);
-        this.setSpritePosition(x,y);
-    }
-
-    public DecorativeObject(int id, float x, float y){
-        super(id,x,y);
-    }
 }
