@@ -7,8 +7,9 @@ public class PauseObject extends CollidingObject {
     private boolean isTriggered;
 
     public PauseObject(Sprite sprite, float x, float y) {
-        super(sprite, x, y);
+        super(sprite);
         sprite.setSize(10, 500);
+        sprite.setPosition(x,y);
         isTriggered = false;
     }
 

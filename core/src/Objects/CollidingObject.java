@@ -26,22 +26,6 @@ public class CollidingObject extends GameObject {
 
 
     /**
-     * Provides Sprite for colliding objects with coordinates.
-     *
-     * @param sprite
-     * @param x
-     * @param y
-     */
-
-    CollidingObject(Sprite sprite, float x, float y) {
-        super(sprite);
-        this.setSpritePosition(x, y);
-    }
-
-
-
-
-    /**
      * Gets the surrounding Colliding box for current sprite.
      *
      * @return Rectangle
