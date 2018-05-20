@@ -170,7 +170,7 @@ class LevelsScreen implements Screen {
         for (int i = 0; i < 10; i++) {
             if (i + 1 > badonkatrunk.highestUnlockedLevel) {
                 buttons[i].setDisabled(true);
-                ImageButton button = menuButton.CreateImageButton("lock.png", (int) (buttons[i].getX() + buttons[i].getWidth() - 64), (int) buttons[i].getY() + 64);
+                ImageButton button = menuButton.CreateImageButton("lock.png", (int) (buttons[i].getX() + buttons[i].getWidth() - 35), (int) buttons[i].getY() - 44);
                 button.setSize(64, 64);
                 stage.addActor(button);
             }
