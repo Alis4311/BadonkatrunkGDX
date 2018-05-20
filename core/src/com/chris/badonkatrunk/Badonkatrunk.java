@@ -26,14 +26,13 @@ import Vehicles.VehicleFactory;
 
 public class Badonkatrunk extends Game {
     private BadonkaMusic menuMusic;
-    private BadonkaMusic gameMusic;
     public int highestUnlockedLevel = 1;
     public static SpriteBatch batch;
     public String username;
 
 
     /**
-     * Creates instances of two classes for playing the music, reads
+     * Creates instances of a class for playing the music, reads
      * previoulsy logged activity and username.
      * If no previous activity a username is asked for when button is pressed.
      */
@@ -41,9 +40,9 @@ public class Badonkatrunk extends Game {
     @Override
     public void create() {
         menuMusic = new BadonkaMusic("loop3.mp3");
-        gameMusic = new BadonkaMusic("loop2.ogg");
         FileHandle file = Gdx.files.local("unlockedLevels.txt");
         FileHandle fileInternal = Gdx.files.internal("unlockedLevels.txt");
+        //Since we need to be able to write to this file, we need to copy it to local storage.
         if (!file.exists()) {
             fileInternal.copyTo(file);
         }
@@ -51,7 +50,6 @@ public class Badonkatrunk extends Game {
         try {
             BufferedReader br = new BufferedReader(file.reader());
             highestUnlockedLevel = Integer.parseInt(br.readLine());
-            //highestUnlockedLevel = 1;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +68,6 @@ public class Badonkatrunk extends Game {
         } else {
             this.username = usernameFromFile;
             this.setScreen(new MenuScreen(this));
-            //this.setScreen(new WinScreen(this,1,9000));
         }
     }
 
@@ -103,21 +100,5 @@ public class Badonkatrunk extends Game {
     }
 
 
-    /**
-     * Plays music when user reached goal in a level.
-     */
-
-    public void playGameMusic() {
-        gameMusic.play();
-    }
-
-
-    /**
-     * Fades out music from level exit.
-     */
-
-    public void stopGameMusic() {
-        gameMusic.fadeOut();
-    }
 }
 
