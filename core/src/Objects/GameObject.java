@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Entity superclass for objects in the game.
- * @author Christoffer Book, Tim Normark
+ * @author Christoffer Book, Tim Normark, Peder Nilsoon
  */
 public abstract class GameObject {
     protected Sprite sprite;

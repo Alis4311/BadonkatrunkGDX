@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
+/**
+ * @ author Peder Nilsson
+ */
 public class MenuScreen implements Screen {
 
     private Stage stage;
