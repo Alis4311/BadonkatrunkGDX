@@ -23,13 +23,24 @@ import java.util.concurrent.TimeUnit;
 
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 
+/**
+ * Screen to display the WinScreen that is shown after completing a level.
+ *
+ * @author Tim Normark
+ */
 public class WinScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private Stage stage;
-
     private BitmapFont font;
 
+    /**
+     * Creates instance of the WinScreen. Creates all the GUI-components for the Screen.
+     *
+     * @param badonkatrunk Reference to the "main"-class, that is responsible for the switching of screens.
+     * @param mapNbr The level that has been played, and won.
+     * @param levelTime long value representing the milliseconds it took for the player to complete the level.
+     */
     public WinScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long levelTime) {
         this.badonkatrunk = badonkatrunk;
         this.mapNbr = mapNbr;
@@ -107,6 +118,11 @@ public class WinScreen implements Screen {
 
     }
 
+    /**
+     * Called when the screen should render itself. The method draws the GUI components of the object on the screen.
+     *
+     * @param delta The time in seconds since the last render
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0, 1);
@@ -139,6 +155,9 @@ public class WinScreen implements Screen {
 
     }
 
+    /**
+     * Disposes resources that the object has used, to prevent memory-leak.
+     */
     @Override
     public void dispose() {
         font.dispose();

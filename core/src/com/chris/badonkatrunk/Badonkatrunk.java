@@ -21,7 +21,7 @@ import Vehicles.VehicleFactory;
  * If no previous activity registerd a file is created.
  * 'EnterNameScreen'is set up, loaded and ready for use.
  *
- * @ author
+ * @ author Tim Normark,
  */
 
 public class Badonkatrunk extends Game {

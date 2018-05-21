@@ -15,7 +15,9 @@ import com.badlogic.gdx.utils.Timer;
 
 
 /**
- *Abstract Entity class that can represent different vehicles that the player uses in the game.
+ * Class that holds all attributes, images, sounds and functionality to represent a Vehicle in the Game.
+ * A Vehicle object handles all logic of it's own functionality and should be able to be used with simple
+ * public method calls such as accelerate() jump() etc.
  *
  * @author Tim Normark
  */
@@ -41,6 +43,18 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private boolean resumeTouch = false;
     private boolean levelsTouch = false;
 
+    /**
+     * Creates a Vehicle object.
+     *
+     * @param drivingAnimationAtlas The path of the atlas file that is used to control the driving animation.
+     * @param engineSound The Sound object that represents this objects engine sound.
+     * @param jumpSound The Sound object that represents this objects jump sound.
+     * @param maxSpeed float value representing this objects maximum driving speed.
+     * @param accelerationRate float value representing this objects acceleration rate.
+     * @param jumpHeight float value representing this objects jumping power.
+     * @param gravity float value representing the gravity force that will affect on this object.
+     * @param map The Map that the vehicle will be used, and played, on.
+     */
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, float gravity, Map map) {
         super(new Sprite(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0001")));
@@ -62,12 +76,16 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
+    /**
+     * Sets the texture and coordinates to the specified region.
+     * @param region
+     */
     private void setRegion(TextureRegion region) {
         sprite.setRegion(region);
     }
 
     /**
-     * Handle input from user before updating car.
+     * Handles input from user.
      */
     private void processInput(){
 
@@ -111,7 +129,8 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     }
 
     /**
-     * Update the position of the car, after processing user input.
+     * The method is used every frame of the Game. Updates the position of the car, after processing the input from user
+     * and then handles collision between the Vehicle and other CollidingObjects.
      */
     public void update(boolean isPaused){
         processInput();
@@ -122,12 +141,19 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
     }
 
-
+    /**
+     * Disposes resources that the object has used, to prevent memory-leak.
+     */
     public void dispose(){
         vehicleSound.stop();
         textureAtlas.dispose();
     }
 
+    /**
+     * Sets the position of the object to the given coordinates.
+     * @param xPosition x-coordinate
+     * @param yPosition y-coordinate
+     */
     protected void setPosition(float xPosition, float yPosition) {
         if(yPosition > groundlevel){
             sprite.setPosition(xPosition, yPosition);
@@ -137,10 +163,13 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             sprite.setPosition(xPosition,groundlevel);
 
         }
-
-
     }
 
+    /**
+     * Checks for collision between the Vehicle and all other CollidingObjects of the level. If the vehicle has
+     * collided the method stops the Vehicle from moving further in the direction of the collision. The method then
+     * sets the new position of Vehicle after all collisions have been adjusted for.
+     */
     private void collisionHandling(){
         boolean bottomRectCollision = false;
         for(CollidingObject object : level.getGameObstacleObjects()) {
@@ -165,6 +194,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
 
         }
 
+        // Handles collision with "PauseObject" that exists in first level. This collision will pause the game and show instructions.
         if(level.hasPauseObject()){
             if(!level.getPauseObject().isTriggered()){
                 if(this.checkCollision(level.getPauseObject().getBoundingRectangle())){
@@ -177,23 +207,28 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             }
         }
 
-
         if(bottomRectCollision){
             setGrounded(true);
-
         }else{
             groundlevel = -200;
             setGrounded(false);
-
         }
 
         setPosition(getX()+xSpeed, getY()+ ySpeed);
     }
 
+    /**
+     * @return A Rectangle from the top of the Vehicle used for collision detection.
+     */
     public Rectangle getTopRectangle(){
         return new Rectangle(this.getX(),this.getY() + this.getHeight()/2, this.getWidth()-10, 5);
     }
 
+    /**
+     * Sets grounded-attribute of object
+     *
+     * @param grounded boolean value to represent grounded-attribute.
+     */
     public void setGrounded(boolean grounded) {
         this.grounded = grounded;
         if(grounded) {
@@ -204,6 +239,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
     }
 
+    /**
+     * Method for making the Vehicle accelerate. The method should be called each frame that the Vehicle should continue
+     * to accelerate.
+     */
     public void accelerate() {
         vehicleSound.accelerate();
 
@@ -212,6 +251,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
     }
 
+    /**
+     * Method for making the Vehicle decelerate and eventually stop. The method should be called every frame that the
+     * Vehicle should continue idling.
+     */
     public void idling() {
         vehicleSound.decelerate();
         if(xSpeed > 0) {
@@ -219,6 +262,9 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
        }
     }
 
+    /**
+     * Method for making the Vehicle jump. If method is called when the Vehicle is already jumping or falling, nothing will happen.
+     */
     public void jump() {
         if(grounded) {
             if(ySpeed <= 0) {
@@ -229,6 +275,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
     }
 
+    /**
+     * Method for making the car start showing it's driving animation. The method is used every time the Vehicle
+     * is not jumping or falling.
+     */
     private void showDrivingAnimation() {
        if(Timer.instance() != null){
            Timer.instance().clear();
@@ -236,11 +286,24 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         Timer.schedule(drivingAnimation,0,1/10.0f);
     }
 
+    /**
+     * Method for making the Vehicle stop showing it's driving animation and instead show a still image of the Vehicle.
+     * Used every time the Vehicle jumps or falls.
+     */
     private void showJumpImage() {
         Timer.instance().clear();
         setRegion(textureAtlas.findRegion("0003"));
     }
 
+    /**
+     * Method that recieves input from user. Method is called every time the user presses a key (on computer).
+     * The method determines what key was pressed. If user pressed the right-arrow-key a flag in the object is set
+     * to indicate that the Vehicle should accelerate. If the space-key was pressed a flag in the objet is set to indicate
+     * that the Vehicle should jump. This method is for making the Game testable on a computer, not intended to be used
+     * in final Android-product.
+     * @param keycode int value representing the pressed key.
+     * @return Always returns false.
+     */
     @Override
     public boolean keyDown(int keycode) {
         if(Input.Keys.RIGHT == keycode){
@@ -253,6 +316,15 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         return false;
     }
 
+    /**
+     * Method that recieves input from user. Method is called every time the user releases a key (on computer).
+     * The method determines what key was released. If user released the right-arrow-key a flag in the object is set
+     * to indicate that the Vehicle should stop accelerating. If the space-key was released a flag in the objet is set
+     * to indicate that the Vehicle should stop jumping. This method is for making the Game testable on a computer, not
+     * intended to be used in final Android-product.
+     * @param keycode int value representing the released key.
+     * @return Always returns false.
+     */
     @Override
     public boolean keyUp(int keycode) {
         if(Input.Keys.RIGHT == keycode){
@@ -270,6 +342,18 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         return false;
     }
 
+    /**
+     * Method that recieves input from user. Method is called every time the user presses down on the screen.
+     * The method determines if the screen-touch was done on the left side of the screen or the right side. If the screen-touch
+     * was done on the left side of the screen a flag in the object is set to indicate that the Vehicle should jump. If
+     * the screen-touch was done on the right side of the screen a flag in the object is set to indicate that the Vehicle
+     * should accelerate.
+     * @param screenX X-coordinate of the screen-touch
+     * @param screenY Y-coordinate of the screen-touch
+     * @param pointer not used
+     * @param button not used
+     * @return Always returns false.
+     */
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //Kolla om spelaren tryckt på höger sida av skärmen
@@ -293,6 +377,18 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         return false;
     }
 
+    /**
+     * Method that recieves input from user. Method is called every time the user releases a press-down from the screen.
+     * The method determines if the touch-up was done on the left side of the screen or the right side. If the touch-up
+     * was done on the left side of the screen a flag in the object is set to indicate that the Vehicle should stop jumping.
+     * If the touch-up was done on the right side of the screen a flag in the object is set to indicate that the Vehicle
+     * should stop accelerating.
+     * @param screenX X-coordinate of the touch-up
+     * @param screenY Y-coordinate of the touch-up
+     * @param pointer not used
+     * @param button not used
+     * @return Always returns false.
+     */
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = false;
@@ -327,7 +423,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         return false;
     }
 
-
+    /**
+     * Private class in Vehicle class that works as a Timer.Task with the only job of changing the shown image in
+     * the driving-animation of the Vehicle.
+     */
     private class DrivingAnimation extends Timer.Task {
         @Override
         public void run() {
@@ -339,20 +438,17 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             } else if(currentFrame >= 15 && currentFrame <20){
                 currentAtlasKey = "0003";
             } else{
-
-                /*if(currentFrame >= 20 && currentFrame < 25){
-                currentAtlasKey = "0002";
-            } else {*/
                 currentFrame = 1;
             }
-
-
-
-            //currentAtlasKey = String.format("%04d", currentFrame);
             setRegion(textureAtlas.findRegion(currentAtlasKey));
         }
     }
 
+    /**
+     * Private class in Vehicle class that handles the Sounds of the Vehicle object. Each Vehicle has a engine sound and
+     * a jump sound. The class encapsulates these two sounds and has methods for playing the jump sound and manipulating
+     * the engine sound to simulate acceleration and idling.
+     */
     private class VehicleSound {
         private Sound jumpSound;
         private Sound engineSound;
@@ -368,9 +464,12 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         private float volumeChangeRate;
         private float engineVolume;
 
-
-
-
+        /**
+         * Creates instance of VehicleSound. The object will use the given Sounds. This constructor sets the engine-sound
+         * to be looping and starts playing it once it has loaded.
+         * @param engineSound The Sound object that will represent the engine-sound of the Vehicle
+         * @param jumpSound The Sound object that will represent the jump-sound of the Vehicle
+         */
         private VehicleSound(Sound engineSound, Sound jumpSound) {
             this.jumpSound = jumpSound;
             this.engineSound = engineSound;
@@ -394,7 +493,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             this.engineSound.setVolume(engineSoundId, engineVolume);
     }
 
-
+        /**
+         * Method for manipulating the engine-sound to simulate the Vehicle accelerating. The method should be called
+         * every frame that the Vehicle should continue to accelerate.
+         */
         private void accelerate() {
             if(pitch < MAX_PITCH) {
                 pitch += pitchChangeRate;
@@ -407,6 +509,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             }
         }
 
+        /**
+         * Method for manipulating the engine-sound to simulate the Vehicle decelerating. The method should be called
+         * every frame that the Vehicle should continue to decelerate.
+         */
         private void decelerate() {
 
             if(pitch > MIN_PITCH) {
@@ -420,11 +526,17 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
             }
         }
 
+        /**
+         * Method for plaing the jump-sound held by the object.
+         */
         private void jump() {
             jumpSound.play();
 
         }
 
+        /**
+         * Method for stopping and disposing all Sound-objects of this instance.
+         */
         public void stop() {
             engineSound.stop(engineSoundId);
             engineSound.dispose();

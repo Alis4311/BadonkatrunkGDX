@@ -15,13 +15,22 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
+/**
+ * Screen that displays the load screen and loads the resources necessary for playing the level.
+ *
+ * @author Tim Normark
+ */
 class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
     private int mapNbr;
     private int counter = 0;
-
     private Stage stage;
 
+    /**
+     * Creates instance of LoadScreen
+     * @param badonkatrunk Reference to the "main"-class, that is responsible for the switching of screens.
+     * @param mapNbr The level chosen by the player.
+     */
     public LoadScreen(Badonkatrunk badonkatrunk, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         this.mapNbr = mapNbr;
@@ -43,12 +52,21 @@ class    LoadScreen implements Screen {
         stage.addActor(helmet);
     }
 
+    /**
+     * Called when this screen becomes the current screen for the Badonkatrunk object. The method stops the music
+     * that is played in all the Menus of the game.
+     */
     @Override
     public void show() {
         badonkatrunk.stopMenuMusic();
-
     }
 
+    /**
+     * Called when the screen should render itself. The method draws the GUI components of the object on the screen.
+     * While showing the "load screen" the method loads the resources for the level that is to be played and then changes
+     * Screen in Badonkatrunk to GameScreen.
+     * @param delta The time in seconds since the last render
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0, 1);
