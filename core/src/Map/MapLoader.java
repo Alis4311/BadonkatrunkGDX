@@ -183,7 +183,7 @@ public class MapLoader {
                 sprite = new Sprite(new Texture(Gdx.files.internal("farmBackground.png")));
                 break;
             case 3:
-                Texture texture = new Texture(Gdx.files.internal("spaceBackground.png"));
+                Texture texture = new Texture(Gdx.files.internal("spaceBackgroundx2.png"));
                 texture.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
                 sprite = new Sprite(texture);
                 break;
