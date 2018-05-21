@@ -38,10 +38,11 @@ public class GameScreen implements Screen{
     private Sprite arrow1 = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowRight2.png")));
     private Sprite arrow2 = new Sprite(arrow1);
     private Sprite arrow3 = new Sprite(arrow1);
-    private Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUp.png")));
-    private Sprite greyCar = new Sprite(new Texture(Gdx.files.internal("Introbana/greyCar.png")));
+    private Sprite arrow = new Sprite(new Texture(Gdx.files.internal("Introbana/arrowUpShow.png")));
+    private Sprite whiteCar = new Sprite(new Texture(Gdx.files.internal("Introbana/carWhite1.png")));
     private Sprite line = new Sprite(new Texture(Gdx.files.internal("line.png")));
-    private Sprite finger = new Sprite(new Texture(Gdx.files.internal("Introbana/tapLeft128.png")));
+    private Sprite tapRight = new Sprite(new Texture(Gdx.files.internal("Introbana/handRight.png")));
+    private Sprite tapLeft = new Sprite(new Texture(Gdx.files.internal("Introbana/handLeft.png")));
 
     public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
@@ -228,17 +229,17 @@ public class GameScreen implements Screen{
 
     public void doJumpPauseStuff(){
 
-        arrow.setPosition(camera.position.x - 150,300);
+        arrow.setPosition(camera.position.x - 100,300);
         arrow.draw(batch);
-        greyCar.setPosition(camera.position.x -150,400);
-        greyCar.setSize(64,64);
+        whiteCar.setPosition(camera.position.x -100,400);
+        whiteCar.setSize(64,64);
         line.setPosition(camera.position.x,0);
         line.setSize(10, camera.viewportHeight);
         line.draw(batch);
-        finger.setPosition(camera.position.x - 250, 200);
-        finger.setScale(0.5f);
-        greyCar.draw(batch);
-        finger.draw(batch);
+        tapLeft.setPosition(camera.position.x - 330, -80);
+        tapLeft.setScale(0.7f);
+        whiteCar.draw(batch);
+        tapLeft.draw(batch);
     }
 
     public void doAcceleratePauseStuff(){
@@ -253,9 +254,9 @@ public class GameScreen implements Screen{
         line.setSize(10, camera.viewportHeight);
         line.draw(batch);
 
-        finger.setPosition(camera.position.x +75, 200);
-        finger.setScale(0.5f);
-        finger.draw(batch);
+        tapRight.setPosition(camera.position.x -170, -80);
+        tapRight.setScale(0.7f);
+        tapRight.draw(batch);
         arrow1.draw(batch);
         arrow2.draw(batch);
         arrow3.draw(batch);
