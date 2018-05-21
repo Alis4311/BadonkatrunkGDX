@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * is unlocked or locked - this is shown with another picture and buttons are
  * .setEnabled() true or false accordingly.
  *
- * @ author  XXX & Peder Nilsson
+ * @ author Peder Nilsson, Tim Normark
  */
 
 class LevelsScreen implements Screen {

@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * A colliding object in screens.
  *
- *  @ author
+ *  @ author Tim Normark
  */
 
 public class CollidingObject extends GameObject {

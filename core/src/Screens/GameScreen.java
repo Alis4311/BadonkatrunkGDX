@@ -12,7 +12,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
-
+/**
+ *
+ *
+ * @author Tim Normark
+ */
 public class GameScreen implements Screen{
     OrthographicCamera camera;
     Vehicle vehicle;

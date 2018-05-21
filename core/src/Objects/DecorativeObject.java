@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 /**
  * An decorative object in Sprites.
  *
- * @ author
+ * @ author Tim Normark
  */
 
 public class DecorativeObject extends GameObject {
