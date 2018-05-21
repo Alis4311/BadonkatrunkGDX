@@ -4,12 +4,18 @@ import Map.Map;
 import com.badlogic.gdx.Gdx;
 
 /**
- * Class that represents a the car that the player uses in the game.
+ * Class that works as Factory that creates Vehicle-objects.
  *
  * author Tim Normark
  */
 public class VehicleFactory {
 
+    /**
+     * Factory-method that creates and returns a Vehicle object. The type of Vehicle is depended on the theme attribute
+     * of the given Map object.
+     * @param map The Map object that is evaluated to decide what type of Vehicle should be returned by the method.
+     * @return A vehicle object.
+     */
     public static Vehicle create(Map map) {
 
         Vehicle vehicle = null;
@@ -34,6 +40,7 @@ public class VehicleFactory {
                 break;
         }
 
+        // initializes the vehicles position in the GameScreen.
         if(vehicle != null) {
             vehicle.setPosition(50, 100);
         }

@@ -21,7 +21,7 @@ import Vehicles.VehicleFactory;
  * If no previous activity registerd a file is created.
  * 'EnterNameScreen'is set up, loaded and ready for use.
  *
- * @ author
+ * @ author Tim Normark,
  */
 
 public class Badonkatrunk extends Game {
@@ -33,7 +33,7 @@ public class Badonkatrunk extends Game {
 
     /**
      * Creates instances of a class for playing the music, reads
-     * previoulsy logged activity and username.
+     * previously logged activity and username.
      * If no previous activity a username is asked for when button is pressed.
      */
 
