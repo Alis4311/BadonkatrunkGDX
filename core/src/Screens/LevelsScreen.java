@@ -81,7 +81,7 @@ class LevelsScreen implements Screen {
         // adds  every button on stage.
         stage.addActor(titlePicture);
         stage.addActor(btnBack);
-        
+
         for (int i = 0; i < buttons.length; i++) {
             buttons[i].setSize(100,100);
             stage.addActor(buttons[i]);

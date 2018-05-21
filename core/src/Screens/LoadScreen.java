@@ -37,7 +37,10 @@ class    LoadScreen implements Screen {
 
         MenuButton menuButton = new MenuButton();
         ImageButton loadImage = menuButton.CreateImageButton("loadingBackground.png", 0, 0);
+        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 150, 250);
+        helmet.setSize(200,200);
         stage.addActor(loadImage);
+        stage.addActor(helmet);
     }
 
     @Override
