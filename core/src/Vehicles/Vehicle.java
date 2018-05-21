@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Timer;
 /**
  *Abstract Entity class that can represent different vehicles that the player uses in the game.
  *
- * @author Tim Normark
+ * @author Tim Normark, Daniel Rosdahl
  */
 public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private VehicleSound vehicleSound;

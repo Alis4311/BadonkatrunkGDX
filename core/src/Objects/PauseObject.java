@@ -2,6 +2,13 @@ package Objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+/**
+ * @author Daniel Rosdahl
+ */
+
+/**
+ * Class that creates a
+ */
 public class PauseObject extends CollidingObject {
 
     private boolean isTriggered;

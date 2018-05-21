@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 /**
  * Class that works as Factory that creates Vehicle-objects.
  *
- * author Tim Normark
+ * author Tim Normark, Daniel Rosdahl
  */
 public class VehicleFactory {
 

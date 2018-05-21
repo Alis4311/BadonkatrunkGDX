@@ -15,7 +15,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 /**
  *
  *
- * @author Tim Normark, Peder Nilsson
+ * @author Tim Normark, Peder Nilsson, Daniel Rosdahl
  */
 public class GameScreen implements Screen{
     OrthographicCamera camera;

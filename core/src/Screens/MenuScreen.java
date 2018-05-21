@@ -16,15 +16,24 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 /**
- * @ author Peder Nilsson
+ * @ author Peder Nilsson, Daniel Rosdahl
+ */
+
+/**
+ * Screen that shows the main menu of the game that the
+ * will start on if the user has played the game before
  */
 public class MenuScreen implements Screen {
 
     private Stage stage;
-    private Camera camera;
-
     private Badonkatrunk badonkatrunk;
 
+    /**
+     * Constructor that sets instances of OrthograpgicCamera, Viewport
+     * and Stage which buttons are added to.
+     *
+     * @param badonkatrunk
+     */
     public MenuScreen(final Badonkatrunk badonkatrunk){
         Camera camera = new OrthographicCamera();
         Viewport viewport = new StretchViewport(500, 500, camera);
@@ -70,42 +79,68 @@ public class MenuScreen implements Screen {
         });
     }
 
+    /**
+     * Renders the background color and the stage
+     *
+     * @param delta
+     */
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
-
-        if(Gdx.input.isKeyPressed(Input.Keys.Q)){
-            badonkatrunk.setScreen(new LoadScreen(badonkatrunk, badonkatrunk.highestUnlockedLevel));
-        }
     }
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void dispose() {
 
     }
 
+    /**
+     * Plays the menu music
+     */
+
     @Override
     public void show() {
         badonkatrunk.playMenuMusic();
     }
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void resize(int width, int height) {
 
     }
 
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
+
     @Override
     public void pause() {
 
     }
 
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
+
     @Override
     public void resume() {
 
     }
+
+    /**
+     * Compulsory inherited method - superclass version is used.
+     */
 
     @Override
     public void hide() {
