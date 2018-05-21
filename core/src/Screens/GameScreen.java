@@ -91,7 +91,7 @@ public class GameScreen implements Screen{
             //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
             if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
 
-                camera.translate(1.5f, 0, 0);
+                camera.translate(vehicle.getScreenSpeed(), 0, 0);
                 //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
                 camera.update();
 

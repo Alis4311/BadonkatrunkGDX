@@ -34,6 +34,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private boolean grounded;
     private DrivingAnimation drivingAnimation;
     private Map level;
+    private float screenSpeed;
 
     private boolean accelerateTouch = false;
     private boolean jumpTouch = false;
@@ -42,7 +43,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private boolean levelsTouch = false;
 
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
-            float accelerationRate, float jumpHeight, float gravity, Map map) {
+            float accelerationRate, float jumpHeight, float gravity, Map map, float screenSpeed) {
         super(new Sprite(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0001")));
         textureAtlas = new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas));
         vehicleSound = new VehicleSound(engineSound, jumpSound);
@@ -51,6 +52,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         this.xSpeed = 0f;
         this.ySpeed = 0f;
         this.gravity = gravity;
+        this.screenSpeed = screenSpeed;
         groundlevel = 0;
         this.jumpHeight = jumpHeight;
         drivingAnimation = new DrivingAnimation();
@@ -188,6 +190,10 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         }
 
         setPosition(getX()+xSpeed, getY()+ ySpeed);
+    }
+
+    public float getScreenSpeed(){
+        return screenSpeed;
     }
 
     public Rectangle getTopRectangle(){
