@@ -60,6 +60,9 @@ class LevelsScreen implements Screen {
         ImageButton[] buttons = new ImageButton[13];
         MenuButton menuButton = new MenuButton();
         ImageButton btnBack = menuButton.CreateImageButton("arrowLeft.png", 64, 480);
+        btnBack.setSize(100,100);
+        ImageButton titlePicture = menuButton.CreateImageButton("badonkatrunk.png", 220, 400);
+        titlePicture.setSize(300,300);
         buttons[0] = menuButton.CreateImageButton("number1.png", 64, 320);
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);
@@ -74,12 +77,12 @@ class LevelsScreen implements Screen {
         buttons[11] = menuButton.CreateImageButton("tractorLevelscreen.png", 78, 180);
         buttons[12] = menuButton.CreateImageButton("RocketLevelscreen.png", 64, 64);
 
+
         // adds  every button on stage.
-
+        stage.addActor(titlePicture);
         stage.addActor(btnBack);
-
+        
         for (int i = 0; i < buttons.length; i++) {
-            btnBack.setSize(100,100);
             buttons[i].setSize(100,100);
             stage.addActor(buttons[i]);
         }

@@ -34,13 +34,15 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         MenuButton menuButton = new MenuButton();
-        ImageButton buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 300);
-        ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 150);
-        ImageButton buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 0, 450);
-        buttonChangeUsername.setSize(50,50);
+        ImageButton titlePicture = menuButton.CreateImageButton("badonkatrunk.png", 100, 300);
+        titlePicture.setSize(300,300);
+        ImageButton buttonPlay = menuButton.CreateImageButton("PlayButton.png", 186, 190);
+        ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 186, 80);
+        ImageButton buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 217, 310);
         stage.addActor(buttonPlay);
         stage.addActor(buttonLevels);
         stage.addActor(buttonChangeUsername);
+        stage.addActor(titlePicture);
 
         buttonPlay.addListener(new ChangeListener() {
             @Override
