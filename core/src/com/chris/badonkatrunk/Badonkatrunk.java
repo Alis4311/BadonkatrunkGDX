@@ -18,8 +18,8 @@ import Vehicles.VehicleFactory;
 /**
  * Sets up the batch for Badonkatrunk with 'MenuScreen' as first screen,
  * reads username and previous progress from file.
- * If no previous activity a file is created.
- * 'EnterNameScreen'is set up and loaded and ready for use.
+ * If no previous activity registerd a file is created.
+ * 'EnterNameScreen'is set up, loaded and ready for use.
  *
  * @ author
  */
