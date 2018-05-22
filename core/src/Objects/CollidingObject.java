@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 
 /**
- * A colliding object in screens.
+ * A colliding object in screens that checks if and where a collision occur.
  *
  *  @ author Tim Normark, Peder Nilsson
  */
@@ -27,6 +27,7 @@ public class CollidingObject extends GameObject {
 
     /**
      * Gets the surrounding Colliding box for current sprite.
+     * This box checks if a collision happens.
      *
      * @return Rectangle
      */
@@ -39,6 +40,7 @@ public class CollidingObject extends GameObject {
 
     /**
      * Returns the right colliding rectangle for this instance.
+     * Detects collisions in front of vehicle.
      *
      * @return Rectangle
      */
@@ -49,6 +51,8 @@ public class CollidingObject extends GameObject {
 
     /**
      * Returns the bottom colliding rectangle for this instance.
+     * Detects collisions in under vehicle.
+     *
      *
      * @return Rectangle
      */
@@ -58,7 +62,8 @@ public class CollidingObject extends GameObject {
     }
 
     /**
-     * Returns the top colliding rectangle  for this instance.
+     * Returns the top colliding rectangle for this instance.
+     * Detects collisions in above vehicle.
      *
      * @return Rectangle
      */
