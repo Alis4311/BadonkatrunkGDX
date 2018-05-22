@@ -10,18 +10,15 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
-import java.util.ArrayList;
-
 
 /**
- * Screen showing 10 levels. Levelbuttons are pictures and are checked every time if Level
- * is unlocked or locked - this is shown with another picture and buttons are
- * .setEnabled() true or false accordingly.
+ * Screen showing 10 levels of Badonkatrunk. Levelbuttons are pictures and are checked every time if Level
+ * is unlocked or locked - this is shown with another picture  of a lock on top. Buttons are
+ * set to enabled true or false accordingly.
  *
  * @ author Tim Normark, Peder Nilsson, Daniel Rosdahl
  */
@@ -60,9 +57,9 @@ class LevelsScreen implements Screen {
         ImageButton[] buttons = new ImageButton[13];
         MenuButton menuButton = new MenuButton();
         ImageButton btnBack = menuButton.CreateImageButton("arrowLeft.png", 64, 480);
-        btnBack.setSize(100,100);
+        btnBack.setSize(100, 100);
         ImageButton titlePicture = menuButton.CreateImageButton("badonkatrunk.png", 220, 400);
-        titlePicture.setSize(300,300);
+        titlePicture.setSize(300, 300);
         buttons[0] = menuButton.CreateImageButton("number1.png", 64, 320);
         buttons[1] = menuButton.CreateImageButton("number2.png", 192, 320);
         buttons[2] = menuButton.CreateImageButton("number3.png", 320, 320);
@@ -83,7 +80,7 @@ class LevelsScreen implements Screen {
         stage.addActor(btnBack);
 
         for (int i = 0; i < buttons.length; i++) {
-            buttons[i].setSize(100,100);
+            buttons[i].setSize(100, 100);
             stage.addActor(buttons[i]);
         }
 
@@ -168,7 +165,7 @@ class LevelsScreen implements Screen {
             }
         });
 
-        //Checks if level is not completed, disable button and adds a picture of a lock
+        //Checks if level is not completed, disables button and adds a picture of a lock
 
         for (int i = 0; i < 10; i++) {
             if (i + 1 > badonkatrunk.highestUnlockedLevel) {
