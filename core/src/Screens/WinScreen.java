@@ -20,15 +20,10 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.badlogic.gdx.graphics.Color.YELLOW;
-import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
-
 /**
  * Screen to display the WinScreen that is shown after completing a level.
  *
- * @author Tim Normark
+ * @author Tim Normark, Peder Nilsson
  */
 public class WinScreen implements Screen {
     private Badonkatrunk badonkatrunk;
