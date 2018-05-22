@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 /**
- *
+ * Class containing the actual "game-screen".
  *
  * @author Christoffer Book, Tim Normark, Peder Nilsson, Daniel Rosdahl
  */
@@ -23,7 +23,9 @@ public class GameScreen implements Screen{
     Map level;
     SpriteBatch batch;
     ShapeRenderer shape;
-
+    /**
+     * Bunch of static variables used for pausing in different situations.
+     */
     public static boolean isPaused;
     public static boolean isPausedForJump;
     public static boolean isPausedForAcceleration;
@@ -48,6 +50,13 @@ public class GameScreen implements Screen{
     private Sprite tapRight = new Sprite(new Texture(Gdx.files.internal("Introbana/handRight.png")));
     private Sprite tapLeft = new Sprite(new Texture(Gdx.files.internal("Introbana/handLeft.png")));
 
+    /**
+     * Constructor for gamescreen.
+     * @param badonkatrunk - the one and only badonkatrumk
+     * @param vehicle - the vehicle to be used in this instance of game.
+     * @param level - the level to play
+     * @param mapNbr - the number of the level, for use when submitting highscore.
+     */
     public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         this.vehicle = vehicle;
@@ -61,8 +70,8 @@ public class GameScreen implements Screen{
         camera.setToOrtho(false,500,500);
 
         shape = new ShapeRenderer();
-        isPaused = true;
-        clockStarted = false;
+        isPaused = true; // start every level paused.
+        clockStarted = false; //clock is not started until player starts driving.
         startTime = 0;
 
 
@@ -79,6 +88,11 @@ public class GameScreen implements Screen{
 
     }
 
+    /**
+     * render method, update everything  and draw it to screen
+     *
+     * @param delta the difference in time since last call.
+     */
     @Override
     public void render(float delta) {
 
@@ -92,30 +106,29 @@ public class GameScreen implements Screen{
                 startTime = System.currentTimeMillis();
             }
 
-            //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
+
+            //If camera has reached the end of the level, don´t move.
             if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
 
                 camera.translate(vehicle.getScreenSpeed(), 0, 0);
-                //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
                 camera.update();
 
 
-                //Kolla om fordonet hamnat bakom kameran, i så fall ska banan starta om.
+                //If vehicle has fallen behind the screen, restart level.
                 if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
                     //vehicle.dispose();
                     restart();
                 }
-                //Kolla om bilen "kör om" kameran, i så fall ska kameran följa med bilen frammåt.
+                //If car passes screen, move screen in accordance to car.
                 if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
                     camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
                 }
             }
 
 
-            //Kolla om fordonet är i överkant av kamerans vy, i så fall följer kameran med uppåt, men inte ovanför bakgrundsbilden.
+            //If vehicle is above screen, follow it all the way to the top of the background but no further.
             if(vehicle.getY() > camera.position.y + camera.viewportHeight/4 && camera.position.y + camera.viewportHeight /2 <= level.getHeight()) {
                 camera.position.y = vehicle.getY() - camera.viewportWidth / 4;
-                //Fullösning? om kameran hamnar ovanför bakgrundsbilden så hoppar den ner till bakgrundsbildens övre kant.
                 if(camera.position.y + camera.viewportHeight / 2 > level.getHeight()) {
                     camera.position.y = level.getHeight() - camera.viewportHeight / 2;
                 }
