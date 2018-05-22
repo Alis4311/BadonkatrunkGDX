@@ -15,7 +15,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 /**
  *
  *
- * @author Tim Normark, Peder Nilsson, Daniel Rosdahl
+ * @author Christoffer Book, Tim Normark, Peder Nilsson, Daniel Rosdahl
  */
 public class GameScreen implements Screen{
     OrthographicCamera camera;
@@ -144,7 +144,7 @@ public class GameScreen implements Screen{
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        level.draw(batch);
+        level.draw(batch, camera.position.x);
 
         long currentExpiredTime = System.currentTimeMillis() - startTime;
         if(currentExpiredTime > 1000000){

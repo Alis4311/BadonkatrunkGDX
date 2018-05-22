@@ -53,8 +53,8 @@ public class MenuScreen implements Screen {
         ImageButton buttonChangeUsername = menuButton.CreateImageButton("userAvatar.png", 217, 310);
         stage.addActor(buttonPlay);
         stage.addActor(buttonLevels);
-        stage.addActor(buttonChangeUsername);
         stage.addActor(titlePicture);
+        stage.addActor(buttonChangeUsername);
 
         buttonPlay.addListener(new ChangeListener() {
             @Override

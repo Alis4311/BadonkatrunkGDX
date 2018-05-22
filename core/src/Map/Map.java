@@ -142,14 +142,19 @@ public class Map {
         return theme;
     }
 
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch, float cameraX){
 
         batch.draw(background.getTexture(),0,0);
         for(DecorativeObject decorativeObject : backgroundObjectList){
-            decorativeObject.draw(batch);
+            if (decorativeObject.getX() > cameraX -500 && decorativeObject.getX() < cameraX +500) {
+                decorativeObject.draw(batch);
+            }
         }
         for(CollidingObject object : obstacleObjectList){
-            object.draw(batch);
+            if(object.getX() > cameraX - 285 && object.getX() < cameraX + 250){
+                object.draw(batch);
+            }
+
         }
 
     }

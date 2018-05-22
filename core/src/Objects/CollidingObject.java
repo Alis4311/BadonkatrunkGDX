@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 /**
  * A colliding object in screens that checks if and where a collision occur.
  *
- *  @ author Tim Normark, Peder Nilsson
+ *  @author Christoffer Book, Tim Normark, Peder Nilsson
  */
 
 public class CollidingObject extends GameObject {
