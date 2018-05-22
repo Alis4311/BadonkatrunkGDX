@@ -18,7 +18,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 /**
  * Screen that displays the load screen and loads the resources necessary for playing the level.
  *
- * @author Tim Normark
+ * @author Tim Normark, Peder Nilsson
  */
 class    LoadScreen implements Screen {
     private Badonkatrunk badonkatrunk;
@@ -45,9 +45,10 @@ class    LoadScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         MenuButton menuButton = new MenuButton();
-        ImageButton loadImage = menuButton.CreateImageButton("loadingBackground.png", 0, 0);
-        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 150, 250);
+        ImageButton loadImage = menuButton.CreateImageButton("loadingBackground.png", -250, -260);
+        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 150, 230);
         helmet.setSize(200,200);
+        loadImage.setSize(1000,1000);
         stage.addActor(loadImage);
         stage.addActor(helmet);
     }
