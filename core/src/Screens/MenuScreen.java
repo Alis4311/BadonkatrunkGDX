@@ -20,8 +20,8 @@ import com.chris.badonkatrunk.Badonkatrunk;
  */
 
 /**
- * Screen that shows the main menu of the game that the
- * will start on if the user has played the game before
+ *  A Screen that is the main menu of the game.
+ *  User starts here if game is played before.
  */
 public class MenuScreen implements Screen {
 
@@ -29,8 +29,8 @@ public class MenuScreen implements Screen {
     private Badonkatrunk badonkatrunk;
 
     /**
-     * Constructor that sets instances of OrthograpgicCamera, Viewport
-     * and Stage which buttons are added to.
+     * Constructor that creates instances of OrthographicCamera, Viewport
+     * and Stage which buttons with listeners are added to.
      *
      * @param badonkatrunk
      */
@@ -80,7 +80,7 @@ public class MenuScreen implements Screen {
     }
 
     /**
-     * Renders the background color and the stage
+     * Renders the background color and the stage.
      *
      * @param delta
      */
@@ -103,7 +103,7 @@ public class MenuScreen implements Screen {
     }
 
     /**
-     * Plays the menu music
+     * Plays the menu music.
      */
 
     @Override
