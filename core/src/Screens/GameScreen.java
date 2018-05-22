@@ -131,23 +131,22 @@ public class GameScreen implements Screen{
                 camera.position.y = vehicle.getY() - camera.viewportWidth / 4;
                 if(camera.position.y + camera.viewportHeight / 2 > level.getHeight()) {
                     camera.position.y = level.getHeight() - camera.viewportHeight / 2;
-                }
+               }
             }
-            //Kolla om fordonet är i underkant av kamerans vy, i så fall följer kameran med nedåt.
+            //if vehicle is below the bottom of the camera, follow it
             else if(vehicle.getY() < camera.position.y - camera.viewportHeight/4 && camera.position.y >= camera.viewportHeight /2) {
                 camera.position.y = vehicle.getY() + camera.viewportHeight / 4;
-                //Fullösning? om kameran hamnar nedanför bakgrundsbilden så hoppar den upp till bakgrundsbildens nedre kant.
                 if(camera.position.y -camera.viewportHeight / 2 < 0) {
                     camera.position.y = camera.viewportHeight / 2;
                 }
             }
 
-            //Kolla om fordonet hamnat nedanför kamerans synfält
+            //if vehicle is below level, restart.
             if(vehicle.getY() + vehicle.getHeight() < camera.position.y - camera.viewportHeight/2) {
                 restart();
             }
 
-            //Kolla om fordonet kommit i mål.
+            //If vehicle passes goal line,
             if(vehicle.getX() >= level.getGoalXCoordinates()){
                 nextLevel(startTime);
             }
@@ -207,6 +206,9 @@ public class GameScreen implements Screen{
 
     }
 
+    /**
+     * Dispose every disposable object when done using them
+     */
     @Override
     public void dispose() {
         font.dispose();
@@ -214,12 +216,17 @@ public class GameScreen implements Screen{
         vehicle.dispose();
     }
 
+    /**
+     * Method to restart current level.
+     */
     public void restart(){
         badonkatrunk.setScreen(new LoadScreen(badonkatrunk, mapNbr));
         vehicle.dispose();
         this.dispose();
     }
-
+    /**
+     * Go to winScreen, and write to file if next level > highestunlocked level.
+     */
     private void nextLevel(long startTime){
         int nextLevel = Math.min(mapNbr+1,10);
         if(nextLevel > badonkatrunk.highestUnlockedLevel){
@@ -236,6 +243,9 @@ public class GameScreen implements Screen{
         this.dispose();
     }
 
+    /**
+     * Return to the levels menu screen .
+     */
     public void returnToLevels() {
         returnToLevels = false;
         vehicle.dispose();
@@ -244,6 +254,9 @@ public class GameScreen implements Screen{
         dispose();
     }
 
+    /**
+     * For introductionlevel, show the instructions for jump
+     */
     public void doJumpPauseStuff(){
 
         arrow.setPosition(camera.position.x - 100,300);
@@ -259,6 +272,9 @@ public class GameScreen implements Screen{
         tapLeft.draw(batch);
     }
 
+    /**
+     * For introductionlevel, show the instructions for acceleration
+     */
     public void doAcceleratePauseStuff(){
 
         arrow2.setScale(1.5f);
@@ -279,6 +295,9 @@ public class GameScreen implements Screen{
         arrow3.draw(batch);
     }
 
+    /**
+     * For pausebutton options, show the buttons.
+     */
     public void doPauseForButtonStuff() {
         resumeButton.setPosition(camera.position.x  - 120, camera.position.y + 40);
         levelsButton.setPosition(camera.position.x - 120, camera.position.y - 100);
