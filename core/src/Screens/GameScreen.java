@@ -78,7 +78,7 @@ public class GameScreen implements Screen{
 
         pauseButton = new Sprite(new Texture(Gdx.files.internal("pauseButton.png")));
         resumeButton = new Sprite(new Texture(Gdx.files.internal("resumeButton.png")));
-        levelsButton = new Sprite(new Texture(Gdx.files.internal("levelsButtonBig.png")));
+        levelsButton = new Sprite(new Texture(Gdx.files.internal("levelsButtonBlack.png")));
 
     }
 
@@ -174,13 +174,14 @@ public class GameScreen implements Screen{
         if(isPausedForAcceleration){
             doAcceleratePauseStuff();
         }
-        if(isPausedForButton) {
-            doPauseForButtonStuff();
-        }
         if(returnToLevels) {
             returnToLevels();
         }
         vehicle.draw(batch);
+
+        if(isPausedForButton) {
+            doPauseForButtonStuff();
+        }
 
         batch.end();
 
@@ -248,6 +249,8 @@ public class GameScreen implements Screen{
      */
     public void returnToLevels() {
         returnToLevels = false;
+        isPausedForAcceleration = false;
+        isPausedForJump = false;
         vehicle.dispose();
         badonkatrunk.playMenuMusic();
         badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));

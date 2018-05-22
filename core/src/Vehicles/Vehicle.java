@@ -373,7 +373,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
         if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = true;
 
         //Kolla först om spelaren tryckt uppe till vänster, runt pausknapp. Annars om spelaren tryckt någonstans på vänster sida av skärmen.
-        if(screenX < 75 && screenY < 75) {
+        if(screenX < Gdx.graphics.getWidth() / 8 && screenY < Gdx.graphics.getHeight() / 8) {
             pauseTouch = true;
         } else if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = true;
 
@@ -406,7 +406,7 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if(screenX >  Gdx.graphics.getWidth() / 2) accelerateTouch = false;
         if(screenX <  Gdx.graphics.getWidth() / 2) jumpTouch = false;
-        if(screenX < 75 && screenY < 75) pauseTouch = false;
+        if(screenX <  Gdx.graphics.getWidth() / 8 && screenY < Gdx.graphics.getHeight() / 8) pauseTouch = false;
 
         //Kolla om spelaren släppt inom x-koordinaterna som resume- och levels-knapparna ligger.
         if(screenX > Gdx.graphics.getWidth() / 4 && screenX < Gdx.graphics.getWidth() - (Gdx.graphics.getWidth() / 4)) {
