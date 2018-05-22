@@ -71,7 +71,7 @@ class LevelsScreen implements Screen {
         buttons[8] = menuButton.CreateImageButton("number9.png", 320, 64);
         buttons[9] = menuButton.CreateImageButton("number10.png", 448, 64);
         buttons[10] = menuButton.CreateImageButton("carLevelscreen.png", 315, 450);
-        buttons[11] = menuButton.CreateImageButton("tractorLevelscreen.png", 78, 180);
+        buttons[11] = menuButton.CreateImageButton("tractor3.png", 78, 200);
         buttons[12] = menuButton.CreateImageButton("RocketLevelscreen.png", 64, 64);
 
 
