@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,6 +22,7 @@ import com.chris.badonkatrunk.Badonkatrunk;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.badlogic.gdx.graphics.Color.YELLOW;
 import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
 
 /**
@@ -63,6 +65,9 @@ public class WinScreen implements Screen {
         skinButton.addRegions(buttonAtlas);
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
+        textButtonStyle.fontColor = Color.YELLOW;
+
+        font.getData().setScale(2f,2f);
 
         textButtonStyle.up = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
