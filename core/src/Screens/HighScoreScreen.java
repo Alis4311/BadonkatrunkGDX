@@ -98,14 +98,17 @@ public class HighScoreScreen implements Screen {
                 HighScoreScreen.this.dispose();
             }
         });
-        stage.addActor(buttonLevels);
-        stage.addActor(buttonNextLevel);
+
         stage.addActor(tractor);
         stage.addActor(flower);
         stage.addActor(flower2);
         stage.addActor(flower3);
         stage.addActor(title);
         stage.addActor(topTen);
+        stage.addActor(buttonLevels);
+        if(mapNbr != 10) {
+            stage.addActor(buttonNextLevel);
+        }
 
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         //ClientConnection connection = new ClientConnection("192.168.43.22",80,highScore, this);
