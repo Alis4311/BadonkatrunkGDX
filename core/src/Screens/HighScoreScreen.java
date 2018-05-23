@@ -74,9 +74,9 @@ public class HighScoreScreen implements Screen {
         ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 270, 350);
         ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 30, 350);
         ImageButton flower = menuButton.CreateImageButton("farmGoal.png", 420, 30);
-        ImageButton flower2 = menuButton.CreateImageButton("farmGoal.png", 400, 15);
-        ImageButton flower3 = menuButton.CreateImageButton("farmGoal.png", 378, 20);
-        ImageButton car = menuButton.CreateImageButton("carLevelscreen.png", 19, 10);
+        ImageButton flower2 = menuButton.CreateImageButton("farmGoal.png", 405, 15);
+        ImageButton flower3 = menuButton.CreateImageButton("farmGoal.png", 383, 23);
+        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 59, 14);
         ImageButton title = menuButton.CreateImageButton("badonkatrunk.png",115, 240);
         buttonNextLevel.setSize(200,200);
         buttonLevels.setSize(200,200);
@@ -98,7 +98,7 @@ public class HighScoreScreen implements Screen {
         });
         stage.addActor(buttonLevels);
         stage.addActor(buttonNextLevel);
-        stage.addActor(car);
+        stage.addActor(tractor);
         stage.addActor(flower);
         stage.addActor(flower2);
         stage.addActor(flower3);

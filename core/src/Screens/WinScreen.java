@@ -68,18 +68,18 @@ public class WinScreen implements Screen {
         textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         TextButton winButton = new TextButton("Finish", textButtonStyle);
-        winButton.setText("Congratulations!\n\nTime: " + seconds + " s");
+        winButton.setText("W E L L  D O N E ! ! !\nTime:\n" + seconds + " s");
         winButton.setHeight(50);
         winButton.setWidth(100);
-        winButton.setPosition(200,410);
+        winButton.setPosition(200,390);
         stage.addActor(winButton);
 
         MenuButton menuButton = new MenuButton();
-        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 300);
-        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
-        ImageButton buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
-        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 30, 400);
-        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 406, 390);
+        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 250);
+        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 160);
+        ImageButton buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 70);
+        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 30, 350);
+        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 406, 340);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
