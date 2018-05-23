@@ -64,6 +64,7 @@ public class GameScreen implements Screen{
         this.mapNbr = mapNbr;
         font = new BitmapFont();
         font.setColor(Color.WHITE);
+        font.getData().setScale(2f,2f);
         batch = Badonkatrunk.batch;
 
         camera = new OrthographicCamera();
@@ -163,7 +164,8 @@ public class GameScreen implements Screen{
             currentExpiredTime = 0;
         }
         String timeString = "Time: " + currentExpiredTime / 1000;
-        font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2,camera.position.y + 200);
+        font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2-25,camera.position.y + 200);
+
 
         pauseButton.setPosition(camera.position.x - (camera.viewportWidth / 2) + 15, camera.position.y + (camera.viewportHeight / 2) - 50);
         pauseButton.draw(batch, 1f);
