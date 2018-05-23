@@ -26,7 +26,7 @@ import java.util.ArrayList;
 /**
  * Screen to display the HighScore-screen.o
  *
- * @author Christoffer Book
+ * @author Christoffer Book, Peder Nilsson
  * From Requirements number : FO-1 Leaderboard
  */
 public class HighScoreScreen implements Screen {
@@ -73,14 +73,16 @@ public class HighScoreScreen implements Screen {
         MenuButton menuButton = new MenuButton();
         ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 270, 350);
         ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 30, 350);
-        ImageButton flower = menuButton.CreateImageButton("farmGoal.png", 420, 30);
-        ImageButton flower2 = menuButton.CreateImageButton("farmGoal.png", 405, 15);
-        ImageButton flower3 = menuButton.CreateImageButton("farmGoal.png", 383, 23);
-        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 59, 14);
-        ImageButton title = menuButton.CreateImageButton("badonkatrunk.png",115, 240);
+        ImageButton flower = menuButton.CreateImageButton("farmGoal.png", 460, 30);
+        ImageButton flower2 = menuButton.CreateImageButton("farmGoal.png", 445, 15);
+        ImageButton flower3 = menuButton.CreateImageButton("farmGoal.png", 423, 23);
+        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 19, 14);
+        ImageButton title = menuButton.CreateImageButton("masters1.png",115, 247);
+        ImageButton topTen = menuButton.CreateImageButton("topTenBubble.png",25, 80);
         buttonNextLevel.setSize(200,200);
         buttonLevels.setSize(200,200);
         title.setSize(270,270);
+        topTen.setSize(130,130);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -103,6 +105,7 @@ public class HighScoreScreen implements Screen {
         stage.addActor(flower2);
         stage.addActor(flower3);
         stage.addActor(title);
+        stage.addActor(topTen);
 
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         //ClientConnection connection = new ClientConnection("192.168.43.22",80,highScore, this);
