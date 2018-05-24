@@ -112,7 +112,7 @@ public class HighScoreScreen implements Screen {
 
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         //ClientConnection connection = new ClientConnection("192.168.43.22",80,highScore, this);
-        ClientConnection connection = new ClientConnection("127.0.0.1", 8080, highScore, this);
+        ClientConnection connection = new ClientConnection("10.2.0.94", 80, highScore, this);
     }
 
     @Override
