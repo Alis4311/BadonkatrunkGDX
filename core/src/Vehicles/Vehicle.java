@@ -42,6 +42,11 @@ public class Vehicle extends Objects.CollidingObject implements InputProcessor {
     private boolean resumeTouch = false;
     private boolean levelsTouch = false;
 
+    public Vehicle(Sprite sprite, float x, float y){
+        super(sprite);
+        sprite.setPosition(x, y);
+    }
+
     Vehicle(String drivingAnimationAtlas, Sound engineSound, Sound jumpSound, float maxSpeed,
             float accelerationRate, float jumpHeight, float gravity, Map map, float screenSpeed) {
         super(new Sprite(new TextureAtlas(Gdx.files.internal(drivingAnimationAtlas)).findRegion("0001")));

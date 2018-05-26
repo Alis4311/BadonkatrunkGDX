@@ -1,6 +1,7 @@
 package com.chris.badonkatrunk;
 
 
+import Testing.TestVehicleTest;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -58,17 +59,18 @@ public class Badonkatrunk extends Game {
 
         FileHandle fileUsername = Gdx.files.local("username.txt");
         FileHandle usernameInternal = Gdx.files.internal("username.txt");
-        if (!fileUsername.exists()) {
-            usernameInternal.copyTo(fileUsername);
-        }
-        String usernameFromFile = fileUsername.readString();
-        if (usernameFromFile.isEmpty()) {
-
-            this.setScreen(new EnterNameScreen(this));
-        } else {
-            this.username = usernameFromFile;
-            this.setScreen(new MenuScreen(this));
-        }
+//        if (!fileUsername.exists()) {
+//            usernameInternal.copyTo(fileUsername);
+//        }
+//        String usernameFromFile = fileUsername.readString();
+//        if (usernameFromFile.isEmpty()) {
+//
+//            this.setScreen(new EnterNameScreen(this));
+//        } else {
+//            this.username = usernameFromFile;
+//            this.setScreen(new MenuScreen(this));
+//        }
+        new TestVehicleTest();
     }
 
 
