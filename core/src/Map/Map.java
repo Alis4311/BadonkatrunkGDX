@@ -70,10 +70,6 @@ public class Map {
 
     }
 
-    public void dispose(){
-
-    }
-
     /**
      * Returns the background Sprite.
      * @return - Sprite.
@@ -138,20 +134,28 @@ public class Map {
         return (int)getBackground().getHeight();
     }
 
+    /**
+     * Returns the theme of the background Sprite.
+     * @return - int.
+     */
     public int getTheme() {
         return theme;
     }
 
-    public void draw(SpriteBatch batch, float cameraX){
+    /**
+     * Draws all the objects.
+     * @param batch - SpriteBatch.
+     */
+    public void draw(SpriteBatch batch, float cameraX) {
 
-        batch.draw(background.getTexture(),0,0);
-        for(DecorativeObject decorativeObject : backgroundObjectList){
-            if (decorativeObject.getX() > cameraX -500 && decorativeObject.getX() < cameraX +500) {
+        batch.draw(background.getTexture(), 0, 0);
+        for (DecorativeObject decorativeObject : backgroundObjectList) {
+            if (decorativeObject.getX() > cameraX - 500 && decorativeObject.getX() < cameraX + 500) {
                 decorativeObject.draw(batch);
             }
         }
-        for(CollidingObject object : obstacleObjectList){
-            if(object.getX() > cameraX - 285 && object.getX() < cameraX + 250){
+        for (CollidingObject object : obstacleObjectList) {
+            if (object.getX() > cameraX - 285 && object.getX() < cameraX + 250) {
                 object.draw(batch);
             }
 
@@ -160,9 +164,18 @@ public class Map {
     }
 
 
+    /**
+     * Returns the pause object.
+     * @return - PauseObject.
+     */
     public PauseObject getPauseObject(){
         return this.pauseObject;
     }
+
+    /**
+     * Returns boolean if there is a PauseObject or not.
+     * @return - boolean.
+     */
     public boolean hasPauseObject(){
         return hasPauseObject;
     }
