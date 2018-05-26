@@ -4,9 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
- * An decorative object in Sprites.
+ * A decorative object in Screens.
  *
- * @ author Tim Normark, Peder Nilsson
+ * @author Christoffer Book, Tim Normark, Peder Nilsson
  */
 
 public class DecorativeObject extends GameObject {

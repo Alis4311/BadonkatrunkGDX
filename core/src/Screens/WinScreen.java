@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,14 +20,10 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.actor;
-
 /**
  * Screen to display the WinScreen that is shown after completing a level.
  *
- * @author Tim Normark
+ * @author Tim Normark, Peder Nilsson
  */
 public class WinScreen implements Screen {
     private Badonkatrunk badonkatrunk;
@@ -63,22 +60,26 @@ public class WinScreen implements Screen {
         skinButton.addRegions(buttonAtlas);
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = font;
+        textButtonStyle.fontColor = Color.YELLOW;
+
+        font.getData().setScale(2f,2f);
 
         textButtonStyle.up = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.down = skinButton.getDrawable("rounded_rectangle_button");
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         TextButton winButton = new TextButton("Finish", textButtonStyle);
-        winButton.setText("Congratulations! \n Time: " + seconds + "s");
+        winButton.setText("W E L L  D O N E ! ! !\nTime:\n" + seconds + " s");
         winButton.setHeight(50);
         winButton.setWidth(100);
-        winButton.setPosition(200,400);
+        winButton.setPosition(200,390);
         stage.addActor(winButton);
 
         MenuButton menuButton = new MenuButton();
-        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 300);
-        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 200);
-        ImageButton buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 100);
-
+        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 122, 250);
+        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 122, 160);
+        ImageButton buttonHighScore = menuButton.CreateImageButton("highScoreButton.png", 122, 70);
+        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 30, 350);
+        ImageButton helmet = menuButton.CreateImageButton("helmet8.png", 406, 340);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -108,6 +109,8 @@ public class WinScreen implements Screen {
 
         stage.addActor(buttonLevels);
         stage.addActor(buttonHighScore);
+        stage.addActor(tractor);
+        stage.addActor(helmet);
         if(mapNbr != 10) {
             stage.addActor(buttonNextLevel);
         }

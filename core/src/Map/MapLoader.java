@@ -119,6 +119,7 @@ public class MapLoader {
                 texture = new Texture(Gdx.files.internal(""));
                 break;
             case 5:
+                texture = new Texture(Gdx.files.internal("farmGoal.png"));
                 break;
             case 6:
                 break;

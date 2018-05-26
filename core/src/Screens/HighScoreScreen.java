@@ -25,7 +25,8 @@ import java.util.ArrayList;
 
 /**
  * Screen to display the HighScore-screen.o
- * @author Christoffer Book
+ *
+ * @author Christoffer Book, Peder Nilsson
  * From Requirements number : FO-1 Leaderboard
  */
 public class HighScoreScreen implements Screen {
@@ -42,8 +43,8 @@ public class HighScoreScreen implements Screen {
      * Constructor for the HighScore-screen.
      *
      * @param badonkatrunk - Referemce to the "main"-class, that is responsible for the switching of screens.
-     * @param mapNbr - The level played.
-     * @param time - The time in milliseconds in which the level was completed.
+     * @param mapNbr       - The level played.
+     * @param time         - The time in milliseconds in which the level was completed.
      */
     public HighScoreScreen(final Badonkatrunk badonkatrunk, final int mapNbr, final long time) {
 
@@ -59,7 +60,7 @@ public class HighScoreScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         font = new BitmapFont();
-        skinButton=new Skin();
+        skinButton = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("textButton.txt"));
         skinButton.addRegions(buttonAtlas);
         textButtonStyle = new TextButton.TextButtonStyle();
@@ -70,8 +71,18 @@ public class HighScoreScreen implements Screen {
         textButtonStyle.checked = skinButton.getDrawable("rounded_rectangle_button");
         buttons = getButtons();
         MenuButton menuButton = new MenuButton();
-       ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 225, 400);
-        ImageButton buttonLevels = menuButton.CreateImageButton("LevelsButton.png", 20, 400);
+        ImageButton buttonNextLevel = menuButton.CreateImageButton("nextlevelButton.png", 270, 350);
+        ImageButton buttonLevels = menuButton.CreateImageButton("levelsButtonBig.png", 30, 350);
+        ImageButton flower = menuButton.CreateImageButton("farmGoal.png", 460, 30);
+        ImageButton flower2 = menuButton.CreateImageButton("farmGoal.png", 445, 15);
+        ImageButton flower3 = menuButton.CreateImageButton("farmGoal.png", 423, 23);
+        ImageButton tractor = menuButton.CreateImageButton("tractor3.png", 19, 14);
+        ImageButton title = menuButton.CreateImageButton("masters1.png",115, 247);
+        ImageButton topTen = menuButton.CreateImageButton("topTenBubble.png",25, 80);
+        buttonNextLevel.setSize(200,200);
+        buttonLevels.setSize(200,200);
+        title.setSize(270,270);
+        topTen.setSize(130,130);
         buttonNextLevel.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -87,16 +98,26 @@ public class HighScoreScreen implements Screen {
                 HighScoreScreen.this.dispose();
             }
         });
+
+        stage.addActor(tractor);
+        stage.addActor(flower);
+        stage.addActor(flower2);
+        stage.addActor(flower3);
+        stage.addActor(title);
+        stage.addActor(topTen);
         stage.addActor(buttonLevels);
-        stage.addActor(buttonNextLevel);
+        if(mapNbr != 10) {
+            stage.addActor(buttonNextLevel);
+        }
+
         HighScore highScore = new HighScore(mapNbr, time, badonkatrunk.username);
         //ClientConnection connection = new ClientConnection("192.168.43.22",80,highScore, this);
-        ClientConnection connection = new ClientConnection("127.0.0.1",8080,highScore, this);
+        ClientConnection connection = new ClientConnection("10.2.0.94", 80, highScore, this);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.draw();
@@ -138,8 +159,8 @@ public class HighScoreScreen implements Screen {
 
     }
 
-    public void isOnLeaderboard(boolean onLeaderboard){
-        if(onLeaderboard){
+    public void isOnLeaderboard(boolean onLeaderboard) {
+        if (onLeaderboard) {
             //TODO: Display congratulations.
             System.out.println("Congratulations!");
         } else {
@@ -149,30 +170,32 @@ public class HighScoreScreen implements Screen {
 
     /**
      * Iterate through the list and place names and times in ascending order based on time.
+     *
      * @param newLeaderboard the list to iterate through
      * @author Christoffer Book
      */
-    public void showLeaderboard(ArrayList<HighScore> newLeaderboard){
-        for(int i = 0; i<Math.min(10,newLeaderboard.size()); i++){
-            buttons[i].setText(10-i + ".     " +newLeaderboard.get(9-i).getUserName() + "      " + newLeaderboard.get(9-i).getMilliSecTime());
+    public void showLeaderboard(ArrayList<HighScore> newLeaderboard) {
+        for (int i = 0; i < Math.min(10, newLeaderboard.size()); i++) {
+            buttons[i].setText(10 - i + ".      " + newLeaderboard.get(9 - i).getUserName() + "      " + newLeaderboard.get(9 - i).getMilliSecTime());
         }
 
     }
 
     /**
      * Create the buttons and place them in appropriate locations.
+     *
      * @return the array of buttons, that are placed on the stage.
      * @author Christoffer Book
      */
-    private TextButton[] getButtons(){
+    private TextButton[] getButtons() {
         TextButton[] buttons = new TextButton[10];
-        for(int i = 0; i<buttons.length; i++){
-            buttons[i] = new TextButton("",textButtonStyle);
+        for (int i = 0; i < buttons.length; i++) {
+            buttons[i] = new TextButton("", textButtonStyle);
 
             buttons[i].setText("");
             buttons[i].setHeight(50);
             buttons[i].setWidth(400);
-            buttons[i].setPosition(50,(i*30)+30);
+            buttons[i].setPosition(50, (i * 30) + 30);
             stage.addActor(buttons[i]);
         }
 

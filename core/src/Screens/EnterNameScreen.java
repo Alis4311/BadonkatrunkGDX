@@ -18,13 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.chris.badonkatrunk.Badonkatrunk;
 import com.sun.javafx.scene.control.skin.TextFieldSkin;
 
 /**
- * @author Daniel Rosdahl
+ * @author Daniel Rosdahl, Peder Nilsson
  */
 
 /**
@@ -55,24 +56,29 @@ public class EnterNameScreen implements Screen {
 
         TextField.TextFieldStyle style = new TextField.TextFieldStyle();
         style.font = new BitmapFont(Gdx.files.internal("default.fnt"));
-        style.fontColor = new Color(255,255,255,255);
+        style.fontColor = Color.YELLOW;
+
 
         tfUsername = new TextField("",style);
-        tfUsername.setMessageText("Write username here");
+        tfUsername.setMessageText("Enter nick here!\n- - -");
+        tfUsername.setAlignment(Align.center);
         tfUsername.setMaxLength(3);
-        tfUsername.setPosition(150, 300);
-        tfUsername.setWidth(170);
+        tfUsername.setPosition(70, 250, Align.center);
+        tfUsername.setHeight(80);
+        tfUsername.setWidth(500);
+        style.font.getData().setScale(3,3);
+
 
         stage.addActor(tfUsername);
         MenuButton menuButton = new MenuButton();
-        this.btnContinue = menuButton.CreateImageButton("arrowRight.png", 160, 150);
+        this.btnContinue = menuButton.CreateImageButton("arrowRight.png", 360, 360);
+        this.btnContinue.setSize(100, 100);
         stage.addActor(btnContinue);
 
         btnContinue.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 writeUsername();
-
                 badonkatrunk.setScreen(new MenuScreen(badonkatrunk));
                 stage.dispose();
 

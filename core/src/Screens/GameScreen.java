@@ -13,9 +13,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.chris.badonkatrunk.Badonkatrunk;
 
 /**
+ * Class containing the actual "game-screen".
  *
- *
- * @author Tim Normark, Peder Nilsson, Daniel Rosdahl
+ * @author Christoffer Book, Tim Normark, Peder Nilsson, Daniel Rosdahl
  */
 public class GameScreen implements Screen{
     OrthographicCamera camera;
@@ -23,7 +23,9 @@ public class GameScreen implements Screen{
     Map level;
     SpriteBatch batch;
     ShapeRenderer shape;
-
+    /**
+     * Bunch of static variables used for pausing in different situations.
+     */
     public static boolean isPaused;
     public static boolean isPausedForJump;
     public static boolean isPausedForAcceleration;
@@ -48,6 +50,13 @@ public class GameScreen implements Screen{
     private Sprite tapRight = new Sprite(new Texture(Gdx.files.internal("Introbana/handRight.png")));
     private Sprite tapLeft = new Sprite(new Texture(Gdx.files.internal("Introbana/handLeft.png")));
 
+    /**
+     * Constructor for gamescreen.
+     * @param badonkatrunk - the one and only badonkatrumk
+     * @param vehicle - the vehicle to be used in this instance of game.
+     * @param level - the level to play
+     * @param mapNbr - the number of the level, for use when submitting highscore.
+     */
     public GameScreen(Badonkatrunk badonkatrunk, Vehicle vehicle, Map level, int mapNbr) {
         this.badonkatrunk = badonkatrunk;
         this.vehicle = vehicle;
@@ -55,21 +64,22 @@ public class GameScreen implements Screen{
         this.mapNbr = mapNbr;
         font = new BitmapFont();
         font.setColor(Color.WHITE);
+        font.getData().setScale(2f,2f);
         batch = Badonkatrunk.batch;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false,500,500);
 
         shape = new ShapeRenderer();
-        isPaused = true;
-        clockStarted = false;
+        isPaused = true; // start every level paused.
+        clockStarted = false; //clock is not started until player starts driving.
         startTime = 0;
 
 
 
         pauseButton = new Sprite(new Texture(Gdx.files.internal("pauseButton.png")));
         resumeButton = new Sprite(new Texture(Gdx.files.internal("resumeButton.png")));
-        levelsButton = new Sprite(new Texture(Gdx.files.internal("levelsButtonBig.png")));
+        levelsButton = new Sprite(new Texture(Gdx.files.internal("levelsButtonBlack.png")));
 
     }
 
@@ -79,6 +89,11 @@ public class GameScreen implements Screen{
 
     }
 
+    /**
+     * render method, update everything  and draw it to screen
+     *
+     * @param delta the difference in time since last call.
+     */
     @Override
     public void render(float delta) {
 
@@ -92,49 +107,47 @@ public class GameScreen implements Screen{
                 startTime = System.currentTimeMillis();
             }
 
-            //Kolla om kameran nått slutet av banan, om inte så ska den röra sig åt höger.
+
+            //If camera has reached the end of the level, don´t move.
             if (camera.position.x < level.getGoalXCoordinates() && camera.position.x < level.getWidth() -camera.viewportWidth/2) {
 
                 camera.translate(vehicle.getScreenSpeed(), 0, 0);
-                //camera.position.y = vehicle.getY()/2 + camera.viewportHeight/2;
                 camera.update();
 
 
-                //Kolla om fordonet hamnat bakom kameran, i så fall ska banan starta om.
+                //If vehicle has fallen behind the screen, restart level.
                 if(camera.position.x > vehicle.getX()+camera.viewportWidth/2+vehicle.getBoundingRectangle().width){
                     //vehicle.dispose();
                     restart();
                 }
-                //Kolla om bilen "kör om" kameran, i så fall ska kameran följa med bilen frammåt.
+                //If car passes screen, move screen in accordance to car.
                 if(vehicle.getX()+vehicle.getBoundingRectangle().width >= camera.position.x + camera.viewportWidth / 2){
                     camera.position.x = vehicle.getX()+vehicle.getBoundingRectangle().width - camera.viewportWidth / 2;
                 }
             }
 
 
-            //Kolla om fordonet är i överkant av kamerans vy, i så fall följer kameran med uppåt, men inte ovanför bakgrundsbilden.
+            //If vehicle is above screen, follow it all the way to the top of the background but no further.
             if(vehicle.getY() > camera.position.y + camera.viewportHeight/4 && camera.position.y + camera.viewportHeight /2 <= level.getHeight()) {
                 camera.position.y = vehicle.getY() - camera.viewportWidth / 4;
-                //Fullösning? om kameran hamnar ovanför bakgrundsbilden så hoppar den ner till bakgrundsbildens övre kant.
                 if(camera.position.y + camera.viewportHeight / 2 > level.getHeight()) {
                     camera.position.y = level.getHeight() - camera.viewportHeight / 2;
-                }
+               }
             }
-            //Kolla om fordonet är i underkant av kamerans vy, i så fall följer kameran med nedåt.
+            //if vehicle is below the bottom of the camera, follow it
             else if(vehicle.getY() < camera.position.y - camera.viewportHeight/4 && camera.position.y >= camera.viewportHeight /2) {
                 camera.position.y = vehicle.getY() + camera.viewportHeight / 4;
-                //Fullösning? om kameran hamnar nedanför bakgrundsbilden så hoppar den upp till bakgrundsbildens nedre kant.
                 if(camera.position.y -camera.viewportHeight / 2 < 0) {
                     camera.position.y = camera.viewportHeight / 2;
                 }
             }
 
-            //Kolla om fordonet hamnat nedanför kamerans synfält
+            //if vehicle is below level, restart.
             if(vehicle.getY() + vehicle.getHeight() < camera.position.y - camera.viewportHeight/2) {
                 restart();
             }
 
-            //Kolla om fordonet kommit i mål.
+            //If vehicle passes goal line,
             if(vehicle.getX() >= level.getGoalXCoordinates()){
                 nextLevel(startTime);
             }
@@ -144,14 +157,15 @@ public class GameScreen implements Screen{
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        level.draw(batch);
+        level.draw(batch, camera.position.x);
 
         long currentExpiredTime = System.currentTimeMillis() - startTime;
         if(currentExpiredTime > 1000000){
             currentExpiredTime = 0;
         }
         String timeString = "Time: " + currentExpiredTime / 1000;
-        font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2,camera.position.y + 200);
+        font.draw(batch, timeString,camera.position.x - (timeString.length()*7)/2-25,camera.position.y + 200);
+
 
         pauseButton.setPosition(camera.position.x - (camera.viewportWidth / 2) + 15, camera.position.y + (camera.viewportHeight / 2) - 50);
         pauseButton.draw(batch, 1f);
@@ -162,13 +176,14 @@ public class GameScreen implements Screen{
         if(isPausedForAcceleration){
             doAcceleratePauseStuff();
         }
-        if(isPausedForButton) {
-            doPauseForButtonStuff();
-        }
         if(returnToLevels) {
             returnToLevels();
         }
         vehicle.draw(batch);
+
+        if(isPausedForButton) {
+            doPauseForButtonStuff();
+        }
 
         batch.end();
 
@@ -194,6 +209,9 @@ public class GameScreen implements Screen{
 
     }
 
+    /**
+     * Dispose every disposable object when done using them
+     */
     @Override
     public void dispose() {
         font.dispose();
@@ -201,12 +219,17 @@ public class GameScreen implements Screen{
         vehicle.dispose();
     }
 
+    /**
+     * Method to restart current level.
+     */
     public void restart(){
         badonkatrunk.setScreen(new LoadScreen(badonkatrunk, mapNbr));
         vehicle.dispose();
         this.dispose();
     }
-
+    /**
+     * Go to winScreen, and write to file if next level > highestunlocked level.
+     */
     private void nextLevel(long startTime){
         int nextLevel = Math.min(mapNbr+1,10);
         if(nextLevel > badonkatrunk.highestUnlockedLevel){
@@ -223,14 +246,22 @@ public class GameScreen implements Screen{
         this.dispose();
     }
 
+    /**
+     * Return to the levels menu screen .
+     */
     public void returnToLevels() {
         returnToLevels = false;
+        isPausedForAcceleration = false;
+        isPausedForJump = false;
         vehicle.dispose();
         badonkatrunk.playMenuMusic();
         badonkatrunk.setScreen(new LevelsScreen(badonkatrunk));
         dispose();
     }
 
+    /**
+     * For introductionlevel, show the instructions for jump
+     */
     public void doJumpPauseStuff(){
 
         arrow.setPosition(camera.position.x - 100,300);
@@ -246,6 +277,9 @@ public class GameScreen implements Screen{
         tapLeft.draw(batch);
     }
 
+    /**
+     * For introductionlevel, show the instructions for acceleration
+     */
     public void doAcceleratePauseStuff(){
 
         arrow2.setScale(1.5f);
@@ -266,6 +300,9 @@ public class GameScreen implements Screen{
         arrow3.draw(batch);
     }
 
+    /**
+     * For pausebutton options, show the buttons.
+     */
     public void doPauseForButtonStuff() {
         resumeButton.setPosition(camera.position.x  - 120, camera.position.y + 40);
         levelsButton.setPosition(camera.position.x - 120, camera.position.y - 100);
